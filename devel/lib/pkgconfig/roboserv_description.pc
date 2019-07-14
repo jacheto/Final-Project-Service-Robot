@@ -1,0 +1,8 @@
+prefix=/home/felipe/roboserv_ws/devel
+
+Name: roboserv_description
+Description: Description of roboserv_description
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/felipe/roboserv_ws/devel/lib 
+Requires: 

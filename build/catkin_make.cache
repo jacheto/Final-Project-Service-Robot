@@ -1,0 +1,2 @@
+roboserv_description:roboserv_simulation
+-DCATKIN_DEVEL_PREFIX=/home/felipe/roboserv_ws/devel -DCMAKE_INSTALL_PREFIX=/home/felipe/roboserv_ws/install -G Unix Makefiles

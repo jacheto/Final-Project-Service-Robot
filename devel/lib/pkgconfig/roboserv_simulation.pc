@@ -1,0 +1,8 @@
+prefix=/home/felipe/roboserv_ws/devel
+
+Name: roboserv_simulation
+Description: Description of roboserv_simulation
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/felipe/roboserv_ws/devel/lib 
+Requires: 
