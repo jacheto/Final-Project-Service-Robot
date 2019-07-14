@@ -68,6 +68,10 @@ Compile o workspace:
 Instale o turtlebot, robô que pegamos emprestados algumas features:
 
     sudo apt-get install ros-kinetic-turtlebot*
+
+Instale o pointcloud_to_laserscan, um pacote para gerar um laser scan a partir de uma nuvem de pontos:
+
+    sudo apt-get install ros-kinetic-pointcloud-to-laserscan
     
 Adicione o workspace na lista de pastas onde o ROS procura os pacotes:
     
