@@ -9,17 +9,18 @@
 	
 	<xacro:property name="robot_name" value="robo_link" />
 	
-	<xacro:property name="body_size_x" value="0.4" />
-	<xacro:property name="body_size_y" value="0.2" />
-	<xacro:property name="body_size_z" value="0.1" />
+	<xacro:property name="body_radius" value="0.2" />
+	<xacro:property name="body_length" value="0.1" />
 	<xacro:property name="body_mass" value="5.0" />
 	
-	<xacro:property name="caster_radius" value="0.05" />
+	<xacro:property name="caster_radius" value="0.03" />
+	<xacro:property name="caster_z" value="-0.03" />
 	<xacro:property name="caster_mass" value="1.0" />
 	
-	<xacro:property name="wheel_radius" value="0.1" />
-	<xacro:property name="wheel_length" value="0.05" />
-	<xacro:property name="wheel_mass" value="5.0" />
+	<xacro:property name="wheel_radius" value="0.05" />
+	<xacro:property name="wheel_z" value="-0.0105" />
+	<xacro:property name="wheel_length" value="0.02" />
+	<xacro:property name="wheel_mass" value="4.0" />
 	
 	<!--Corpo do robo-->
 	<link name="${robot_name}">
@@ -27,23 +28,26 @@
 		<!--Posicao inicial do carro-->
     	<pose>0 0 0.1 0 0 0</pose>
 		
-		<!--Chassi-->
-		<xacro:create_box name="chassis" mass="${body_mass}" size_x="${body_size_x}" size_y="${body_size_y}" size_z="${body_size_z}"
+		<xacro:create_cylinder name="chassis" mass="${body_mass}" radius="${body_radius}" length="${body_length}"
 						  px="0" py="0" pz="0" wr="0" wp="0" wy="0"/>
 	
 		<!--Roda esferica frontal-->
 		<xacro:create_sphere name="caster" mass="${caster_mass}" radius="${caster_radius}"
-						  px="-0.15" py="0" pz="-0.05" wr="0" wp="0" wy="0"/>
+						  px="-0.15" py="0" pz="${caster_z}" wr="0" wp="0" wy="0"/>
+	
+		<!--Roda esferica traseira-->
+		<xacro:create_sphere name="caster" mass="${caster_mass}" radius="${caster_radius}"
+						  px="0.15" py="0" pz="${caster_z}" wr="0" wp="0" wy="0"/>
 	</link>
 
 	<!--Roda esquerda-->
 	<xacro:create_wheel name="left_wheel" mass="${wheel_mass}" radius="${wheel_radius}" length="${wheel_length}" 
-						body_name="${robot_name}" body_size_x="${body_size_x}" body_size_y="${body_size_y}" 
+						body_name="${robot_name}" body_size_y="${body_radius}" wheel_pos_z="${wheel_z}"
 						wheel_pos_x="0.015" wheel_side = "1" whell_spacing="0.02"/>
 	
 	<!--Roda direita-->
 	<xacro:create_wheel name="right_wheel" mass="${wheel_mass}" radius="${wheel_radius}" length="${wheel_length}" 
-						body_name="${robot_name}" body_size_x="${body_size_x}" body_size_y="${body_size_y}" 
+						body_name="${robot_name}" body_size_y="${body_radius}" wheel_pos_z="${wheel_z}"
 						wheel_pos_x="0.015" wheel_side = "-1" whell_spacing="0.02"/>
 	
 	<!--Kinect-->
@@ -117,5 +121,63 @@
 	</link>
 	
 	<turtlebot_sim_3dsensor/>
+
+	<!--Sensor Infravermelho-->
+	<xacro:create_ir name="distSensor_R"  body_name="${robot_name}" lenght="${body_radius}" height="${body_length/2}" ang_degree="-45"/>
+	<xacro:create_ir name="distSensor_FR" body_name="${robot_name}" lenght="${body_radius}" height="${body_length/2}" ang_degree="-25"/>
+	<xacro:create_ir name="distSensor_F"  body_name="${robot_name}" lenght="${body_radius}" height="${body_length/2}" ang_degree="0"/>
+	<xacro:create_ir name="distSensor_FL" body_name="${robot_name}" lenght="${body_radius}" height="${body_length/2}" ang_degree="25"/>
+	<xacro:create_ir name="distSensor_L"  body_name="${robot_name}" lenght="${body_radius}" height="${body_length/2}" ang_degree="45"/>
+		
+	
+	<!--joint name="ir_front_joint" type="fixed">
+		<axis xyz="0 1 0" />
+		<origin rpy="0 0 ${pi/4}" xyz="${body_radius} 0 ${body_length/2}" />
+		<parent link="robo_link"/>
+		<child link="base_ir_front"/>
+	</joint>
+	<link name="base_ir_front">
+		<collision>
+		  <origin xyz="0 0 0" rpy="0 0 0"/>
+		  <geometry>
+			<box size="0.01 0.01 0.01"/>
+		  </geometry>
+		</collision>    <visual>
+		  <origin xyz="0 0 0" rpy="0 0 0"/>
+		  <geometry>
+			<box size="0.01 0.01 0.01"/>
+		  </geometry>
+		</visual>    <inertial>
+		  <mass value="1e-5" />
+		  <origin xyz="0 0 0" rpy="0 0 0"/>
+		  <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0"      izz="1e-6" />
+		</inertial>
+	</link-->
+	
+	<!--Sensor Sonar
+	<joint name="sonar_front_joint" type="fixed">
+		<axis xyz="0 1 0" />
+		<origin rpy="0 0 0" xyz="${body_radius} 0 ${body_length/2}" />
+		<parent link="robo_link"/>
+		<child link="base_sonar_front"/>
+	</joint>
+	<link name="base_sonar_front">
+		<collision>
+		  <origin xyz="0 0 0" rpy="0 0 0"/>
+		  <geometry>
+			<box size="0.01 0.01 0.01"/>
+		  </geometry>
+		</collision>    <visual>
+		  <origin xyz="0 0 0" rpy="0 0 0"/>
+		  <geometry>
+			<box size="0.01 0.01 0.01"/>
+		  </geometry>
+		</visual>    <inertial>
+		  <mass value="1e-5" />
+		  <origin xyz="0 0 0" rpy="0 0 0"/>
+		  <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+		</inertial>
+	 </link>-->
+
 	
 </robot>
