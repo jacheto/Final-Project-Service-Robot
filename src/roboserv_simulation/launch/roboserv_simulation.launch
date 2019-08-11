@@ -69,18 +69,30 @@
 		<param name="move_base/DWAPlannerROS/yaw_goal_tolerance" value="0.8"/>
 		<param name="move_base/DWAPlannerROS/xy_goal_tolerance" value="0.5"/>
 		<param name="move_base/DWAPlannerROS/latch_xy_goal_tolerance" value="true"/>
+		<param name="recovery_behaviors" value="[{name: conservative_reset, type: clear_costmap_recovery/ClearCostmapRecovery}, 
+												{name: rotate_recovery, 	type: rotate_recovery/RotateRecovery}]"/>
+		<param name="controller_patience" value="5"/>
+		<param name="clearing_rotation_allowed" value="true"/>
+		<param name="oscillation_timeout" value="5"/>
+		<param name="planner_frequency" value="0.5"/>
 		
 		<remap from="cmd_vel" to="cmd_vel_mux/input/navi"/>
 	</node>
   
+	<!-- Finish goal auxiliary -->
+	<node pkg="roboserv_simulation" type="finish_goal_aux.py" name="finish_goal_aux" output="screen">
+		<param name="tolerance_dist" value="0.2"/>
+		<param name="tolerance_ang" value="0.2"/>
+		<param name="ang_vel" value="1"/>
+	</node>
 
-  <!-- Safety Controller-->
-  <node pkg="nodelet" type="nodelet" name="kobuki_safety_controller" args="load kobuki_safety_controller/SafetyControllerNodelet mobile_base_nodelet_manager">
-    <remap from="kobuki_safety_controller/cmd_vel" to="cmd_vel_mux/input/safety_controller"/>
-    <remap from="kobuki_safety_controller/events/bumper" to="mobile_base/events/bumper"/>
-    <remap from="kobuki_safety_controller/events/cliff" to="mobile_base/events/cliff"/>
-    <remap from="kobuki_safety_controller/events/wheel_drop" to="mobile_base/events/wheel_drop"/>
-  </node>
+	<!-- Safety Controller
+	<node pkg="nodelet" type="nodelet" name="kobuki_safety_controller" args="load kobuki_safety_controller/SafetyControllerNodelet mobile_base_nodelet_manager">
+		<remap from="kobuki_safety_controller/cmd_vel" to="cmd_vel_mux/input/safety_controller"/>
+		<remap from="kobuki_safety_controller/events/bumper" to="mobile_base/events/bumper"/>
+		<remap from="kobuki_safety_controller/events/cliff" to="mobile_base/events/cliff"/>
+		<remap from="kobuki_safety_controller/events/wheel_drop" to="mobile_base/events/wheel_drop"/>
+	</node>-->
 
   <!-- Velocity Smoother
   <node pkg="nodelet" type="nodelet" name="navigation_velocity_smoother" args="load yocs_velocity_smoother/VelocitySmootherNodelet mobile_base_nodelet_manager">
