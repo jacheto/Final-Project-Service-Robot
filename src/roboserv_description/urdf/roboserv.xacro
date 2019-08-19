@@ -26,7 +26,7 @@
 	<link name="${robot_name}">
 		
 		<!--Posicao inicial do carro-->
-    	<pose>0 0 0.1 0 0 0</pose>
+    	<pose>0 0 0.5 0 0 0</pose>
 		
 		<xacro:create_cylinder name="chassis" mass="${body_mass}" radius="${body_radius}" length="${body_length}"
 						  px="0" py="0" pz="0" wr="0" wp="0" wy="0"/>

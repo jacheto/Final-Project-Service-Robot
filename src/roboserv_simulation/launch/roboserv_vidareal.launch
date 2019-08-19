@@ -71,8 +71,8 @@
 		<param name="move_base/DWAPlannerROS/yaw_goal_tolerance" value="0.8"/>
 		<param name="move_base/DWAPlannerROS/xy_goal_tolerance" value="0.5"/>
 		<param name="move_base/DWAPlannerROS/latch_xy_goal_tolerance" value="true"/>
-		<param name="recovery_behaviors" value="[{name: conservative_reset, type: clear_costmap_recovery/ClearCostmapRecovery}, 
-												{name: rotate_recovery, 	type: rotate_recovery/RotateRecovery}]"/>
+		<!--param name="recovery_behaviors" value="[{name: conservative_reset, type: clear_costmap_recovery/ClearCostmapRecovery}, 
+												{name: rotate_recovery, 	type: rotate_recovery/RotateRecovery}]"/-->
 		<param name="controller_patience" value="5"/>
 		<param name="clearing_rotation_allowed" value="true"/>
 		<param name="oscillation_timeout" value="5"/>
