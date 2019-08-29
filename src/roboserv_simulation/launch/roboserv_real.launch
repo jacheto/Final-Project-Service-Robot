@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+	
+	<!-- Args -->
+	<!--arg name="world_file"  default="$(find zed_slam)/worlds/sala_de_testes"/-->
+	<arg name="world_file"  default="$(find roboserv_simulation)/worlds/cafezin"/>
+	<arg name="use_sim_camera" default="true"/>
+	<arg name="use_sim_distSensors" default="true"/>
+	
+	<!-- Gazebo -->
+	<include file="$(find gazebo_ros)/launch/empty_world.launch">
+		<arg name="use_sim_time" 			value="true"/>
+		<arg name="debug" 					value="false"/>
+		<arg name="gui" 					value="true" />
+		<arg name="world_name"				value="$(arg world_file)"/>
+	</include>
+	
+	<!-- Spawn Roboserv -->
+	<param name="robot_description" command="$(find xacro)/xacro.py '$(find roboserv_description)/urdf/roboserv.xacro' use_sim_camera:=$(arg use_sim_camera) use_sim_distSensors:=$(arg use_sim_distSensors)"/>
+	<node name="roboserv_spawn" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model roboserv -z 0.5" />
+	
+	<!-- send fake joint values -->
+	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+		<param name="use_gui" value="False"/>
+	</node>
+	
+	<!-- Inicia conexao com arduino -->
+	<group unless="$(arg use_sim_distSensors)">
+
+		<node pkg="rosserial_python" type="serial_node.py" name="serial_node">
+			<param name="port" value="/dev/ttyUSB0"/> <!-- DEFINIR A PORTA SERIAL DO ARDUINO -->
+			<param name="baud" value="57600"/>
+		</node>
+		
+		<node name="tratamento_sensores" pkg="roboserv_simulation" type="tratamento_sensores.py"/>
+		
+  	</group>
+		
+	<!-- Combine joint values -->
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"/>
+
+	<!-- Show in Rviz   -->
+	<node name="rviz" pkg="rviz" type="rviz"/>
+	
+	<!-- Launch pointcloud_to_laserscan_node -->
+	<node name="pointcloud_to_laserscan_node" pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" output="screen" >
+		<remap from="cloud_in" to="camera/depth/points"/>
+		<param name="target_frame"		value="camera_link"/>
+		<param name="range_min"         value="0.05"/>
+		<param name="range_max"         value="15.0"/>
+		<param name="min_height"        value="0.0"/>
+		<param name="max_height"        value="0.6"/>
+	</node>
+	
+	<!-- Velocity muxer -->
+	<node pkg="nodelet" type="nodelet" name="mobile_base_nodelet_manager" args="manager"/>
+	<node pkg="nodelet" type="nodelet" name="cmd_vel_mux"
+		args="load yocs_cmd_vel_mux/CmdVelMuxNodelet mobile_base_nodelet_manager">
+		<param name="yaml_cfg_file" value="$(find turtlebot_bringup)/param/mux.yaml" />
+	</node>
+	
+	<!-- Launch gmapping -->
+	<node name="gmapping" pkg="gmapping" type="slam_gmapping" output="screen" >
+		<param name="base_frame" value="robo_link"/>
+		<param name="agularUpdate" value="0.1"/>
+		<param name="linearUpdate" value="0.1"/>
+		<param name="lskip" value="10"/>
+		<param name="xmax" value="10"/>
+		<param name="xmin" value="-10"/>
+		<param name="ymax" value="10"/>
+		<param name="ymin" value="-10"/>
+		<param name="minimumScore" value="50"/>
+	</node>
+	
+	<!-- Move base -->
+	<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+		<rosparam file="$(find roboserv_simulation)/config/move_base/costmap_common_params.yaml" command="load" ns="global_costmap" />
+		<rosparam file="$(find roboserv_simulation)/config/move_base/costmap_common_params.yaml" command="load" ns="local_costmap" />
+		<rosparam file="$(find roboserv_simulation)/config/move_base/local_costmap_params.yaml" command="load" />
+		<rosparam file="$(find roboserv_simulation)/config/move_base/global_costmap_params.yaml" command="load" />
+		<rosparam file="$(find roboserv_simulation)/config/move_base/base_local_planner_params.yaml" command="load" />
+		<param name="oscillation_timeout" value="3"/>
+		
+		<param name="move_base/DWAPlannerROS/yaw_goal_tolerance" value="0.8"/>
+		<param name="move_base/DWAPlannerROS/xy_goal_tolerance" value="0.5"/>
+		<param name="move_base/DWAPlannerROS/latch_xy_goal_tolerance" value="true"/>
+		<param name="recovery_behaviors" value="[{name: conservative_reset, type: clear_costmap_recovery/ClearCostmapRecovery}, 
+												{name: rotate_recovery, 	type: rotate_recovery/RotateRecovery}]"/>
+		<param name="controller_patience" value="5"/>
+		<param name="clearing_rotation_allowed" value="true"/>
+		<param name="oscillation_timeout" value="5"/>
+		<param name="planner_frequency" value="0.5"/>
+		
+		<remap from="cmd_vel" to="cmd_vel_mux/input/navi"/>
+	</node>
+  
+	<!-- Finish goal auxiliary -->
+	<node pkg="roboserv_simulation" type="finish_goal_aux.py" name="finish_goal_aux" output="screen">
+		<param name="tolerance_dist" value="0.4"/>
+		<param name="tolerance_ang" value="0.2"/>
+		<param name="ang_vel" value="0.75"/>
+	</node>
+  
+	<!-- Gate control -->
+	<node pkg="roboserv_simulation" type="gate_control.py" name="gate_control" output="screen">
+	</node>
+  
+</launch>

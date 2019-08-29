@@ -2,14 +2,19 @@
 
 <robot name="roboserv" xmlns:xacro="http://www.ros.org/wiki/xacro">
 	
+	<!-- Argumentos -->	
+	
+	<xacro:arg name="use_sim_camera" default="true" />
+	<xacro:arg name="use_sim_distSensors" default="true" />
+	
 	<!--Incluir os outros arquivos necessarios-->
-	<xacro:include filename="$(find roboserv_description)/urdf/roboserv.gazebo" />
+	<xacro:include filename="$(find roboserv_description)/urdf/roboserv.gazebo" /> <!-- use_sim_camera:=$(arg use_sim_camera) use_sim_distSensors:=$(arg use_sim_distSensors)" /-->
 	<xacro:include filename="$(find roboserv_description)/urdf/materials.xacro" />
 	<xacro:include filename="$(find roboserv_description)/urdf/macros.xacro" />
 	
 	<xacro:property name="robot_name" value="robo_link" />
 	
-	<xacro:property name="body_radius" value="0.2" />
+	<xacro:property name="body_radius" value="0.2"/>
 	<xacro:property name="body_length" value="0.1" />
 	<xacro:property name="body_mass" value="5.0" />
 	
@@ -50,84 +55,91 @@
 						body_name="${robot_name}" body_size_y="${body_radius}" wheel_pos_z="${wheel_z}"
 						wheel_pos_x="0.015" wheel_side = "-1" whell_spacing="0.02"/>
 	
-	<!--Kinect-->
+	<xacro:if value="$(arg use_sim_camera)">
+		
+		<!--Kinect-->
 	
-	<!--Declarando as propriedades-->
-	<xacro:property name="kinect_cam_py" value="-0.0125"/>
-	<xacro:property name="cam_px" value="0.18" />
-	<xacro:property name="cam_py" value="-0.0125" />
-	<xacro:property name="cam_pz" value="0.0870" />
-	<xacro:property name="cam_or" value="0" />
-	<xacro:property name="cam_op" value="0" />
-	<xacro:property name="cam_oy" value="0" />
+		<!--Declarando as propriedades-->
+		<xacro:property name="kinect_cam_py" value="-0.0125"/>
+		<xacro:property name="cam_px" value="0.18" />
+		<xacro:property name="cam_py" value="-0.0125" />
+		<xacro:property name="cam_pz" value="0.0870" />
+		<xacro:property name="cam_or" value="0" />
+		<xacro:property name="cam_op" value="0" />
+		<xacro:property name="cam_oy" value="0" />
 	
-	<!--Criando as juncoes-->
+		<!--Criando as juncoes-->
 	
-	<!--Chassi -> Camera RGB-->
-	<joint name="camera_rgb_joint" type="fixed">
-		<origin xyz="${cam_px} ${cam_py} ${cam_pz}" rpy="${cam_or} ${cam_op} ${cam_oy}"/>
-		<parent link="${robot_name}"/>
-		<child link="camera_rgb_frame" />
-	</joint>
+		<!--Chassi -> Camera RGB-->
+		<joint name="camera_rgb_joint" type="fixed">
+			<origin xyz="${cam_px} ${cam_py} ${cam_pz}" rpy="${cam_or} ${cam_op} ${cam_oy}"/>
+			<parent link="${robot_name}"/>
+			<child link="camera_rgb_frame" />
+		</joint>
 	
-	<!--Camera RGB -> Camera link (corpo do Kinect)-->
-	<joint name="camera_joint" type="fixed">
-		<origin xyz="-0.031 ${-kinect_cam_py} -0.016" rpy="0 0 0"/>
-		<parent link="camera_rgb_frame"/>
-		<child link="camera_link"/>
-	</joint>
+		<!--Camera RGB -> Camera link (corpo do Kinect)-->
+		<joint name="camera_joint" type="fixed">
+			<origin xyz="-0.031 ${-kinect_cam_py} -0.016" rpy="0 0 0"/>
+			<parent link="camera_rgb_frame"/>
+			<child link="camera_link"/>
+		</joint>
 	
-	<!--Camera RGB -> Camera RGB optica-->
-	<joint name="camera_rgb_optical_joint" type="fixed">
-		<origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}" />
-		<parent link="camera_rgb_frame" />
-		<child link="camera_rgb_optical_frame" />
-	</joint>
+		<!--Camera RGB -> Camera RGB optica-->
+		<joint name="camera_rgb_optical_joint" type="fixed">
+			<origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}" />
+			<parent link="camera_rgb_frame" />
+			<child link="camera_rgb_optical_frame" />
+		</joint>
 	
-	<!--Camera RGB -> Camera de profundidade-->
-	<joint name="camera_depth_joint" type="fixed">
-		<origin xyz="0 ${2 * -kinect_cam_py} 0" rpy="0 0 0" />
-		<parent link="camera_rgb_frame" />
-		<child link="camera_depth_frame" />
-	</joint>
+		<!--Camera RGB -> Camera de profundidade-->
+		<joint name="camera_depth_joint" type="fixed">
+			<origin xyz="0 ${2 * -kinect_cam_py} 0" rpy="0 0 0" />
+			<parent link="camera_rgb_frame" />
+			<child link="camera_depth_frame" />
+		</joint>
 	
-	<!--Camera de profundidade -> Camera de profundidade optica-->
-	<joint name="camera_depth_optical_joint" type="fixed">
-		<origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}" />
-		<parent link="camera_depth_frame" />
-		<child link="camera_depth_optical_frame" />
-	</joint>
+		<!--Camera de profundidade -> Camera de profundidade optica-->
+		<joint name="camera_depth_optical_joint" type="fixed">
+			<origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}" />
+			<parent link="camera_depth_frame" />
+			<child link="camera_depth_optical_frame" />
+		</joint>
 	
-	<!--Criando os frames-->
-	<link name="camera_rgb_frame"/>
-	<link name="camera_rgb_optical_frame"/>
-	<link name="camera_depth_frame"/>
-	<link name="camera_depth_optical_frame"/>
+		<!--Criando os frames-->
+		<link name="camera_rgb_frame"/>
+		<link name="camera_rgb_optical_frame"/>
+		<link name="camera_depth_frame"/>
+		<link name="camera_depth_optical_frame"/>
 	
-	<!--Criando o corpo do Kinect-->
-	<link name="camera_link">
-		<visual>
-			<origin xyz="0 0 0" rpy="0 0 ${pi/2}"/>
-			<geometry>
-				<mesh filename="package://turtlebot_description/meshes/sensors/kinect.dae"/>
-			</geometry>
-		</visual>
-		<collision>
-			<origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
-			<geometry>
-				<box size="0.07271 0.27794 0.073"/>
-			</geometry>
-		</collision>
-	</link>
+		<!--Criando o corpo do Kinect-->
+		<link name="camera_link">
+			<visual>
+				<origin xyz="0 0 0" rpy="0 0 ${pi/2}"/>
+				<geometry>
+					<mesh filename="package://turtlebot_description/meshes/sensors/kinect.dae"/>
+				</geometry>
+			</visual>
+			<collision>
+				<origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+				<geometry>
+					<box size="0.07271 0.27794 0.073"/>
+				</geometry>
+			</collision>
+		</link>
 	
-	<turtlebot_sim_3dsensor/>
+		<turtlebot_sim_3dsensor/>
+	
+	</xacro:if>
 
+		
 	<!--Sensor Infravermelho-->
+
 	<xacro:create_ir name="distSensor_R"  body_name="${robot_name}" lenght="${body_radius}" height="${body_length/2}" ang_degree="-45"/>
 	<xacro:create_ir name="distSensor_FR" body_name="${robot_name}" lenght="${body_radius}" height="${body_length/2}" ang_degree="-25"/>
 	<xacro:create_ir name="distSensor_F"  body_name="${robot_name}" lenght="${body_radius}" height="${body_length/2}" ang_degree="0"/>
 	<xacro:create_ir name="distSensor_FL" body_name="${robot_name}" lenght="${body_radius}" height="${body_length/2}" ang_degree="25"/>
 	<xacro:create_ir name="distSensor_L"  body_name="${robot_name}" lenght="${body_radius}" height="${body_length/2}" ang_degree="45"/>
+
 		
 	
 	<!--joint name="ir_front_joint" type="fixed">

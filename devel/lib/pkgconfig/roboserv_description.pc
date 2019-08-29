@@ -3,6 +3,6 @@ prefix=/home/felipe/roboserv_ws/devel
 Name: roboserv_description
 Description: Description of roboserv_description
 Version: 0.0.0
-Cflags: 
+Cflags: -I/home/felipe/roboserv_ws/devel/include
 Libs: -L/home/felipe/roboserv_ws/devel/lib 
-Requires: 
+Requires: message_runtime
