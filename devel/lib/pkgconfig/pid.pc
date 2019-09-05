@@ -1,0 +1,8 @@
+prefix=/home/felipe/roboserv_ws/devel
+
+Name: pid
+Description: Description of pid
+Version: 0.0.27
+Cflags: -I/home/felipe/roboserv_ws/devel/include -I/home/felipe/roboserv_ws/src/pid/include
+Libs: -L/home/felipe/roboserv_ws/devel/lib 
+Requires: roscpp std_msgs message_runtime dynamic_reconfigure

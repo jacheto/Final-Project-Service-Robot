@@ -4,15 +4,18 @@
 	
 	<!-- Argumentos -->	
 	
-	<xacro:arg name="use_sim_camera" default="true" />
-	<xacro:arg name="use_sim_distSensors" default="true" />
+	<xacro:arg name="using_simulation" default="1"/>
+	<xacro:property name="using_simulation" value="$(arg using_simulation)" />
 	
 	<!--Incluir os outros arquivos necessarios-->
-	<xacro:include filename="$(find roboserv_description)/urdf/roboserv.gazebo" /> <!-- use_sim_camera:=$(arg use_sim_camera) use_sim_distSensors:=$(arg use_sim_distSensors)" /-->
+	<xacro:if value="${using_simulation==1}">
+		<xacro:include filename="$(find roboserv_description)/urdf/roboserv.gazebo" />
+	</xacro:if>
+	
 	<xacro:include filename="$(find roboserv_description)/urdf/materials.xacro" />
 	<xacro:include filename="$(find roboserv_description)/urdf/macros.xacro" />
 	
-	<xacro:property name="robot_name" value="robo_link" />
+	<xacro:property name="robot_name" value="base_link" />
 	
 	<xacro:property name="body_radius" value="0.2"/>
 	<xacro:property name="body_length" value="0.1" />
@@ -55,18 +58,72 @@
 						body_name="${robot_name}" body_size_y="${body_radius}" wheel_pos_z="${wheel_z}"
 						wheel_pos_x="0.015" wheel_side = "-1" whell_spacing="0.02"/>
 	
-	<xacro:if value="$(arg use_sim_camera)">
+	<!--Propriedades da câmera-->
+	<xacro:property name="cam_px" value="0.18" />
+	<xacro:property name="cam_py" value="-0.0125" />
+	<xacro:property name="cam_pz" value="0.7" />
+	<xacro:property name="cam_or" value="0" />
+	<xacro:property name="cam_op" value="0" />
+	<xacro:property name="cam_oy" value="0" />
+	
+	
+	<xacro:if value="${using_simulation==0}">
+	
+		<!--ZED-->
+
+		<!-- Camera Center -->
+		<joint name="zed_camera_center_joint" type="fixed">
+			<parent link="base_link"/>
+			<child link="zed_camera_center"/>
+			<origin xyz="${cam_px} ${cam_py} ${cam_pz}" rpy="${cam_or} ${cam_op} ${cam_oy}"/>
+		</joint>
+		<link name="zed_camera_center">
+			<visual>
+				<origin xyz="0 0 0" rpy="0 0 0"/>
+				<geometry>
+					<mesh filename="package://zed_wrapper/urdf/models/ZED.stl" />
+				</geometry>
+				<material name="light_grey">
+					<color rgba="0.8 0.8 0.8 0.8"/>
+				</material>
+			</visual>
+		</link>
+
+		<!-- Left Camera -->
+		<joint name="zed_left_camera_joint" type="fixed">
+			<parent link="zed_camera_center"/>
+			<child link="zed_left_camera_frame"/>
+			<origin xyz="0 0.06 0" rpy="0 0 0" />
+		</joint>
+		<link name="zed_left_camera_frame" />
+			<joint name="zed_left_camera_optical_joint" type="fixed">
+				<origin xyz="0 0 0" rpy="-1.57079632679 0.0 -1.57079632679"/>
+				<parent link="zed_left_camera_frame"/>
+				<child link="zed_left_camera_optical_frame"/>
+			</joint>	
+		<link name="zed_left_camera_optical_frame"/>
+
+		<!-- Right Camera -->
+		<joint name="zed_right_camera_joint" type="fixed">
+			<parent link="zed_camera_center"/>
+			<child link="zed_right_camera_frame"/>
+			<origin xyz="0 -0.06 0" rpy="0 0 0" />
+		</joint>
+		<link name="zed_right_camera_frame" />
+			<joint name="zed_right_camera_optical_joint" type="fixed">
+				<origin xyz="0 0 0" rpy="-1.57079632679 0.0 -1.57079632679"/>
+				<parent link="zed_right_camera_frame"/>
+				<child link="zed_right_camera_optical_frame"/>
+			</joint>
+		<link name="zed_right_camera_optical_frame"/>
+	</xacro:if>
+	
+	<xacro:if value="${using_simulation==1}">
 		
 		<!--Kinect-->
 	
 		<!--Declarando as propriedades-->
 		<xacro:property name="kinect_cam_py" value="-0.0125"/>
-		<xacro:property name="cam_px" value="0.18" />
-		<xacro:property name="cam_py" value="-0.0125" />
-		<xacro:property name="cam_pz" value="0.0870" />
-		<xacro:property name="cam_or" value="0" />
-		<xacro:property name="cam_op" value="0" />
-		<xacro:property name="cam_oy" value="0" />
 	
 		<!--Criando as juncoes-->
 	
@@ -139,57 +196,6 @@
 	<xacro:create_ir name="distSensor_F"  body_name="${robot_name}" lenght="${body_radius}" height="${body_length/2}" ang_degree="0"/>
 	<xacro:create_ir name="distSensor_FL" body_name="${robot_name}" lenght="${body_radius}" height="${body_length/2}" ang_degree="25"/>
 	<xacro:create_ir name="distSensor_L"  body_name="${robot_name}" lenght="${body_radius}" height="${body_length/2}" ang_degree="45"/>
-
-		
-	
-	<!--joint name="ir_front_joint" type="fixed">
-		<axis xyz="0 1 0" />
-		<origin rpy="0 0 ${pi/4}" xyz="${body_radius} 0 ${body_length/2}" />
-		<parent link="robo_link"/>
-		<child link="base_ir_front"/>
-	</joint>
-	<link name="base_ir_front">
-		<collision>
-		  <origin xyz="0 0 0" rpy="0 0 0"/>
-		  <geometry>
-			<box size="0.01 0.01 0.01"/>
-		  </geometry>
-		</collision>    <visual>
-		  <origin xyz="0 0 0" rpy="0 0 0"/>
-		  <geometry>
-			<box size="0.01 0.01 0.01"/>
-		  </geometry>
-		</visual>    <inertial>
-		  <mass value="1e-5" />
-		  <origin xyz="0 0 0" rpy="0 0 0"/>
-		  <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0"      izz="1e-6" />
-		</inertial>
-	</link-->
-	
-	<!--Sensor Sonar
-	<joint name="sonar_front_joint" type="fixed">
-		<axis xyz="0 1 0" />
-		<origin rpy="0 0 0" xyz="${body_radius} 0 ${body_length/2}" />
-		<parent link="robo_link"/>
-		<child link="base_sonar_front"/>
-	</joint>
-	<link name="base_sonar_front">
-		<collision>
-		  <origin xyz="0 0 0" rpy="0 0 0"/>
-		  <geometry>
-			<box size="0.01 0.01 0.01"/>
-		  </geometry>
-		</collision>    <visual>
-		  <origin xyz="0 0 0" rpy="0 0 0"/>
-		  <geometry>
-			<box size="0.01 0.01 0.01"/>
-		  </geometry>
-		</visual>    <inertial>
-		  <mass value="1e-5" />
-		  <origin xyz="0 0 0" rpy="0 0 0"/>
-		  <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
-		</inertial>
-	 </link>-->
 
 	
 </robot>

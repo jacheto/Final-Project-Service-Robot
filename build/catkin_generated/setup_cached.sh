@@ -8,5 +8,3 @@
 
 # modified environment variables
 export PWD="/home/felipe/roboserv_ws/build"
-export PYTHONPATH="/home/felipe/roboserv_ws/devel/lib/python2.7/dist-packages:$PYTHONPATH"
-export ROS_PACKAGE_PATH="/home/felipe/roboserv_ws/src:/home/felipe/catkin_ws/src:/opt/ros/kinetic/share"

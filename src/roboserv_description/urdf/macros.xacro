@@ -93,17 +93,6 @@
 						  px="0" py="0" pz="0" wr="0" wp="${pi/2}" wy="${pi/2}"/>
 		</link>
 		
-		<!--Cria uma referencia no Gazebo-->
-		<gazebo reference="${name}">
-			<mu1 value="1.0"/>
-			<mu2 value="1.0"/>
-			<kp  value="1000000.0" />
-			<kd  value="100.0" />
-			<max_vel value="1.0" />
-			<fdir1 value="0 0 0"/>
-			<material>Gazebo/Black</material>
-		</gazebo>
-		
 		<!--Cria a juncao com o corpo-->
 		<joint name="${name}_hinge" type="continuous">
 			<parent link="${body_name}"/>

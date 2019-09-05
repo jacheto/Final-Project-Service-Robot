@@ -5,7 +5,6 @@
 	<!--arg name="world_file"  default="$(find zed_slam)/worlds/sala_de_testes"/-->
 	<arg name="world_file"  default="$(find roboserv_simulation)/worlds/cafezin"/>
 	
-
 	<!-- Gazebo -->
 	<include file="$(find gazebo_ros)/launch/empty_world.launch">
 		<arg name="use_sim_time" 			value="true"/>
@@ -15,16 +14,16 @@
 	</include>
 	
 	<!-- Spawn Roboserv -->
-	<param name="robot_description" command="$(find xacro)/xacro.py '$(find roboserv_description)/urdf/roboserv.xacro'"/>
+	<param name="robot_description" command="$(find xacro)/xacro.py '$(find roboserv_description)/urdf/roboserv.xacro' using_simulation:=1"/>
 	<node name="roboserv_spawn" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model roboserv -z 0.5" />
 	
+	<!-- Combine joint values -->
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"/>
+
 	<!-- send fake joint values -->
 	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
 		<param name="use_gui" value="False"/>
 	</node>
-
-	<!-- Combine joint values -->
-	<node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"/>
 
 	<!-- Show in Rviz   -->
 	<node name="rviz" pkg="rviz" type="rviz"/>
@@ -48,7 +47,7 @@
 	
 	<!-- Launch gmapping -->
 	<node name="gmapping" pkg="gmapping" type="slam_gmapping" output="screen" >
-		<param name="base_frame" value="robo_link"/>
+		<param name="base_frame" value="base_link"/>
 		<param name="agularUpdate" value="0.1"/>
 		<param name="linearUpdate" value="0.1"/>
 		<param name="lskip" value="10"/>

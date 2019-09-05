@@ -1,6 +1,6 @@
 # generated from genmsg/cmake/pkg-genmsg.cmake.em
 
-message(STATUS "roboserv_description: 1 messages, 0 services")
+message(STATUS "roboserv_description: 2 messages, 0 services")
 
 set(MSG_I_FLAGS "-Iroboserv_description:/home/felipe/roboserv_ws/src/roboserv_description/msg;-Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg")
 
@@ -22,6 +22,11 @@ add_custom_target(_roboserv_description_generate_messages_check_deps_${_filename
   COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "roboserv_description" "/home/felipe/roboserv_ws/src/roboserv_description/msg/Sensores.msg" ""
 )
 
+get_filename_component(_filename "/home/felipe/roboserv_ws/src/roboserv_description/msg/Motores.msg" NAME_WE)
+add_custom_target(_roboserv_description_generate_messages_check_deps_${_filename}
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "roboserv_description" "/home/felipe/roboserv_ws/src/roboserv_description/msg/Motores.msg" ""
+)
+
 #
 #  langs = gencpp;geneus;genlisp;gennodejs;genpy
 #
@@ -30,6 +35,12 @@ add_custom_target(_roboserv_description_generate_messages_check_deps_${_filename
 ### Generating Messages
 _generate_msg_cpp(roboserv_description
   "/home/felipe/roboserv_ws/src/roboserv_description/msg/Sensores.msg"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/roboserv_description
+)
+_generate_msg_cpp(roboserv_description
+  "/home/felipe/roboserv_ws/src/roboserv_description/msg/Motores.msg"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/roboserv_description
@@ -51,6 +62,8 @@ add_dependencies(roboserv_description_generate_messages roboserv_description_gen
 # add dependencies to all check dependencies targets
 get_filename_component(_filename "/home/felipe/roboserv_ws/src/roboserv_description/msg/Sensores.msg" NAME_WE)
 add_dependencies(roboserv_description_generate_messages_cpp _roboserv_description_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/felipe/roboserv_ws/src/roboserv_description/msg/Motores.msg" NAME_WE)
+add_dependencies(roboserv_description_generate_messages_cpp _roboserv_description_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
 add_custom_target(roboserv_description_gencpp)
@@ -63,6 +76,12 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS roboserv_description_generate_messa
 ### Generating Messages
 _generate_msg_eus(roboserv_description
   "/home/felipe/roboserv_ws/src/roboserv_description/msg/Sensores.msg"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/roboserv_description
+)
+_generate_msg_eus(roboserv_description
+  "/home/felipe/roboserv_ws/src/roboserv_description/msg/Motores.msg"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/roboserv_description
@@ -84,6 +103,8 @@ add_dependencies(roboserv_description_generate_messages roboserv_description_gen
 # add dependencies to all check dependencies targets
 get_filename_component(_filename "/home/felipe/roboserv_ws/src/roboserv_description/msg/Sensores.msg" NAME_WE)
 add_dependencies(roboserv_description_generate_messages_eus _roboserv_description_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/felipe/roboserv_ws/src/roboserv_description/msg/Motores.msg" NAME_WE)
+add_dependencies(roboserv_description_generate_messages_eus _roboserv_description_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
 add_custom_target(roboserv_description_geneus)
@@ -96,6 +117,12 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS roboserv_description_generate_messa
 ### Generating Messages
 _generate_msg_lisp(roboserv_description
   "/home/felipe/roboserv_ws/src/roboserv_description/msg/Sensores.msg"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/roboserv_description
+)
+_generate_msg_lisp(roboserv_description
+  "/home/felipe/roboserv_ws/src/roboserv_description/msg/Motores.msg"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/roboserv_description
@@ -117,6 +144,8 @@ add_dependencies(roboserv_description_generate_messages roboserv_description_gen
 # add dependencies to all check dependencies targets
 get_filename_component(_filename "/home/felipe/roboserv_ws/src/roboserv_description/msg/Sensores.msg" NAME_WE)
 add_dependencies(roboserv_description_generate_messages_lisp _roboserv_description_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/felipe/roboserv_ws/src/roboserv_description/msg/Motores.msg" NAME_WE)
+add_dependencies(roboserv_description_generate_messages_lisp _roboserv_description_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
 add_custom_target(roboserv_description_genlisp)
@@ -129,6 +158,12 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS roboserv_description_generate_messa
 ### Generating Messages
 _generate_msg_nodejs(roboserv_description
   "/home/felipe/roboserv_ws/src/roboserv_description/msg/Sensores.msg"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/roboserv_description
+)
+_generate_msg_nodejs(roboserv_description
+  "/home/felipe/roboserv_ws/src/roboserv_description/msg/Motores.msg"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/roboserv_description
@@ -150,6 +185,8 @@ add_dependencies(roboserv_description_generate_messages roboserv_description_gen
 # add dependencies to all check dependencies targets
 get_filename_component(_filename "/home/felipe/roboserv_ws/src/roboserv_description/msg/Sensores.msg" NAME_WE)
 add_dependencies(roboserv_description_generate_messages_nodejs _roboserv_description_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/felipe/roboserv_ws/src/roboserv_description/msg/Motores.msg" NAME_WE)
+add_dependencies(roboserv_description_generate_messages_nodejs _roboserv_description_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
 add_custom_target(roboserv_description_gennodejs)
@@ -162,6 +199,12 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS roboserv_description_generate_messa
 ### Generating Messages
 _generate_msg_py(roboserv_description
   "/home/felipe/roboserv_ws/src/roboserv_description/msg/Sensores.msg"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/roboserv_description
+)
+_generate_msg_py(roboserv_description
+  "/home/felipe/roboserv_ws/src/roboserv_description/msg/Motores.msg"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/roboserv_description
@@ -182,6 +225,8 @@ add_dependencies(roboserv_description_generate_messages roboserv_description_gen
 
 # add dependencies to all check dependencies targets
 get_filename_component(_filename "/home/felipe/roboserv_ws/src/roboserv_description/msg/Sensores.msg" NAME_WE)
+add_dependencies(roboserv_description_generate_messages_py _roboserv_description_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/felipe/roboserv_ws/src/roboserv_description/msg/Motores.msg" NAME_WE)
 add_dependencies(roboserv_description_generate_messages_py _roboserv_description_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility

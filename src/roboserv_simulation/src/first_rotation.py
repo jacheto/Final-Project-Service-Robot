@@ -64,7 +64,7 @@ def safety_control():
 			vel_pub.publish(move)
 
 
-	rate.sleep()
+		rate.sleep()
     
 def start():
 	global vel_pub
