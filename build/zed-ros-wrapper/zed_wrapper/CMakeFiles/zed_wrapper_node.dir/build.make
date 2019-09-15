@@ -133,7 +133,7 @@ zed_wrapper_node_EXTERNAL_OBJECTS =
 /home/felipe/roboserv_ws/devel/lib/zed_wrapper/zed_wrapper_node: /usr/local/zed/lib/libsl_input.so
 /home/felipe/roboserv_ws/devel/lib/zed_wrapper/zed_wrapper_node: /usr/local/zed/lib/libsl_core.so
 /home/felipe/roboserv_ws/devel/lib/zed_wrapper/zed_wrapper_node: /usr/local/zed/lib/libsl_zed.so
-/home/felipe/roboserv_ws/devel/lib/zed_wrapper/zed_wrapper_node: /media/felipe/DATA/ProgramasUbuntu/cuda-10.0/lib64/libcudart_static.a
+/home/felipe/roboserv_ws/devel/lib/zed_wrapper/zed_wrapper_node: /usr/local/cuda-10.0/lib64/libcudart_static.a
 /home/felipe/roboserv_ws/devel/lib/zed_wrapper/zed_wrapper_node: /usr/lib/x86_64-linux-gnu/librt.so
 /home/felipe/roboserv_ws/devel/lib/zed_wrapper/zed_wrapper_node: /usr/local/cuda-10.0/lib64/libnppial.so
 /home/felipe/roboserv_ws/devel/lib/zed_wrapper/zed_wrapper_node: /usr/local/cuda-10.0/lib64/libnppisu.so
@@ -145,7 +145,7 @@ zed_wrapper_node_EXTERNAL_OBJECTS =
 /home/felipe/roboserv_ws/devel/lib/zed_wrapper/zed_wrapper_node: /usr/local/cuda-10.0/lib64/libnppim.so
 /home/felipe/roboserv_ws/devel/lib/zed_wrapper/zed_wrapper_node: /usr/local/cuda-10.0/lib64/libnppist.so
 /home/felipe/roboserv_ws/devel/lib/zed_wrapper/zed_wrapper_node: /usr/local/cuda-10.0/lib64/libnppitc.so
-/home/felipe/roboserv_ws/devel/lib/zed_wrapper/zed_wrapper_node: /media/felipe/DATA/ProgramasUbuntu/cuda-10.0/lib64/libnpps.so
+/home/felipe/roboserv_ws/devel/lib/zed_wrapper/zed_wrapper_node: /usr/local/cuda-10.0/lib64/libnpps.so
 /home/felipe/roboserv_ws/devel/lib/zed_wrapper/zed_wrapper_node: zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_node.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/felipe/roboserv_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable /home/felipe/roboserv_ws/devel/lib/zed_wrapper/zed_wrapper_node"
 	cd /home/felipe/roboserv_ws/build/zed-ros-wrapper/zed_wrapper && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/zed_wrapper_node.dir/link.txt --verbose=$(VERBOSE)

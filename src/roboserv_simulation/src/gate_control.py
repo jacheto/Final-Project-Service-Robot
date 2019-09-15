@@ -23,17 +23,9 @@ def update_R(rng):
 	global range_R
 	range_R = rng.range
 
-def update_FR(rng):
-	global range_FR
-	range_FR = rng.range
-
 def update_F(rng):
 	global range_F
 	range_F = rng.range
-
-def update_FL(rng):
-	global range_FL
-	range_FL = rng.range
 
 def update_L(rng):
 	global range_L
@@ -45,53 +37,55 @@ def update_vel(vel):
 
 def gate_control():
 	global range_R
-	global range_FR
 	global range_F
-	global range_FL
 	global range_L
 	global vel_pub
 	global input_vel
 	global last_input_vel
 	global last_output_vel
 	
-	ang_correction_vel = 1
-	min_fator = 0.3
-	
-	max_dist = 0.5	# distancia da parede onde a velocidade X comeca a diminuir
-	min_dist = 0.15	# distancia da parede onde a velocidade X nao pode ser > 0
-	
 	output_vel = Twist()
-	#fator = 1
-	# tratamento da velocidade X
-	#if range_F < max_dist and False:
-	#	if output_vel.linear.x > 0:
-	#		fator = (range_F - min_dist) / (max_dist - min_dist)
-	#		if fator < 0:
-	#			fator = 0
-	#		output_vel.linear.x *= fator
 	
-	
-	a = 0.04877
-	b = 0.9512	
+	# Aplica a rampa e realimenta os estados
+	# Tempo de subida: 	2 s
+	# Funcao utilizada: G(z) = a/(z-b)
+	a = 0.1175
+	b = 0.8825
 	output_vel.linear.x = b * last_output_vel.linear.x + a * last_input_vel.linear.x
 	output_vel.angular.z = b * last_output_vel.angular.z + a * last_input_vel.angular.z
-		
-	if range_L < 0.2:
-		output_vel.linear.x = 0;
-
-	vel_pub.publish(output_vel)
-	
 	last_output_vel = output_vel
 	last_input_vel = input_vel
+	
+	gate_vel = Twist()
+	
+	gate_vel.linear.x = output_vel.linear.x
+	gate_vel.angular.z = output_vel.angular.z
+	
+	# Evita deixar um numero muito pequeno
+	if -1e-5 < output_vel.linear.x < 1e-3:
+		gate_vel.linear.x = 0
+	if -1e-5 < output_vel.angular.z < 1e-3:
+		gate_vel.angular.z = 0
+	
+	# Para o robo caso o sensor seja ativado
+	if range_L < 0.3 or range_F < 0.3 or range_R < 0.3:
+		gate_vel.linear.x = 0
+	
+	# Conserta a rampa do robo para se adaptar a faixa morta do motor (vmin)
+	vmin = 0.01	
+	vmax = 0.2
+	direction = 1 if output_vel.linear.x >= 0 else -1
+	gate_vel.linear.x = output_vel.linear.x * (vmax - vmin) / vmax + vmin * direction
+	
+	# Publica a velocidade
+	vel_pub.publish(gate_vel)
     
 def start():
 	global vel_pub
     
 	rospy.init_node('gate_control')
 	rospy.Subscriber('distSensor_R', Range, update_R)
-	rospy.Subscriber('distSensor_FR', Range, update_FR)
 	rospy.Subscriber('distSensor_F', Range, update_F)
-	rospy.Subscriber('distSensor_FL', Range, update_FL)
 	rospy.Subscriber('distSensor_L', Range, update_L)
 	rospy.Subscriber('cmd_vel_mux/output', Twist, update_vel)
 	

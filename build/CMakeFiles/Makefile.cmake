@@ -253,8 +253,6 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/usr/share/cmake-3.5/Modules/CMakeParseArguments.cmake"
   "/usr/share/cmake-3.5/Modules/CMakeSystemSpecificInformation.cmake"
   "/usr/share/cmake-3.5/Modules/CMakeSystemSpecificInitialize.cmake"
-  "/usr/share/cmake-3.5/Modules/CheckCSourceCompiles.cmake"
-  "/usr/share/cmake-3.5/Modules/CheckCXXSourceCompiles.cmake"
   "/usr/share/cmake-3.5/Modules/CheckIncludeFile.cmake"
   "/usr/share/cmake-3.5/Modules/CheckLibraryExists.cmake"
   "/usr/share/cmake-3.5/Modules/CheckSymbolExists.cmake"

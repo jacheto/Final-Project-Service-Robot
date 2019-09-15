@@ -121,44 +121,6 @@
 		</sensor>  
 	</gazebo>
 
-	<gazebo reference="distSensor_FR">        
-		<sensor type="ray" name="distSensor_FR">
-			<pose>0 0 0 0 0 0</pose>
-			<visualize>true</visualize>
-			<update_rate>50</update_rate>
-			<ray>
-				<scan>
-					<horizontal>
-						<samples>10</samples>
-						<resolution>1</resolution> 
-						<min_angle>-0.14835</min_angle>
-						<max_angle>0.14835</max_angle>
-					</horizontal>
-					<vertical>
-						<samples>10</samples>
-						<resolution>1</resolution> 
-						<min_angle>-0.04835</min_angle>
-						<max_angle>0.04835</max_angle> 
-					</vertical>
-				</scan>
-				<range>
-					<min>0.01</min>
-					<max>2</max>
-					<resolution>0.02</resolution>
-				</range>
-			</ray>
-			<plugin filename="libgazebo_ros_range.so" name="gazebo_ros_range">
-				<gaussianNoise>0.005</gaussianNoise>
-				<alwaysOn>true</alwaysOn>
-				<updateRate>50</updateRate>
-				<topicName>distSensor_FR</topicName>
-				<frameName>distSensor_FR</frameName>
-				<radiation>INFRARED</radiation>
-				<fov>0.2967</fov>
-			</plugin>
-		</sensor>  
-	</gazebo>
-
 	<gazebo reference="distSensor_F">        
 		<sensor type="ray" name="distSensor_F">
 			<pose>0 0 0 0 0 0</pose>
@@ -191,44 +153,6 @@
 				<updateRate>50</updateRate>
 				<topicName>distSensor_F</topicName>
 				<frameName>distSensor_F</frameName>
-				<radiation>INFRARED</radiation>
-				<fov>0.2967</fov>
-			</plugin>
-		</sensor>  
-	</gazebo>
-
-	<gazebo reference="distSensor_FL">        
-		<sensor type="ray" name="distSensor_FL">
-			<pose>0 0 0 0 0 0</pose>
-			<visualize>true</visualize>
-			<update_rate>50</update_rate>
-			<ray>
-				<scan>
-					<horizontal>
-						<samples>10</samples>
-						<resolution>1</resolution> 
-						<min_angle>-0.14835</min_angle>
-						<max_angle>0.14835</max_angle>
-					</horizontal>
-					<vertical>
-						<samples>10</samples>
-						<resolution>1</resolution> 
-						<min_angle>-0.04835</min_angle>
-						<max_angle>0.04835</max_angle> 
-					</vertical>
-				</scan>
-				<range>
-					<min>0.01</min>
-					<max>2</max>
-					<resolution>0.02</resolution>
-				</range>
-			</ray>
-			<plugin filename="libgazebo_ros_range.so" name="gazebo_ros_range">
-				<gaussianNoise>0.005</gaussianNoise>
-				<alwaysOn>true</alwaysOn>
-				<updateRate>50</updateRate>
-				<topicName>distSensor_FL</topicName>
-				<frameName>distSensor_FL</frameName>
 				<radiation>INFRARED</radiation>
 				<fov>0.2967</fov>
 			</plugin>

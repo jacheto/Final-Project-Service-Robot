@@ -121,7 +121,7 @@ if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspeci
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libZEDWrapper.so")
     file(RPATH_CHANGE
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libZEDWrapper.so"
-         OLD_RPATH "/usr/local/zed/lib:/opt/ros/kinetic/lib:/usr/local/cuda-10.0/lib64:/media/felipe/DATA/ProgramasUbuntu/cuda-10.0/lib64:"
+         OLD_RPATH "/usr/local/zed/lib:/opt/ros/kinetic/lib:/usr/local/cuda-10.0/lib64:"
          NEW_RPATH "")
     if(CMAKE_INSTALL_DO_STRIP)
       execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libZEDWrapper.so")
@@ -141,7 +141,7 @@ if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspeci
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/zed_wrapper/zed_wrapper_node")
     file(RPATH_CHANGE
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/zed_wrapper/zed_wrapper_node"
-         OLD_RPATH "/usr/local/zed/lib:/home/felipe/roboserv_ws/devel/lib:/opt/ros/kinetic/lib:/usr/local/cuda-10.0/lib64:/media/felipe/DATA/ProgramasUbuntu/cuda-10.0/lib64:"
+         OLD_RPATH "/usr/local/zed/lib:/home/felipe/roboserv_ws/devel/lib:/opt/ros/kinetic/lib:/usr/local/cuda-10.0/lib64:"
          NEW_RPATH "")
     if(CMAKE_INSTALL_DO_STRIP)
       execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/zed_wrapper/zed_wrapper_node")

@@ -22,7 +22,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/opt/ros/kinetic/include"
   "/opt/ros/kinetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp"
   "/usr/include/eigen3"
-  "/media/felipe/DATA/ProgramasUbuntu/cuda-10.0/include"
+  "/usr/local/cuda-10.0/include"
   "/usr/local/zed/include"
   "/home/felipe/roboserv_ws/src/zed-ros-wrapper/zed_wrapper/src/tools/include"
   "/home/felipe/roboserv_ws/src/zed-ros-wrapper/zed_wrapper/src/nodelet/include"

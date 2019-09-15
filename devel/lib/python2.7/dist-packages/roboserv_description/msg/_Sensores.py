@@ -7,17 +7,15 @@ import struct
 
 
 class Sensores(genpy.Message):
-  _md5sum = "4e7e993f2ad894e38becbb76ebb5ec09"
+  _md5sum = "4ab95327ee166468a1f69926574cd811"
   _type = "roboserv_description/Sensores"
   _has_header = False #flag to mark the presence of a Header object
-  _full_text = """float32 SensorL
-float32 SensorFL
+  _full_text = """float32 SensorL	
 float32 SensorF
-float32 SensorFR
 float32 SensorR
 """
-  __slots__ = ['SensorL','SensorFL','SensorF','SensorFR','SensorR']
-  _slot_types = ['float32','float32','float32','float32','float32']
+  __slots__ = ['SensorL','SensorF','SensorR']
+  _slot_types = ['float32','float32','float32']
 
   def __init__(self, *args, **kwds):
     """
@@ -27,7 +25,7 @@ float32 SensorR
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       SensorL,SensorFL,SensorF,SensorFR,SensorR
+       SensorL,SensorF,SensorR
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -38,19 +36,13 @@ float32 SensorR
       #message fields cannot be None, assign default values for those that are
       if self.SensorL is None:
         self.SensorL = 0.
-      if self.SensorFL is None:
-        self.SensorFL = 0.
       if self.SensorF is None:
         self.SensorF = 0.
-      if self.SensorFR is None:
-        self.SensorFR = 0.
       if self.SensorR is None:
         self.SensorR = 0.
     else:
       self.SensorL = 0.
-      self.SensorFL = 0.
       self.SensorF = 0.
-      self.SensorFR = 0.
       self.SensorR = 0.
 
   def _get_types(self):
@@ -66,7 +58,7 @@ float32 SensorR
     """
     try:
       _x = self
-      buff.write(_get_struct_5f().pack(_x.SensorL, _x.SensorFL, _x.SensorF, _x.SensorFR, _x.SensorR))
+      buff.write(_get_struct_3f().pack(_x.SensorL, _x.SensorF, _x.SensorR))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -79,8 +71,8 @@ float32 SensorR
       end = 0
       _x = self
       start = end
-      end += 20
-      (_x.SensorL, _x.SensorFL, _x.SensorF, _x.SensorFR, _x.SensorR,) = _get_struct_5f().unpack(str[start:end])
+      end += 12
+      (_x.SensorL, _x.SensorF, _x.SensorR,) = _get_struct_3f().unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
@@ -94,7 +86,7 @@ float32 SensorR
     """
     try:
       _x = self
-      buff.write(_get_struct_5f().pack(_x.SensorL, _x.SensorFL, _x.SensorF, _x.SensorFR, _x.SensorR))
+      buff.write(_get_struct_3f().pack(_x.SensorL, _x.SensorF, _x.SensorR))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -108,8 +100,8 @@ float32 SensorR
       end = 0
       _x = self
       start = end
-      end += 20
-      (_x.SensorL, _x.SensorFL, _x.SensorF, _x.SensorFR, _x.SensorR,) = _get_struct_5f().unpack(str[start:end])
+      end += 12
+      (_x.SensorL, _x.SensorF, _x.SensorR,) = _get_struct_3f().unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
@@ -118,9 +110,9 @@ _struct_I = genpy.struct_I
 def _get_struct_I():
     global _struct_I
     return _struct_I
-_struct_5f = None
-def _get_struct_5f():
-    global _struct_5f
-    if _struct_5f is None:
-        _struct_5f = struct.Struct("<5f")
-    return _struct_5f
+_struct_3f = None
+def _get_struct_3f():
+    global _struct_3f
+    if _struct_3f is None:
+        _struct_3f = struct.Struct("<3f")
+    return _struct_3f

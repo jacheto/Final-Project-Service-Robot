@@ -28,7 +28,10 @@
 
 	<!-- Tratamento dos sensores -->
 	<node name="tratamento_sensores" pkg="roboserv_simulation" type="tratamento_sensores.py"/>
-	
+
+	<!-- Tratamento do laserScan 
+	<node name="tratamento_scan" pkg="roboserv_simulation" type="tratamento_scan.py"/>
+	-->
 	<!-- Abrir zed -->
     <node name="zed_node" pkg="zed_wrapper" type="zed_wrapper_node" output="screen" required="true">
         <rosparam file="$(find zed_wrapper)/params/common.yaml" command="load" />
@@ -39,14 +42,25 @@
 	<node name="rviz" pkg="rviz" type="rviz"/>
 	
 	<!-- Transforma a nuvem de pontos em laserscan -->
+	 <node pkg="depthimage_to_laserscan" type="depthimage_to_laserscan" name="depthimage_to_laserscan" >
+        <remap from="image" to="/zed_node/depth/depth_registered" />
+		<remap from="camera_info" to="/zed_node/depth/camera_info" />
+        <param name="scan_height" value="300"/>
+        <param name="range_min" value="0.5"/>
+        <param name="range_max" value="20"/>
+        <param name="output_frame_id" value="zed_camera_center"/>
+    </node>
+	
+	<!-- Transforma a nuvem de pontos em laserscan 
 	<node name="pointcloud_to_laserscan_node" pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" output="screen" >
 		<remap from="cloud_in" to="/zed_node/point_cloud/cloud_registered"/>
 		<param name="target_frame"		value="base_link"/>
 		<param name="range_min"         value="0.05"/>
 		<param name="range_max"         value="15.0"/>
-		<param name="min_height"        value="0.0"/>
-		<param name="max_height"        value="0.6"/>
-	</node>
+		<param name="min_height"        value="0.7"/>
+		<param name="max_height"        value="0.9"/>
+		<remap from="scan"        		to="scan_input"/>
+	</node>-->
 	
 	<!-- Multiplexador de velocidade -->
 	<node pkg="nodelet" type="nodelet" name="mobile_base_nodelet_manager" args="manager"/>
@@ -55,7 +69,7 @@
 		<param name="yaml_cfg_file" value="$(find turtlebot_bringup)/param/mux.yaml" />
 	</node>
   
-	<!-- Limita a velocidade atrav?s dos sensores -->
+	<!-- Limita a velocidade atraves dos sensores -->
 	<node pkg="roboserv_simulation" type="gate_control.py" name="gate_control" output="screen">
 	</node>
 	
@@ -79,7 +93,6 @@
 		<rosparam file="$(find roboserv_simulation)/config/move_base/local_costmap_params.yaml" command="load" />
 		<rosparam file="$(find roboserv_simulation)/config/move_base/global_costmap_params.yaml" command="load" />
 		<rosparam file="$(find roboserv_simulation)/config/move_base/base_local_planner_params.yaml" command="load" />
-		<param name="oscillation_timeout" value="3"/>
 		
 		<param name="move_base/DWAPlannerROS/yaw_goal_tolerance" value="0.8"/>
 		<param name="move_base/DWAPlannerROS/xy_goal_tolerance" value="0.5"/>
@@ -89,7 +102,7 @@
 		<param name="controller_patience" value="5"/>
 		<param name="clearing_rotation_allowed" value="true"/>
 		<param name="oscillation_timeout" value="5"/>
-		<param name="planner_frequency" value="0.5"/>
+		<param name="planner_frequency" value="0.4"/>
 		
 		<remap from="cmd_vel" to="cmd_vel_mux/input/navi"/>
 	</node>

@@ -7,15 +7,20 @@
 #include <Servo.h>
 #include <Ultrasonic.h>
 
+// R  S  L
+// S  F  S
+
 #define pinMotor_L 9
 #define pinMotor_R 10
 
-#define pinTrig_L  6
-#define pinEcho_L  7
+#define pinTrig_L  3//6
+#define pinEcho_L  2//7
+
 #define pinTrig_F  5
 #define pinEcho_F  4
-#define pinTrig_R  A0
-#define pinEcho_R  A1
+
+#define pinTrig_R  A4//A0
+#define pinEcho_R  A5//A1
 
 void setarMotores(const geometry_msgs::Twist&);
 
@@ -41,7 +46,8 @@ void setarMotores(const geometry_msgs::Twist& vel){
   
   int vel_L = (int) (90 - (vel.linear.x - vel.angular.z * wheel_dist/2) * k);
   int vel_R = (int) (90 - (vel.linear.x + vel.angular.z * wheel_dist/2) * k);
-
+  //int vel_L = (int) (90 - vel.linear.x * 90)
+  
   motor_L.write(vel_L);
   motor_R.write(vel_R);
 }
@@ -67,7 +73,7 @@ float get_dist(int pinTrig, int pinEcho) {
   digitalWrite(pinTrig, HIGH);
   delayMicroseconds(10);
   digitalWrite(pinTrig, LOW);
-  float duration = pulseIn(pinEcho, HIGH, 20000);
+  float duration = pulseIn(pinEcho, HIGH, 10000);
   float distance = duration*0.034/200;
   
   if (distance == 0 || distance > 4 ) { 

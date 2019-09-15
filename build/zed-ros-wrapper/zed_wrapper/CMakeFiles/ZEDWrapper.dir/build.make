@@ -158,7 +158,7 @@ ZEDWrapper_EXTERNAL_OBJECTS =
 /home/felipe/roboserv_ws/devel/lib/libZEDWrapper.so: /usr/local/zed/lib/libsl_input.so
 /home/felipe/roboserv_ws/devel/lib/libZEDWrapper.so: /usr/local/zed/lib/libsl_core.so
 /home/felipe/roboserv_ws/devel/lib/libZEDWrapper.so: /usr/local/zed/lib/libsl_zed.so
-/home/felipe/roboserv_ws/devel/lib/libZEDWrapper.so: /media/felipe/DATA/ProgramasUbuntu/cuda-10.0/lib64/libcudart_static.a
+/home/felipe/roboserv_ws/devel/lib/libZEDWrapper.so: /usr/local/cuda-10.0/lib64/libcudart_static.a
 /home/felipe/roboserv_ws/devel/lib/libZEDWrapper.so: /usr/lib/x86_64-linux-gnu/librt.so
 /home/felipe/roboserv_ws/devel/lib/libZEDWrapper.so: /usr/local/cuda-10.0/lib64/libnppial.so
 /home/felipe/roboserv_ws/devel/lib/libZEDWrapper.so: /usr/local/cuda-10.0/lib64/libnppisu.so
@@ -170,7 +170,7 @@ ZEDWrapper_EXTERNAL_OBJECTS =
 /home/felipe/roboserv_ws/devel/lib/libZEDWrapper.so: /usr/local/cuda-10.0/lib64/libnppim.so
 /home/felipe/roboserv_ws/devel/lib/libZEDWrapper.so: /usr/local/cuda-10.0/lib64/libnppist.so
 /home/felipe/roboserv_ws/devel/lib/libZEDWrapper.so: /usr/local/cuda-10.0/lib64/libnppitc.so
-/home/felipe/roboserv_ws/devel/lib/libZEDWrapper.so: /media/felipe/DATA/ProgramasUbuntu/cuda-10.0/lib64/libnpps.so
+/home/felipe/roboserv_ws/devel/lib/libZEDWrapper.so: /usr/local/cuda-10.0/lib64/libnpps.so
 /home/felipe/roboserv_ws/devel/lib/libZEDWrapper.so: zed-ros-wrapper/zed_wrapper/CMakeFiles/ZEDWrapper.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/felipe/roboserv_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX shared library /home/felipe/roboserv_ws/devel/lib/libZEDWrapper.so"
 	cd /home/felipe/roboserv_ws/build/zed-ros-wrapper/zed_wrapper && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/ZEDWrapper.dir/link.txt --verbose=$(VERBOSE)

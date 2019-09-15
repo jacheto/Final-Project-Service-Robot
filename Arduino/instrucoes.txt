@@ -1,0 +1,4 @@
+1- Mude as mensagens
+2- Da um 'catkin_make' em roboserv_ws
+3- Da um 'rm -rf ros_lib' na pasta libraries desta pasta
+4- Da um 'rosrun rosserial_arduino make_libraries.py .' na pasta libraries desta pasta

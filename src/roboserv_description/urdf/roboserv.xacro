@@ -35,6 +35,26 @@
 		
 		<!--Posicao inicial do carro-->
     	<pose>0 0 0.5 0 0 0</pose>
+
+
+		<joint name="base_LV1" type="fixed">
+			<parent link="base_link"/>
+			<child link="base_LV1"/>
+			<origin xyz="0 0 0.3" rpy="0 0 0"/>
+		</joint>
+		<link name="base_LV1">
+			<visual>
+				<origin xyz="0 0 0" rpy="0 0 0"/>
+				<geometry>
+					<mesh filename="package://roboserv_description/urdf/models/BaseLV1.stl" />
+				</geometry>
+				<material name="black">
+					<color rgba="0.0 0.0 0.0 0.0"/>
+				</material>
+			</visual>
+		</link>
+
+
 		
 		<xacro:create_cylinder name="chassis" mass="${body_mass}" radius="${body_radius}" length="${body_length}"
 						  px="0" py="0" pz="0" wr="0" wp="0" wy="0"/>
@@ -47,21 +67,23 @@
 		<xacro:create_sphere name="caster" mass="${caster_mass}" radius="${caster_radius}"
 						  px="0.15" py="0" pz="${caster_z}" wr="0" wp="0" wy="0"/>
 	</link>
+	
+	<xacro:if value="${using_simulation==1}">
+		<!--Roda esquerda-->
+		<xacro:create_wheel name="left_wheel" mass="${wheel_mass}" radius="${wheel_radius}" length="${wheel_length}" 
+							body_name="${robot_name}" body_size_y="${body_radius}" wheel_pos_z="${wheel_z}"
+							wheel_pos_x="0.015" wheel_side = "1" whell_spacing="0.02"/>
+	
+		<!--Roda direita-->
+		<xacro:create_wheel name="right_wheel" mass="${wheel_mass}" radius="${wheel_radius}" length="${wheel_length}" 
+							body_name="${robot_name}" body_size_y="${body_radius}" wheel_pos_z="${wheel_z}"
+							wheel_pos_x="0.015" wheel_side = "-1" whell_spacing="0.02"/>
+	</xacro:if>
 
-	<!--Roda esquerda-->
-	<xacro:create_wheel name="left_wheel" mass="${wheel_mass}" radius="${wheel_radius}" length="${wheel_length}" 
-						body_name="${robot_name}" body_size_y="${body_radius}" wheel_pos_z="${wheel_z}"
-						wheel_pos_x="0.015" wheel_side = "1" whell_spacing="0.02"/>
-	
-	<!--Roda direita-->
-	<xacro:create_wheel name="right_wheel" mass="${wheel_mass}" radius="${wheel_radius}" length="${wheel_length}" 
-						body_name="${robot_name}" body_size_y="${body_radius}" wheel_pos_z="${wheel_z}"
-						wheel_pos_x="0.015" wheel_side = "-1" whell_spacing="0.02"/>
-	
 	<!--Propriedades da câmera-->
-	<xacro:property name="cam_px" value="0.18" />
-	<xacro:property name="cam_py" value="-0.0125" />
-	<xacro:property name="cam_pz" value="0.7" />
+	<xacro:property name="cam_px" value="0" />
+	<xacro:property name="cam_py" value="0" />
+	<xacro:property name="cam_pz" value="0.8" />
 	<xacro:property name="cam_or" value="0" />
 	<xacro:property name="cam_op" value="0" />
 	<xacro:property name="cam_oy" value="0" />
@@ -81,7 +103,7 @@
 			<visual>
 				<origin xyz="0 0 0" rpy="0 0 0"/>
 				<geometry>
-					<mesh filename="package://zed_wrapper/urdf/models/ZED.stl" />
+					<mesh filename="package://roboserv_description/urdf/models/BaseLV1.stl" />
 				</geometry>
 				<material name="light_grey">
 					<color rgba="0.8 0.8 0.8 0.8"/>
@@ -173,7 +195,7 @@
 			<visual>
 				<origin xyz="0 0 0" rpy="0 0 ${pi/2}"/>
 				<geometry>
-					<mesh filename="package://turtlebot_description/meshes/sensors/kinect.dae"/>
+					<mesh filename="package://roboserv_description/urdf/models/BaseLV1.stl"/>
 				</geometry>
 			</visual>
 			<collision>
@@ -192,9 +214,7 @@
 	<!--Sensor Infravermelho-->
 
 	<xacro:create_ir name="distSensor_R"  body_name="${robot_name}" lenght="${body_radius}" height="${body_length/2}" ang_degree="-45"/>
-	<xacro:create_ir name="distSensor_FR" body_name="${robot_name}" lenght="${body_radius}" height="${body_length/2}" ang_degree="-25"/>
 	<xacro:create_ir name="distSensor_F"  body_name="${robot_name}" lenght="${body_radius}" height="${body_length/2}" ang_degree="0"/>
-	<xacro:create_ir name="distSensor_FL" body_name="${robot_name}" lenght="${body_radius}" height="${body_length/2}" ang_degree="25"/>
 	<xacro:create_ir name="distSensor_L"  body_name="${robot_name}" lenght="${body_radius}" height="${body_length/2}" ang_degree="45"/>
 
 	
