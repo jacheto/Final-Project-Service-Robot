@@ -35,26 +35,6 @@
 		
 		<!--Posicao inicial do carro-->
     	<pose>0 0 0.5 0 0 0</pose>
-
-
-		<joint name="base_LV1" type="fixed">
-			<parent link="base_link"/>
-			<child link="base_LV1"/>
-			<origin xyz="0 0 0.3" rpy="0 0 0"/>
-		</joint>
-		<link name="base_LV1">
-			<visual>
-				<origin xyz="0 0 0" rpy="0 0 0"/>
-				<geometry>
-					<mesh filename="package://roboserv_description/urdf/models/BaseLV1.stl" />
-				</geometry>
-				<material name="black">
-					<color rgba="0.0 0.0 0.0 0.0"/>
-				</material>
-			</visual>
-		</link>
-
-
 		
 		<xacro:create_cylinder name="chassis" mass="${body_mass}" radius="${body_radius}" length="${body_length}"
 						  px="0" py="0" pz="0" wr="0" wp="0" wy="0"/>
@@ -103,7 +83,7 @@
 			<visual>
 				<origin xyz="0 0 0" rpy="0 0 0"/>
 				<geometry>
-					<mesh filename="package://roboserv_description/urdf/models/BaseLV1.stl" />
+					<mesh filename="package://zed_wrapper/urdf/models/ZED.stl" />
 				</geometry>
 				<material name="light_grey">
 					<color rgba="0.8 0.8 0.8 0.8"/>
@@ -195,7 +175,7 @@
 			<visual>
 				<origin xyz="0 0 0" rpy="0 0 ${pi/2}"/>
 				<geometry>
-					<mesh filename="package://roboserv_description/urdf/models/BaseLV1.stl"/>
+					<mesh filename="package://turtlebot_description/meshes/sensors/kinect.dae"/>
 				</geometry>
 			</visual>
 			<collision>
