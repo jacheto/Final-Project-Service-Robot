@@ -60,7 +60,6 @@ def finish_goal_aux():
 	while not rospy.is_shutdown():
 		if status == 1:
 			dist_from_goal = get_dist(goal_pose, fb_pose)
-			print(dist_from_goal)
 			if dist_from_goal < tolerance_dist:
 				ang_robot = get_ang(fb_pose)
 				ang_goal = get_ang(goal_pose)

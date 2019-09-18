@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+	
+	<arg name="n" default="1"/>
+	<!-- Spawn Roboserv -->
+	<param name="robot_description" command="$(find xacro)/xacro.py '$(find roboserv_description)/urdf/roboserv.xacro' using_simulation:=1"/>
+	<node name="roboserv_spawn" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model roboserv_$(arg n) -z 0.5" />
+	
+</launch>

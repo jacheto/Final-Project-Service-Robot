@@ -49,8 +49,8 @@ def gate_control():
 	# Aplica a rampa e realimenta os estados
 	# Tempo de subida: 	2 s
 	# Funcao utilizada: G(z) = a/(z-b)
-	a = 0.1175
-	b = 0.8825
+	a = 0.2212
+	b = 0.7788
 	output_vel.linear.x = b * last_output_vel.linear.x + a * last_input_vel.linear.x
 	output_vel.angular.z = b * last_output_vel.angular.z + a * last_input_vel.angular.z
 	last_output_vel = output_vel
@@ -72,10 +72,10 @@ def gate_control():
 		gate_vel.linear.x = 0
 	
 	# Conserta a rampa do robo para se adaptar a faixa morta do motor (vmin)
-	vmin = 0.01	
-	vmax = 0.2
-	direction = 1 if output_vel.linear.x >= 0 else -1
-	gate_vel.linear.x = output_vel.linear.x * (vmax - vmin) / vmax + vmin * direction
+	#vmin = 0.08	
+	#vmax = 0.2
+	#direction = 1 if output_vel.linear.x >= 0 else -1
+	#gate_vel.linear.x = output_vel.linear.x * (vmax - vmin) / vmax + vmin * direction
 	
 	# Publica a velocidade
 	vel_pub.publish(gate_vel)

@@ -1,27 +1,54 @@
 <?xml version="1.0"?>
-<robot>
 
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
 	<!--Criando um cilindro-->
-	<macro name="create_cylinder" params="name mass radius length px py pz wr wp wy">
+	<macro name="create_cylinder" params="name radius height pos_x pos_y pos_z wr wp wy density">
+		<xacro:property name="mass" value="${radius*radius*pi*height*density}"/>
 		<collision name="${name}_collision">
-			<origin xyz = "${px} ${py} ${pz}" rpy="${wr} ${wp} ${wy}"/>
+			<origin xyz = "${pos_x} ${pos_y} ${pos_z}" rpy="${wr} ${wp} ${wy}"/>
 			<geometry>
-				<cylinder radius="${radius}" length="${length}"/>
+				<cylinder radius="${radius}" length="${height}"/>
 			</geometry>
 		</collision>
 		<visual name="${name}_visual">
-			<origin xyz = "${px} ${py} ${pz}" rpy="${wr} ${wp} ${wy}"/>
+			<origin xyz = "${pos_x} ${pos_y} ${pos_z}" rpy="${wr} ${wp} ${wy}"/>
 			<geometry>
-				<cylinder radius="${radius}" length="${length}"/>
+				<cylinder radius="${radius}" length="${height}"/>
 			</geometry>
 		</visual>
 		<inertial>
-			<origin xyz = "${px} ${py} ${pz}" rpy="${wr} ${wp} ${wy}"/>
+			<origin xyz = "${pos_x} ${pos_y} ${pos_z}" rpy="${wr} ${wp} ${wy}"/>
 			<mass value="${mass}"/>
 			<inertia  
-				ixx="${mass*(3*radius*radius+length*length)/12}" ixy = "0" ixz = "0"
-				iyy="${mass*(3*radius*radius+length*length)/12}" iyz = "0"
+				ixx="${mass*(3*radius*radius+height*height)/12}" ixy = "0" ixz = "0"
+				iyy="${mass*(3*radius*radius+height*height)/12}" iyz = "0"
+				izz="${mass*radius*radius/2}" />
+		</inertial>
+	</macro>
+
+	<!--Criando uma peça-->
+	<macro name="create_mesh" params="name size_x size_y size_z dist_x dist_y dist_z wr wp wy density">
+		<xacro:property name="radius" value="${(size_x+size_y)/4}"/>
+		<xacro:property name="mass" value="${radius*radius*pi*size_z*density*0.6}"/>
+		<collision name="${name}_collision">
+			<origin xyz = "${dist_x-size_x/2} ${dist_y-size_y/2} ${dist_z-size_z}" rpy="${wr} ${wp} ${wy}"/>
+			<geometry>
+				<cylinder radius="${radius}" length="${size_z}"/>
+			</geometry>
+		</collision>
+		<visual name="${name}_visual">
+			<origin xyz = "${dist_x-size_x} ${-dist_y+size_y} ${dist_z-size_z}" rpy="${wr-pi/2} ${wp} ${wy-pi/2}"/>
+			<geometry>
+				<mesh filename="package://roboserv_description/urdf/models/dae/${name}.dae" scale="0.001 0.001 0.001"/>
+			</geometry>
+		</visual>
+		<inertial>
+			<origin xyz = "${dist_x-size_x/2} ${dist_y-size_y/2} ${dist_z-size_z}" rpy="${wr} ${wp} ${wy}"/>
+			<mass value="${mass}"/>
+			<inertia  
+				ixx="${mass*(3*radius*radius+size_z*size_z)/12}" ixy = "0" ixz = "0"
+				iyy="${mass*(3*radius*radius+size_z*size_z)/12}" iyz = "0"
 				izz="${mass*radius*radius/2}" />
 		</inertial>
 	</macro>
@@ -48,6 +75,9 @@
 				iyy="${mass*(size_x*size_x+size_z*size_z)/12}" iyz = "0"
 				izz="${mass*(size_x*size_x+size_z*size_z)/12}" />
 		</inertial>
+		<material name="black">
+			<color rgba="0 0 0 0"/>
+		</material>
 	</macro>
 	
 	<!--Criando uma esfera-->
@@ -89,8 +119,7 @@
 		
 		<!--Cria um cilindro-->
 		<link name="${name}">
-			<create_cylinder name="${name}" mass="${mass}" radius="${radius}" length="${length}"
-						  px="0" py="0" pz="0" wr="0" wp="${pi/2}" wy="${pi/2}"/>
+			<create_cylinder name="${name}" radius="${radius}" height="${length}" pos_x="0" pos_y="0" pos_z="0" wr="0" wp="${pi/2}" wy="${pi/2}" density="600"/>
 		</link>
 		
 		<!--Cria a juncao com o corpo-->
