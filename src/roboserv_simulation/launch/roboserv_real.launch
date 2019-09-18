@@ -3,6 +3,7 @@
 	
 	<!-- Porta do Arduino -->
 	<arg name="ard_port" default="0"/>
+	<arg name="mapping" default="false"/>
 	
 	<!-- Definicao do robo -->
 	<param name="robot/name" value="roboserv_real"/>
@@ -10,18 +11,12 @@
 	<param name="robot_description" command="$(find xacro)/xacro.py '$(find roboserv_description)/urdf/roboserv.xacro' using_simulation:=0"/>
 	<param name="use_sim_time" value="false"/>
 
-
-	<!-- Conexao com arduino -->
-	<node pkg="rosserial_python" type="serial_node.py" name="serial_node">
-		<param name="port" value="/dev/ttyUSB$(arg ard_port)"/>
-		<param name="baud" value="57600"/>
-	</node>
-	
-	<!-- Joints -->
+	<!-- Publica os joints -->
 	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
 		<param name="use_gui" value="false"/>
-	</node>-->
+	</node>
 
+	<!-- Publica os joints do robo -->
 	<node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
 		<param name="publish_frequency" type="double" value="5.0" />
 	</node>
@@ -29,9 +24,17 @@
 	<!-- Tratamento dos sensores -->
 	<node name="tratamento_sensores" pkg="roboserv_simulation" type="tratamento_sensores.py"/>
 
-	<!-- Tratamento do laserScan 
-	<node name="tratamento_scan" pkg="roboserv_simulation" type="tratamento_scan.py"/>
-	-->
+	<!-- Tratamento do scanner, retira pontos na borda que podem bugar a profundidade-->
+	<node name="tratamento_scan" pkg="roboserv_simulation" type="tratamento_scan.py">
+		<param name="hidden_points" value="50" />
+	</node>
+	
+	<!-- Faz a conexao com o arduino -->
+	<node pkg="rosserial_python" type="serial_node.py" name="serial_node">
+		<param name="port" value="/dev/ttyUSB$(arg ard_port)"/>
+		<param name="baud" value="57600"/>
+	</node>
+	
 	<!-- Abrir zed -->
     <node name="zed_node" pkg="zed_wrapper" type="zed_wrapper_node" output="screen" required="true">
         <rosparam file="$(find zed_wrapper)/params/common.yaml" command="load" />
@@ -39,7 +42,7 @@
     </node>
 
 	<!-- Abrir Rviz -->
-	<node name="rviz" pkg="rviz" type="rviz"/>
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find roboserv_simulation)/config/rviz/rviz_config.rviz"/>
 	
 	<!-- Transforma a nuvem de pontos em laserscan -->
 	 <node pkg="depthimage_to_laserscan" type="depthimage_to_laserscan" name="depthimage_to_laserscan" >
@@ -48,61 +51,59 @@
         <param name="scan_height" value="300"/>
         <param name="range_min" value="0.5"/>
         <param name="range_max" value="20"/>
-        <param name="output_frame_id" value="zed_camera_center"/>
+        <param name="output_frame_id" value="base_link"/>
+        <remap from="scan" to="scan_input"/>
     </node>
-	
-	<!-- Transforma a nuvem de pontos em laserscan 
-	<node name="pointcloud_to_laserscan_node" pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" output="screen" >
-		<remap from="cloud_in" to="/zed_node/point_cloud/cloud_registered"/>
-		<param name="target_frame"		value="base_link"/>
-		<param name="range_min"         value="0.05"/>
-		<param name="range_max"         value="15.0"/>
-		<param name="min_height"        value="0.7"/>
-		<param name="max_height"        value="0.9"/>
-		<remap from="scan"        		to="scan_input"/>
-	</node>-->
-	
 	<!-- Multiplexador de velocidade -->
 	<node pkg="nodelet" type="nodelet" name="mobile_base_nodelet_manager" args="manager"/>
 	<node pkg="nodelet" type="nodelet" name="cmd_vel_mux"
 		args="load yocs_cmd_vel_mux/CmdVelMuxNodelet mobile_base_nodelet_manager">
-		<param name="yaml_cfg_file" value="$(find turtlebot_bringup)/param/mux.yaml" />
+		<param name="yaml_cfg_file" value="$(find roboserv_simulation)/config/mux/mux.yaml" />
 	</node>
   
 	<!-- Limita a velocidade atraves dos sensores -->
 	<node pkg="roboserv_simulation" type="gate_control.py" name="gate_control" output="screen">
 	</node>
-	
-	<!-- SLAM -->
-	<node name="gmapping" pkg="gmapping" type="slam_gmapping" output="screen" >
-		<param name="base_frame" value="base_link"/>
-		<param name="agularUpdate" value="0.1"/>
-		<param name="linearUpdate" value="0.1"/>
-		<param name="lskip" value="10"/>
-		<param name="xmax" value="10"/>
-		<param name="xmin" value="-10"/>
-		<param name="ymax" value="10"/>
-		<param name="ymin" value="-10"/>
-		<param name="minimumScore" value="50"/>
-	</node>
-	
+
+	<group unless="$(arg mapping)">
+		<node name="planner_map_server" pkg="map_server" type="map_server" args="$(find roboserv_simulation)/maps/test_map.yaml"/>
+	</group>
+
+	<group if="$(arg mapping)">
+		<!-- SLAM: gera o mapa do ambiente -->
+		<node name="gmapping" pkg="gmapping" type="slam_gmapping" output="screen" >
+			<param name="base_frame" value="base_link"/>
+			<param name="agularUpdate" value="0.1"/>
+			<param name="linearUpdate" value="0.1"/>
+			<param name="lskip" value="10"/>
+			<param name="xmax" value="10"/>
+			<param name="xmin" value="-10"/>
+			<param name="ymax" value="10"/>
+			<param name="ymin" value="-10"/>
+			<param name="minimumScore" value="50"/>
+		</node>
+		
+		<!-- Salva o mapa em um arquivo continuamente -->
+		<node name="map_saver" pkg="map_server" type="map_saver" args="-f $(find roboserv_simulation)/maps/test_map"/>
+	</group>
+
+	<arg name="no_static_map" value="true"/>
 	<!-- Path planning -->
 	<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
-		<rosparam file="$(find roboserv_simulation)/config/move_base/costmap_common_params.yaml" command="load" ns="global_costmap" />
-		<rosparam file="$(find roboserv_simulation)/config/move_base/costmap_common_params.yaml" command="load" ns="local_costmap" />
-		<rosparam file="$(find roboserv_simulation)/config/move_base/local_costmap_params.yaml" command="load" />
-		<rosparam file="$(find roboserv_simulation)/config/move_base/global_costmap_params.yaml" command="load" />
-		<rosparam file="$(find roboserv_simulation)/config/move_base/base_local_planner_params.yaml" command="load" />
-		
-		<param name="move_base/DWAPlannerROS/yaw_goal_tolerance" value="0.8"/>
-		<param name="move_base/DWAPlannerROS/xy_goal_tolerance" value="0.5"/>
-		<param name="move_base/DWAPlannerROS/latch_xy_goal_tolerance" value="true"/>
-		<param name="recovery_behaviors" value="[{name: conservative_reset, type: clear_costmap_recovery/ClearCostmapRecovery}, 
-												{name: rotate_recovery, 	type: rotate_recovery/RotateRecovery}]"/>
-		<param name="controller_patience" value="5"/>
-		<param name="clearing_rotation_allowed" value="true"/>
-		<param name="oscillation_timeout" value="5"/>
-		<param name="planner_frequency" value="0.4"/>
+		<param name="base_global_planner" value="navfn/NavfnROS"/>
+		<param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS"/>
+
+		<rosparam file="$(find roboserv_simulation)/config/move_base/planner.yaml" command="load"/>
+		<rosparam file="$(find roboserv_simulation)/config/move_base/costmap_common.yaml" command="load" ns="global_costmap" />
+		<rosparam file="$(find roboserv_simulation)/config/move_base/costmap_common.yaml" command="load" ns="local_costmap" />
+		<rosparam file="$(find roboserv_simulation)/config/move_base/costmap_local.yaml" command="load" ns="local_costmap" />
+		<rosparam file="$(find roboserv_simulation)/config/move_base/costmap_global_static.yaml" command="load" ns="global_costmap" unless="$(arg no_static_map)"/>
+		<rosparam file="$(find roboserv_simulation)/config/move_base/costmap_global_laser.yaml" command="load" ns="global_costmap" if="$(arg no_static_map)"/>
+
+		<param name="local_costmap/width" value="10.0"/>
+		<param name="local_costmap/height" value="10.0"/>
+		<param name="global_costmap/width" value="100.0" if="$(arg no_static_map)"/>
+		<param name="global_costmap/height" value="100.0" if="$(arg no_static_map)"/>
 		
 		<remap from="cmd_vel" to="cmd_vel_mux/input/navi"/>
 	</node>

@@ -37,42 +37,42 @@
     	<pose>0 0 0.5 0 0 0</pose>
 
 		<xacro:create_mesh name="BaseLV1" size_x="0.5" size_y="0.3988" size_z="0.01" dist_x="0.2" dist_y="0.1994" dist_z="-0.02905" wr="0" wp="0" wy="0" density="650" />
-<xacro:create_mesh name="BaseLV2" size_x="0.5" size_y="0.3988" size_z="0.01" dist_x="0.2" dist_y="0.1994" dist_z="0.01905" wr="0" wp="0" wy="0" density="650" />
-<xacro:create_mesh name="BaseLV3" size_x="0.435" size_y="0.4" size_z="0.00635" dist_x="0.135" dist_y="0.2" dist_z="0.25505" wr="0" wp="0" wy="0" density="650" />
-<xacro:create_mesh name="BaseLV4" size_x="0.25" size_y="0.25" size_z="0.00635" dist_x="0.0008" dist_y="0.125" dist_z="0.7114" wr="0" wp="0" wy="0" density="650" />
-<xacro:create_mesh name="Suporte" size_x="0.12607" size_y="0.12607" size_z="0.009" dist_x="-0.06117" dist_y="0.063035" dist_z="0.20605" wr="0" wp="0" wy="0" density="650" />
-<xacro:create_mesh name="PlatMovelLV1" size_x="0.2054" size_y="0.19661" size_z="0.01" dist_x="-0.0215" dist_y="0.098305" dist_z="0.33745" wr="0" wp="0" wy="0" density="650" />
-<xacro:create_mesh name="PlatMovelLV2" size_x="0.25" size_y="0.25" size_z="0.01" dist_x="0.0008" dist_y="0.125" dist_z="0.76745" wr="0" wp="0" wy="0" density="650" />
+		<xacro:create_mesh name="BaseLV2" size_x="0.5" size_y="0.3988" size_z="0.01" dist_x="0.2" dist_y="0.1994" dist_z="0.01905" wr="0" wp="0" wy="0" density="650" />
+		<xacro:create_mesh name="BaseLV3" size_x="0.435" size_y="0.4" size_z="0.00635" dist_x="0.135" dist_y="0.2" dist_z="0.25505" wr="0" wp="0" wy="0" density="650" />
+		<xacro:create_mesh name="BaseLV4" size_x="0.25" size_y="0.25" size_z="0.00635" dist_x="0.0008" dist_y="0.125" dist_z="0.7114" wr="0" wp="0" wy="0" density="650" />
+		<xacro:create_mesh name="Suporte" size_x="0.12607" size_y="0.12607" size_z="0.009" dist_x="-0.06117" dist_y="0.063035" dist_z="0.20605" wr="0" wp="0" wy="0" density="650" />
+		<xacro:create_mesh name="PlatMovelLV1" size_x="0.2054" size_y="0.19661" size_z="0.01" dist_x="-0.0215" dist_y="0.098305" dist_z="0.33745" wr="0" wp="0" wy="0" density="650" />
+		<xacro:create_mesh name="PlatMovelLV2" size_x="0.25" size_y="0.25" size_z="0.01" dist_x="0.0008" dist_y="0.125" dist_z="0.76745" wr="0" wp="0" wy="0" density="650" />
 
-<xacro:create_cylinder name="C_LV1_1" radius="0.00635" height="0.0381" pos_x="0.14" pos_y="0.05443" pos_z="-0.02" wr="0" wp="0" wy="0" density="800" />
-<xacro:create_cylinder name="C_LV1_2" radius="0.00635" height="0.0381" pos_x="0.14" pos_y="-0.05443" pos_z="-0.02" wr="0" wp="0" wy="0" density="800" />
-<xacro:create_cylinder name="C_LV1_3" radius="0.00635" height="0.0381" pos_x="0.05" pos_y="0.1142" pos_z="-0.02" wr="0" wp="0" wy="0" density="800" />
-<xacro:create_cylinder name="C_LV1_4" radius="0.00635" height="0.0381" pos_x="0.05" pos_y="-0.1142" pos_z="-0.02" wr="0" wp="0" wy="0" density="800" />
-<xacro:create_cylinder name="C_LV1_5" radius="0.00635" height="0.0381" pos_x="-0.07" pos_y="0.1142" pos_z="-0.02" wr="0" wp="0" wy="0" density="800" />
-<xacro:create_cylinder name="C_LV1_6" radius="0.00635" height="0.0381" pos_x="-0.07" pos_y="-0.1142" pos_z="-0.02" wr="0" wp="0" wy="0" density="800" />
-<xacro:create_cylinder name="C_LV1_7" radius="0.00635" height="0.0381" pos_x="-0.19" pos_y="0.07843" pos_z="-0.02" wr="0" wp="0" wy="0" density="800" />
-<xacro:create_cylinder name="C_LV1_8" radius="0.00635" height="0.0381" pos_x="-0.19" pos_y="-0.07843" pos_z="-0.02" wr="0" wp="0" wy="0" density="800" />
-<xacro:create_cylinder name="C_LV1_9" radius="0.00635" height="0.0381" pos_x="-0.27" pos_y="0" pos_z="-0.02" wr="0" wp="0" wy="0" density="800" />
-<xacro:create_cylinder name="C_LV2_1" radius="0.00635" height="0.226" pos_x="0.085" pos_y="0.115" pos_z="0.12205" wr="0" wp="0" wy="0" density="800" />
-<xacro:create_cylinder name="C_LV2_2" radius="0.00635" height="0.226" pos_x="0.085" pos_y="-0.115" pos_z="0.12205" wr="0" wp="0" wy="0" density="800" />
-<xacro:create_cylinder name="C_LV2_3" radius="0.00635" height="0.226" pos_x="-0.125" pos_y="0.115" pos_z="0.12205" wr="0" wp="0" wy="0" density="800" />
-<xacro:create_cylinder name="C_LV2_4" radius="0.00635" height="0.226" pos_x="-0.125" pos_y="-0.115" pos_z="0.12205" wr="0" wp="0" wy="0" density="800" />
-<xacro:create_cylinder name="C_LV2_5" radius="0.00635" height="0.226" pos_x="-0.2492" pos_y="0" pos_z="0.12205" wr="0" wp="0" wy="0" density="800" />
-<xacro:create_cylinder name="C_SPT_1" radius="0.00635" height="0.05" pos_x="-0.07117" pos_y="0" pos_z="0.22005" wr="0" wp="0" wy="0" density="800" />
-<xacro:create_cylinder name="C_SPT_2" radius="0.00635" height="0.05" pos_x="-0.125" pos_y="0.05303" pos_z="0.22005" wr="0" wp="0" wy="0" density="800" />
-<xacro:create_cylinder name="C_SPT_3" radius="0.00635" height="0.05" pos_x="-0.125" pos_y="-0.05303" pos_z="0.22005" wr="0" wp="0" wy="0" density="800" />
-<xacro:create_cylinder name="C_SPT_4" radius="0.00635" height="0.05" pos_x="-0.17723" pos_y="0" pos_z="0.22005" wr="0" wp="0" wy="0" density="800" />
-<xacro:create_cylinder name="C_LV3_1" radius="0.00635" height="0.448" pos_x="-0.05349" pos_y="0.07071" pos_z="0.4754" wr="0" wp="0" wy="0" density="800" />
-<xacro:create_cylinder name="C_LV3_2" radius="0.00635" height="0.448" pos_x="-0.05349" pos_y="-0.07071" pos_z="0.4754" wr="0" wp="0" wy="0" density="800" />
-<xacro:create_cylinder name="C_LV3_3" radius="0.00635" height="0.448" pos_x="-0.19491" pos_y="0.07071" pos_z="0.4754" wr="0" wp="0" wy="0" density="800" />
-<xacro:create_cylinder name="C_LV3_4" radius="0.00635" height="0.448" pos_x="-0.19491" pos_y="-0.07071" pos_z="0.4754" wr="0" wp="0" wy="0" density="800" />
-<xacro:create_cylinder name="C_GUIA_1" radius="0.00635" height="0.5" pos_x="-0.04635" pos_y="0" pos_z="0.5014" wr="0" wp="0" wy="0" density="800" />
-<xacro:create_cylinder name="C_GUIA_2" radius="0.00635" height="0.5" pos_x="-0.20135" pos_y="0" pos_z="0.5014" wr="0" wp="0" wy="0" density="800" />
-<xacro:create_cylinder name="C_PLT_1" radius="0.00635" height="0.42" pos_x="-0.06632" pos_y="0.02252" pos_z="0.54745" wr="0" wp="0" wy="0" density="800" />
-<xacro:create_cylinder name="C_PLT_2" radius="0.00635" height="0.42" pos_x="-0.1242" pos_y="0.0804" pos_z="0.54745" wr="0" wp="0" wy="0" density="800" />
-<xacro:create_cylinder name="C_PLT_3" radius="0.00635" height="0.42" pos_x="-0.1242" pos_y="0.0804" pos_z="0.54745" wr="0" wp="0" wy="0" density="800" />
-<xacro:create_cylinder name="C_PLT_4" radius="0.00635" height="0.42" pos_x="-0.18208" pos_y="-0.02252" pos_z="0.54745" wr="0" wp="0" wy="0" density="800" />
-<xacro:create_cylinder name="C_BODY" radius="0.0125" height="0.506" pos_x="-0.1242" pos_y="0" pos_z="0.49055" wr="0" wp="0" wy="0" density="800" />
+		<xacro:create_cylinder name="C_LV1_1" radius="0.00635" height="0.0381" pos_x="0.14" pos_y="0.05443" pos_z="-0.02" wr="0" wp="0" wy="0" density="800" />
+		<xacro:create_cylinder name="C_LV1_2" radius="0.00635" height="0.0381" pos_x="0.14" pos_y="-0.05443" pos_z="-0.02" wr="0" wp="0" wy="0" density="800" />
+		<xacro:create_cylinder name="C_LV1_3" radius="0.00635" height="0.0381" pos_x="0.05" pos_y="0.1142" pos_z="-0.02" wr="0" wp="0" wy="0" density="800" />
+		<xacro:create_cylinder name="C_LV1_4" radius="0.00635" height="0.0381" pos_x="0.05" pos_y="-0.1142" pos_z="-0.02" wr="0" wp="0" wy="0" density="800" />
+		<xacro:create_cylinder name="C_LV1_5" radius="0.00635" height="0.0381" pos_x="-0.07" pos_y="0.1142" pos_z="-0.02" wr="0" wp="0" wy="0" density="800" />
+		<xacro:create_cylinder name="C_LV1_6" radius="0.00635" height="0.0381" pos_x="-0.07" pos_y="-0.1142" pos_z="-0.02" wr="0" wp="0" wy="0" density="800" />
+		<xacro:create_cylinder name="C_LV1_7" radius="0.00635" height="0.0381" pos_x="-0.19" pos_y="0.07843" pos_z="-0.02" wr="0" wp="0" wy="0" density="800" />
+		<xacro:create_cylinder name="C_LV1_8" radius="0.00635" height="0.0381" pos_x="-0.19" pos_y="-0.07843" pos_z="-0.02" wr="0" wp="0" wy="0" density="800" />
+		<xacro:create_cylinder name="C_LV1_9" radius="0.00635" height="0.0381" pos_x="-0.27" pos_y="0" pos_z="-0.02" wr="0" wp="0" wy="0" density="800" />
+		<xacro:create_cylinder name="C_LV2_1" radius="0.00635" height="0.226" pos_x="0.085" pos_y="0.115" pos_z="0.12205" wr="0" wp="0" wy="0" density="800" />
+		<xacro:create_cylinder name="C_LV2_2" radius="0.00635" height="0.226" pos_x="0.085" pos_y="-0.115" pos_z="0.12205" wr="0" wp="0" wy="0" density="800" />
+		<xacro:create_cylinder name="C_LV2_3" radius="0.00635" height="0.226" pos_x="-0.125" pos_y="0.115" pos_z="0.12205" wr="0" wp="0" wy="0" density="800" />
+		<xacro:create_cylinder name="C_LV2_4" radius="0.00635" height="0.226" pos_x="-0.125" pos_y="-0.115" pos_z="0.12205" wr="0" wp="0" wy="0" density="800" />
+		<xacro:create_cylinder name="C_LV2_5" radius="0.00635" height="0.226" pos_x="-0.2492" pos_y="0" pos_z="0.12205" wr="0" wp="0" wy="0" density="800" />
+		<xacro:create_cylinder name="C_SPT_1" radius="0.00635" height="0.05" pos_x="-0.07117" pos_y="0" pos_z="0.22005" wr="0" wp="0" wy="0" density="800" />
+		<xacro:create_cylinder name="C_SPT_2" radius="0.00635" height="0.05" pos_x="-0.125" pos_y="0.05303" pos_z="0.22005" wr="0" wp="0" wy="0" density="800" />
+		<xacro:create_cylinder name="C_SPT_3" radius="0.00635" height="0.05" pos_x="-0.125" pos_y="-0.05303" pos_z="0.22005" wr="0" wp="0" wy="0" density="800" />
+		<xacro:create_cylinder name="C_SPT_4" radius="0.00635" height="0.05" pos_x="-0.17723" pos_y="0" pos_z="0.22005" wr="0" wp="0" wy="0" density="800" />
+		<xacro:create_cylinder name="C_LV3_1" radius="0.00635" height="0.448" pos_x="-0.05349" pos_y="0.07071" pos_z="0.4754" wr="0" wp="0" wy="0" density="800" />
+		<xacro:create_cylinder name="C_LV3_2" radius="0.00635" height="0.448" pos_x="-0.05349" pos_y="-0.07071" pos_z="0.4754" wr="0" wp="0" wy="0" density="800" />
+		<xacro:create_cylinder name="C_LV3_3" radius="0.00635" height="0.448" pos_x="-0.19491" pos_y="0.07071" pos_z="0.4754" wr="0" wp="0" wy="0" density="800" />
+		<xacro:create_cylinder name="C_LV3_4" radius="0.00635" height="0.448" pos_x="-0.19491" pos_y="-0.07071" pos_z="0.4754" wr="0" wp="0" wy="0" density="800" />
+		<xacro:create_cylinder name="C_GUIA_1" radius="0.00635" height="0.5" pos_x="-0.04635" pos_y="0" pos_z="0.5014" wr="0" wp="0" wy="0" density="800" />
+		<xacro:create_cylinder name="C_GUIA_2" radius="0.00635" height="0.5" pos_x="-0.20135" pos_y="0" pos_z="0.5014" wr="0" wp="0" wy="0" density="800" />
+		<xacro:create_cylinder name="C_PLT_1" radius="0.00635" height="0.42" pos_x="-0.06632" pos_y="0.02252" pos_z="0.54745" wr="0" wp="0" wy="0" density="800" />
+		<xacro:create_cylinder name="C_PLT_2" radius="0.00635" height="0.42" pos_x="-0.1242" pos_y="0.0804" pos_z="0.54745" wr="0" wp="0" wy="0" density="800" />
+		<xacro:create_cylinder name="C_PLT_3" radius="0.00635" height="0.42" pos_x="-0.1242" pos_y="0.0804" pos_z="0.54745" wr="0" wp="0" wy="0" density="800" />
+		<xacro:create_cylinder name="C_PLT_4" radius="0.00635" height="0.42" pos_x="-0.18208" pos_y="-0.02252" pos_z="0.54745" wr="0" wp="0" wy="0" density="800" />
+		<xacro:create_cylinder name="C_BODY" radius="0.0125" height="0.506" pos_x="-0.1242" pos_y="0" pos_z="0.49055" wr="0" wp="0" wy="0" density="800" />
 
 
 		<!--
@@ -121,7 +121,7 @@
 		</joint>
 		<link name="zed_camera_center">
 			<visual>
-				<origin xyz="0 0 0" rpy="0 0 0"/>
+				<origin xyz="-0.05 0 0" rpy="0 0 0"/>
 				<geometry>
 					<mesh filename="package://zed_wrapper/urdf/models/ZED.stl" />
 				</geometry>

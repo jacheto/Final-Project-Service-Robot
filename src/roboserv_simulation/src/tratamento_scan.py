@@ -20,18 +20,22 @@ def AtualizarSensores(sensores):
 	sensor_R = sensores.SensorR
 
 def ProcessarScan(scan):
+	r = list(scan.ranges)
+	n = rospy.get_param('~hidden_points') # numero de pontos ignorados de ambos os lados
+	
+	nan = float('nan')
+	r = [nan]*n + r[n:len(r)-n] + [nan]*n
+	
 	output_scan = scan
+	output_scan.ranges = tuple(r)
 	pubScan.publish(output_scan)
-	print(len(scan.ranges))
-
 
 def tratamento_sensores():
 	global pubScan
 
 	rospy.init_node('tratamento_scan')
-	rospy.Subscriber('distSensors', Sensores, AtualizarSensores)
 	rospy.Subscriber('scan_input', LaserScan, ProcessarScan)
-	pubScan =  rospy.Publisher('scan',  LaserScan, queue_size=1)
+	pubScan = rospy.Publisher('scan',  LaserScan, queue_size=1)
 
 	rospy.spin()
 
