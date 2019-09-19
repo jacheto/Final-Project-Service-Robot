@@ -4,7 +4,7 @@
 	<!-- Porta do Arduino -->
 	<arg name="ard_port" default="0" />
 	<arg name="mapping" default="true" />
-	<arg name="maps_dir" default="/media/felipe/DATA/ROS/roboserv/maps" />
+	<arg name="maps_dir" default="/media/felipe/DATA/ROS_maps/roboserv" />
 	<arg name="map_name" default="andar3" />
 	
 	<!-- Definicao do robo -->
@@ -61,6 +61,7 @@
         <param name="output_frame_id" value="base_link"/>
         <remap from="scan" to="scan_input"/>
     </node>
+
 	<!-- Multiplexador de velocidade -->
 	<node pkg="nodelet" type="nodelet" name="mobile_base_nodelet_manager" args="manager"/>
 	<node pkg="nodelet" type="nodelet" name="cmd_vel_mux"
@@ -69,8 +70,7 @@
 	</node>
   
 	<!-- Limita a velocidade atraves dos sensores -->
-	<node pkg="roboserv_simulation" type="gate_control.py" name="gate_control" output="screen">
-	</node>
+	<node pkg="roboserv_simulation" type="gate_control.py" name="gate_control" output="screen"/>
 
 	<group unless="$(arg mapping)">
 		<node name="planner_map_server" pkg="map_server" type="map_server" args="$(arg maps_dir)/$(arg map_name)/map_img.yaml"/>
@@ -97,16 +97,16 @@
 
 	<!-- rtabmap -->
 	<include file="$(find rtabmap_ros)/launch/rtabmap.launch">
-		<arg name="rtabmapviz"			value="false"  />
-		<arg name="rviz"				value="false"  /> 
-		<arg name="stereo"          	default="false"/>
-		<arg unless="$(arg mapping)" 	name="localization"        value="true"/>
-		<arg 	 if="$(arg mapping)" 	name="localization"        value="false"/>
+		<arg name="rtabmapviz"					value="false"  />
+		<arg name="rviz"						value="false"  /> 
+		<arg name="stereo"          			default="false"/>
+		<arg unless="$(arg mapping)" 			name="localization"        value="true"/>
+		<arg 	 if="$(arg mapping)" 			name="localization"        value="false"/>
 
-		<arg name="frame_id"			value="zed_camera_center" />
-		<arg name="map_frame_id"		value="map"/>
-		<arg name="odom_frame_id"		value="local_map"/>
-		<arg name="database_path"       value="$(arg maps_dir)/$(arg map_name)/map_info.db"/>
+		<arg name="frame_id"					value="zed_camera_center" />
+		<arg name="map_frame_id"				value="map"/>
+		<arg name="odom_frame_id"				value="local_map"/>
+		<arg name="database_path"       		value="$(arg maps_dir)/$(arg map_name)/map_info.db"/>
 		
 		<arg name="rgb_topic"					value="/zed_node/rgb/image_rect_color" />
 		<arg name="depth_topic"					value="/zed_node/depth/depth_registered" />
@@ -114,7 +114,7 @@
 		<arg name="depth_camera_info_topic"		value="/zed_node/depth/camera_info" />
 		
 		<arg name="visual_odometry"		value="false"/>
-	</include>
+	</include> 
 
 	<arg name="no_static_map" value="true"/>
 

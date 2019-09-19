@@ -72,10 +72,10 @@ def gate_control():
 		gate_vel.linear.x = 0
 	
 	# Conserta a rampa do robo para se adaptar a faixa morta do motor (vmin)
-	#vmin = 0.08	
-	#vmax = 0.2
-	#direction = 1 if output_vel.linear.x >= 0 else -1
-	#gate_vel.linear.x = output_vel.linear.x * (vmax - vmin) / vmax + vmin * direction
+	vmin = 0.08	
+	vmax = 0.2
+	direction = 1 if output_vel.linear.x >= 0 else -1
+	gate_vel.linear.x = output_vel.linear.x * (vmax - vmin) / vmax + vmin * direction
 	
 	# Publica a velocidade
 	vel_pub.publish(gate_vel)
