@@ -9,7 +9,7 @@
 import rospy
 import pygame
 from geometry_msgs.msg import Twist
-
+from math import exp
 
 def control():
     global last_input_vel
@@ -35,7 +35,7 @@ def control():
     robot_lin_stop_time = 2
     robot_ang_stop_time = 1.5
 
-    freq = 20
+    Hz = 20
     x_vel = 0
     ang_vel = 0
 
@@ -45,7 +45,7 @@ def control():
     pygame.draw.line(screen, (255, 255, 255), (screen_w/3*2, 0), (screen_w/3*2, screen_h), 1)
     pygame.display.flip()
     
-    rate = rospy.Rate(freq)
+    rate = rospy.Rate(Hz)
     vel = Twist()
     mouse_down = False
     stop = False
@@ -99,15 +99,15 @@ def control():
         input_vel.linear.x = trans_pos[1] * 0.3
         input_vel.angular.z = trans_pos[0] * 1.0
 
-        a = 0.1175
-        b = 0.8825
-        output_vel.linear.x = b * last_output_vel.linear.x + a * last_input_vel.linear.x
-        output_vel.angular.z = b * last_output_vel.angular.z + a * last_input_vel.angular.z
+        Ta = 2 # Tempo de assentamento (s)
+        e = exp(- 4/Ta * 1/Hz)
+        output_vel.linear.x = last_output_vel.linear.x * e + last_input_vel.linear.x * (1 - e)
+        output_vel.angular.z = last_output_vel.angular.z * e + last_input_vel.angular.z * (1 - e)
         last_output_vel = output_vel
         last_input_vel = input_vel
         print(stop)
 
-        if output_vel.linear.x > 1e-3 or output_vel.angular.z > 1e-3:
+        if abs(output_vel.linear.x) > 1e-3 or abs(output_vel.angular.z) > 1e-3:
             if stop:
                 output_vel.linear.x = 0
                 output_vel.angular.z = 0

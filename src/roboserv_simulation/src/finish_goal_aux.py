@@ -56,7 +56,7 @@ def finish_goal_aux():
 	rate = rospy.Rate(5)
 	cancel_msg = GoalID()
 	move = Twist()
-	
+	default_vel = Twist()
 	while not rospy.is_shutdown():
 		if status == 1:
 			dist_from_goal = get_dist(goal_pose, fb_pose)
@@ -73,11 +73,13 @@ def finish_goal_aux():
 					move.angular.z = ang_vel * direction
 					vel_pub.publish(move)
 		rate.sleep()
+		vel_pub_default.publish(default_vel)
 	
 
 def start():
 	global cancel_pub
 	global vel_pub
+	global vel_pub_default
 	
 	global tolerance_dist
 	global tolerance_ang
@@ -94,6 +96,7 @@ def start():
 	
 	cancel_pub = rospy.Publisher('move_base/cancel', GoalID, queue_size=1)
 	vel_pub = rospy.Publisher('cmd_vel_mux/input/switch', Twist, queue_size=1)
+	vel_pub_default = rospy.Publisher('cmd_vel_mux/input/default', Twist, queue_size=1)
 	
 	finish_goal_aux()
 

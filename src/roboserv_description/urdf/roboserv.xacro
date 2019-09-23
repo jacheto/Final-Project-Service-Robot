@@ -79,13 +79,15 @@
 		<xacro:create_cylinder name="chassis" mass="${body_mass}" radius="${body_radius}" length="${body_length}"
 						  px="0" py="0" pz="0" wr="0" wp="0" wy="0"/>
 		-->
-		<!--Roda esferica frontal-->
-		<xacro:create_sphere name="caster" mass="${caster_mass}" radius="${caster_radius}"
-						  px="-0.15" py="0" pz="${caster_z}" wr="0" wp="0" wy="0"/>
-	
-		<!--Roda esferica traseira-->
-		<xacro:create_sphere name="caster" mass="${caster_mass}" radius="${caster_radius}"
-						  px="0.15" py="0" pz="${caster_z}" wr="0" wp="0" wy="0"/>
+		<xacro:if value="${using_simulation==1}">
+			<!--Roda esferica frontal-->
+			<xacro:create_sphere name="caster" mass="${caster_mass}" radius="${caster_radius}"
+							px="-0.15" py="0" pz="${caster_z}" wr="0" wp="0" wy="0"/>
+		
+			<!--Roda esferica traseira-->
+			<xacro:create_sphere name="caster" mass="${caster_mass}" radius="${caster_radius}"
+							px="0.15" py="0" pz="${caster_z}" wr="0" wp="0" wy="0"/>
+		</xacro:if>		  
 	</link>
 	
 	<xacro:if value="${using_simulation==1}">

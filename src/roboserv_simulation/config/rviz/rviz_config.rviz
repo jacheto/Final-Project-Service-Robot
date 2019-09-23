@@ -4,9 +4,6 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
-        - /Map1
-        - /TF1
-        - /TF1/TF1
         - /TF1/TF1/Tree1
       Splitter Ratio: 0.636828661
     Tree Height: 386
@@ -135,7 +132,10 @@ Visualization Manager:
                 zed_right_camera_frame:
                   zed_right_camera_optical_frame:
                     {}
-            odom:
+            local_map:
+              odom:
+                {}
+            map:
               {}
           Update Interval: 0
           Value: true

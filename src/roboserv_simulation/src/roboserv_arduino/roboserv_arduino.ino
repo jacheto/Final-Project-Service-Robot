@@ -39,14 +39,16 @@ std_msgs::String str_msg;
 ros::Publisher sensorPub("distSensors",  &dist);
 ros::Subscriber<geometry_msgs::Twist> sub("cmd_vel_gate", setarMotores);
 
-float k;
 float wheel_dist = 0.38;
 
 void setarMotores(const geometry_msgs::Twist& vel){
   
-  int vel_L = (int) (90 - (vel.linear.x - vel.angular.z * wheel_dist/2) * k);
-  int vel_R = (int) (90 - (vel.linear.x + vel.angular.z * wheel_dist/2) * k);
-  //int vel_L = (int) (90 - vel.linear.x * 90)
+  int vel_L = (int) (90 - 90 * (vel.linear.x - vel.angular.z * wheel_dist/2) );
+  int vel_R = (int) (90 - 90 * (vel.linear.x + vel.angular.z * wheel_dist/2) );
+  if (vel_L < 0)    vel_L = 0;
+  if (vel_L > 180)  vel_L = 180;
+  if (vel_R < 0)    vel_R = 0;
+  if (vel_R > 180)  vel_R = 180;
   
   motor_L.write(vel_L);
   motor_R.write(vel_R);
@@ -58,13 +60,6 @@ void setup() {
   nh.initNode();
   nh.advertise(sensorPub);
   nh.subscribe(sub);
-  float max_vel = 0.2;
-  float min_vel = -0.2;
-  float max_ang = 1;
-  float min_ang = -1;
-  float multiplier = 0.3;
-
-  k = 90/(max(max_vel, max_ang * wheel_dist/2) - min(min_vel, min_ang * wheel_dist/2)) * multiplier;
 }
 
 float get_dist(int pinTrig, int pinEcho) {

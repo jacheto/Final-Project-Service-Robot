@@ -35,7 +35,7 @@ video:
     color_enhancement:          true                                # [FUTURE USE] This parameter enhances color spreading on R/G/B channel and increase gamma correction on black areas for a better gray segmentation in black areas. Recommended for computer's vision applications.
 
 depth:
-    quality:                    1                                   # '0': NONE, '1': PERFORMANCE, '2': MEDIUM, '3': QUALITY, '4': ULTRA
+    quality:                    4                                   # '0': NONE, '1': PERFORMANCE, '2': MEDIUM, '3': QUALITY, '4': ULTRA
     sensing_mode:               0                                   # '0': STANDARD, '1': FILL
     depth_stabilization:        1                                   # `0`: disabled, `1`: enabled
     openni_depth_mode:          0                                   # '0': 32bit float meters, '1': 16bit uchar millimeters
@@ -46,8 +46,8 @@ depth:
 
 tracking:
     publish_tf:                 true                                # publish `odom -> base_link` TF
-    publish_map_tf:             true                                # publish `map -> odom` TF
-    world_frame:                'local_map'                               # the reference fixed frame (same as `map_frame` or `odometry_frame`)
+    publish_map_tf:             true                               # publish `map -> odom` TF
+    world_frame:                'map'                               # the reference fixed frame (same as `map_frame` or `odometry_frame`)
     map_frame:                  'local_map'
     odometry_frame:             'odom'
     odometry_db:                ''
@@ -62,8 +62,8 @@ tracking:
     init_odom_with_first_valid_pose: true                           # Enable to initialize the odometry with the first valid pose
     path_pub_rate:              2.0                                 # Path positions punlishing frequency
     path_max_count:             -1                                  # use '-1' for unlimited path size
-    two_d_mode:                 false                               # Force navigation on a plane. If true the Z value will be fixed to "fixed_z_value", roll and pitch to zero
-    fixed_z_value:              1.0                                 # Value to be used for Z coordinate if `two_d_mode` is true
+    two_d_mode:                 true                                # Force navigation on a plane. If true the Z value will be fixed to "fixed_z_value", roll and pitch to zero
+    fixed_z_value:              0.1                                 # Value to be used for Z coordinate if `two_d_mode` is true
 
 mapping:
     mapping_enabled:            false                               # True to enable mapping and fused point cloud pubblication

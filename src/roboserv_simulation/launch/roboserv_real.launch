@@ -5,7 +5,7 @@
 	<arg name="ard_port" default="0" />
 	<arg name="mapping" default="true" />
 	<arg name="maps_dir" default="/media/felipe/DATA/ROS_maps/roboserv" />
-	<arg name="map_name" default="andar3" />
+	<arg name="map_name" default="testes_dev" />
 	
 	<!-- Definicao do robo -->
 	<param name="robot/name" value="roboserv_real"/>
@@ -46,6 +46,8 @@
     <node name="zed_node" pkg="zed_wrapper" type="zed_wrapper_node" output="screen" required="true">
         <rosparam file="$(find roboserv_simulation)/config/zed/common.yaml" command="load" />
         <rosparam file="$(find roboserv_simulation)/config/zed/zed.yaml" command="load" />
+		<arg unless="$(arg mapping)" 			name="depth.quality"        value="1"/>
+		<arg 	 if="$(arg mapping)" 			name="depth.quality"        value="4"/>
     </node>
 
 	<!-- Abrir Rviz -->
@@ -89,6 +91,7 @@
 			<param name="ymax" value="10"/>
 			<param name="ymin" value="-10"/>
 			<param name="minimumScore" value="50"/>
+			<param name="transform_publish_period" value="0"/>
 		</node>
 		
 		<!-- Salva o mapa em um arquivo continuamente -->
@@ -141,8 +144,8 @@
 	<!-- Auxiliar para o path planning -->
 	<node pkg="roboserv_simulation" type="finish_goal_aux.py" name="finish_goal_aux" output="screen">
 		<param name="tolerance_dist" value="0.4"/>
-		<param name="tolerance_ang" value="0.2"/>
-		<param name="ang_vel" value="0.75"/>
+		<param name="tolerance_ang" value="0.3"/>
+		<param name="ang_vel" value="0.5"/>
 	</node>
   
 </launch>

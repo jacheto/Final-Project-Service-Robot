@@ -9,6 +9,7 @@
 import rospy
 from sensor_msgs.msg import Range
 from geometry_msgs.msg import Twist
+from math import exp
 
 range_R = 999
 range_FR = 999
@@ -45,38 +46,41 @@ def gate_control():
 	global last_output_vel
 	
 	output_vel = Twist()
+
+	# Para o robo caso o sensor seja ativado
+	if range_L < 0.3 or range_F < 0.3 or range_R < 0.3:
+		last_input_vel.linear.x = 0
 	
 	# Aplica a rampa e realimenta os estados
 	# Tempo de subida: 	2 s
 	# Funcao utilizada: G(z) = a/(z-b)
-	a = 0.2212
-	b = 0.7788
-	output_vel.linear.x = b * last_output_vel.linear.x + a * last_input_vel.linear.x
-	output_vel.angular.z = b * last_output_vel.angular.z + a * last_input_vel.angular.z
+	#a = 0.2212
+	#b = 0.7788
+	#output_vel.linear.x = b * last_output_vel.linear.x + a * last_input_vel.linear.x
+	#output_vel.angular.z = b * last_output_vel.angular.z + a * last_input_vel.angular.z
+	
+	Ta = 0.2 # Tempo de assentamento (s)
+	Hz = 20.0 # Frequencia de atualizacao
+	e = exp(- 4/Ta * 1/Hz)
+	output_vel.linear.x = last_output_vel.linear.x * e + last_input_vel.linear.x * (1 - e)
+	output_vel.angular.z = last_output_vel.angular.z * e + last_input_vel.angular.z * (1 - e)
+
 	last_output_vel = output_vel
 	last_input_vel = input_vel
 	
 	gate_vel = Twist()
-	
-	gate_vel.linear.x = output_vel.linear.x
-	gate_vel.angular.z = output_vel.angular.z
-	
+
 	# Evita deixar um numero muito pequeno
-	if -1e-5 < output_vel.linear.x < 1e-3:
+	if abs(output_vel.linear.x) < 1e-4:
 		gate_vel.linear.x = 0
-	if -1e-5 < output_vel.angular.z < 1e-3:
+	else:
+		gate_vel.linear.x = output_vel.linear.x
+
+	if abs(output_vel.angular.z) < 1e-4:
 		gate_vel.angular.z = 0
-	
-	# Para o robo caso o sensor seja ativado
-	if range_L < 0.3 or range_F < 0.3 or range_R < 0.3:
-		gate_vel.linear.x = 0
-	
-	# Conserta a rampa do robo para se adaptar a faixa morta do motor (vmin)
-	vmin = 0.08	
-	vmax = 0.2
-	direction = 1 if output_vel.linear.x >= 0 else -1
-	gate_vel.linear.x = output_vel.linear.x * (vmax - vmin) / vmax + vmin * direction
-	
+	else:
+		gate_vel.angular.z = output_vel.angular.z
+
 	# Publica a velocidade
 	vel_pub.publish(gate_vel)
     
