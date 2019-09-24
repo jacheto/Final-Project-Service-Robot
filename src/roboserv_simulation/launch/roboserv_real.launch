@@ -46,8 +46,6 @@
     <node name="zed_node" pkg="zed_wrapper" type="zed_wrapper_node" output="screen" required="true">
         <rosparam file="$(find roboserv_simulation)/config/zed/common.yaml" command="load" />
         <rosparam file="$(find roboserv_simulation)/config/zed/zed.yaml" command="load" />
-		<arg unless="$(arg mapping)" 			name="depth.quality"        value="1"/>
-		<arg 	 if="$(arg mapping)" 			name="depth.quality"        value="4"/>
     </node>
 
 	<!-- Abrir Rviz -->
@@ -160,7 +158,7 @@
 		<param name="orientation_scale" value="0.0"/>
 		<param name="gain_scale" value="1.0"/>
 		<param name="transform_tolerance" value="0.4"/>
-		<param name="min_frontier_size" value="0.5"/>
+		<param name="min_frontier_size" value="2"/>
 	</node>
   
 </launch>
