@@ -2,4 +2,4 @@
 source_root_dir = "/home/felipe/roboserv_ws/src"
 whitelisted_packages = "".split(';') if "" != "" else []
 blacklisted_packages = "".split(';') if "" != "" else []
-underlay_workspaces = "/home/felipe/roboserv_ws/devel;/home/felipe/catkin_ws/devel;/opt/ros/kinetic".split(';') if "/home/felipe/roboserv_ws/devel;/home/felipe/catkin_ws/devel;/opt/ros/kinetic" != "" else []
+underlay_workspaces = "/home/felipe/roboserv_ws/devel;/opt/ros/kinetic".split(';') if "/home/felipe/roboserv_ws/devel;/opt/ros/kinetic" != "" else []

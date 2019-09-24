@@ -14,7 +14,8 @@ def inicializar():
     directory = rospy.get_param('~directory')
     if not os.path.isdir(directory):
         os.mkdir(directory)
-
+    if not os.path.isfile(directory + '/obj_info.txt'):
+        os.mknod("obj_info.txt")
 if __name__ == '__main__':
 	try:
 		inicializar()

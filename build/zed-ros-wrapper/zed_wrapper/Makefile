@@ -79,28 +79,6 @@ rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
 
-# Special rule for the target test
-test:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
-	/usr/bin/ctest --force-new-ctest-process $(ARGS)
-.PHONY : test
-
-# Special rule for the target test
-test/fast: test
-
-.PHONY : test/fast
-
-# Special rule for the target install/local
-install/local: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local
-
-# Special rule for the target install/local
-install/local/fast: install/local
-
-.PHONY : install/local/fast
-
 # Special rule for the target install/strip
 install/strip: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
@@ -112,6 +90,17 @@ install/strip/fast: install/strip
 
 .PHONY : install/strip/fast
 
+# Special rule for the target test
+test:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
+	/usr/bin/ctest --force-new-ctest-process $(ARGS)
+.PHONY : test
+
+# Special rule for the target test
+test/fast: test
+
+.PHONY : test/fast
+
 # Special rule for the target list_install_components
 list_install_components:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
@@ -121,6 +110,17 @@ list_install_components:
 list_install_components/fast: list_install_components
 
 .PHONY : list_install_components/fast
+
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: install/local
+
+.PHONY : install/local/fast
 
 # Special rule for the target edit_cache
 edit_cache:
@@ -196,516 +196,6 @@ all_files_zed_wrapper/fast:
 .PHONY : all_files_zed_wrapper/fast
 
 # Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_node.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_node.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_node.dir/rule
-
-# Convenience name for target.
-zed_wrapper_node: zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_node.dir/rule
-
-.PHONY : zed_wrapper_node
-
-# fast build rule for target.
-zed_wrapper_node/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_node.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_node.dir/build
-.PHONY : zed_wrapper_node/fast
-
-# Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/ZEDWrapper.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/ZEDWrapper.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/ZEDWrapper.dir/rule
-
-# Convenience name for target.
-ZEDWrapper: zed-ros-wrapper/zed_wrapper/CMakeFiles/ZEDWrapper.dir/rule
-
-.PHONY : ZEDWrapper
-
-# fast build rule for target.
-ZEDWrapper/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/ZEDWrapper.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/ZEDWrapper.dir/build
-.PHONY : ZEDWrapper/fast
-
-# Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_gencfg.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_gencfg.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_gencfg.dir/rule
-
-# Convenience name for target.
-zed_wrapper_gencfg: zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_gencfg.dir/rule
-
-.PHONY : zed_wrapper_gencfg
-
-# fast build rule for target.
-zed_wrapper_gencfg/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_gencfg.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_gencfg.dir/build
-.PHONY : zed_wrapper_gencfg/fast
-
-# Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_gennodejs.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_gennodejs.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_gennodejs.dir/rule
-
-# Convenience name for target.
-zed_wrapper_gennodejs: zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_gennodejs.dir/rule
-
-.PHONY : zed_wrapper_gennodejs
-
-# fast build rule for target.
-zed_wrapper_gennodejs/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_gennodejs.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_gennodejs.dir/build
-.PHONY : zed_wrapper_gennodejs/fast
-
-# Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/bond_generate_messages_lisp.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/bond_generate_messages_lisp.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/bond_generate_messages_lisp.dir/rule
-
-# Convenience name for target.
-bond_generate_messages_lisp: zed-ros-wrapper/zed_wrapper/CMakeFiles/bond_generate_messages_lisp.dir/rule
-
-.PHONY : bond_generate_messages_lisp
-
-# fast build rule for target.
-bond_generate_messages_lisp/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/bond_generate_messages_lisp.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/bond_generate_messages_lisp.dir/build
-.PHONY : bond_generate_messages_lisp/fast
-
-# Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/bond_generate_messages_cpp.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/bond_generate_messages_cpp.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/bond_generate_messages_cpp.dir/rule
-
-# Convenience name for target.
-bond_generate_messages_cpp: zed-ros-wrapper/zed_wrapper/CMakeFiles/bond_generate_messages_cpp.dir/rule
-
-.PHONY : bond_generate_messages_cpp
-
-# fast build rule for target.
-bond_generate_messages_cpp/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/bond_generate_messages_cpp.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/bond_generate_messages_cpp.dir/build
-.PHONY : bond_generate_messages_cpp/fast
-
-# Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_stop_remote_stream.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_stop_remote_stream.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_stop_remote_stream.dir/rule
-
-# Convenience name for target.
-_zed_wrapper_generate_messages_check_deps_stop_remote_stream: zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_stop_remote_stream.dir/rule
-
-.PHONY : _zed_wrapper_generate_messages_check_deps_stop_remote_stream
-
-# fast build rule for target.
-_zed_wrapper_generate_messages_check_deps_stop_remote_stream/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_stop_remote_stream.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_stop_remote_stream.dir/build
-.PHONY : _zed_wrapper_generate_messages_check_deps_stop_remote_stream/fast
-
-# Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_genlisp.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_genlisp.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_genlisp.dir/rule
-
-# Convenience name for target.
-zed_wrapper_genlisp: zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_genlisp.dir/rule
-
-.PHONY : zed_wrapper_genlisp
-
-# fast build rule for target.
-zed_wrapper_genlisp/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_genlisp.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_genlisp.dir/build
-.PHONY : zed_wrapper_genlisp/fast
-
-# Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/nodelet_generate_messages_nodejs.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/nodelet_generate_messages_nodejs.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/nodelet_generate_messages_nodejs.dir/rule
-
-# Convenience name for target.
-nodelet_generate_messages_nodejs: zed-ros-wrapper/zed_wrapper/CMakeFiles/nodelet_generate_messages_nodejs.dir/rule
-
-.PHONY : nodelet_generate_messages_nodejs
-
-# fast build rule for target.
-nodelet_generate_messages_nodejs/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/nodelet_generate_messages_nodejs.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/nodelet_generate_messages_nodejs.dir/build
-.PHONY : nodelet_generate_messages_nodejs/fast
-
-# Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/tf2_msgs_generate_messages_py.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/tf2_msgs_generate_messages_py.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/tf2_msgs_generate_messages_py.dir/rule
-
-# Convenience name for target.
-tf2_msgs_generate_messages_py: zed-ros-wrapper/zed_wrapper/CMakeFiles/tf2_msgs_generate_messages_py.dir/rule
-
-.PHONY : tf2_msgs_generate_messages_py
-
-# fast build rule for target.
-tf2_msgs_generate_messages_py/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/tf2_msgs_generate_messages_py.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/tf2_msgs_generate_messages_py.dir/build
-.PHONY : tf2_msgs_generate_messages_py/fast
-
-# Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/nodelet_generate_messages_lisp.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/nodelet_generate_messages_lisp.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/nodelet_generate_messages_lisp.dir/rule
-
-# Convenience name for target.
-nodelet_generate_messages_lisp: zed-ros-wrapper/zed_wrapper/CMakeFiles/nodelet_generate_messages_lisp.dir/rule
-
-.PHONY : nodelet_generate_messages_lisp
-
-# fast build rule for target.
-nodelet_generate_messages_lisp/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/nodelet_generate_messages_lisp.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/nodelet_generate_messages_lisp.dir/build
-.PHONY : nodelet_generate_messages_lisp/fast
-
-# Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_nodejs.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_nodejs.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_nodejs.dir/rule
-
-# Convenience name for target.
-zed_wrapper_generate_messages_nodejs: zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_nodejs.dir/rule
-
-.PHONY : zed_wrapper_generate_messages_nodejs
-
-# fast build rule for target.
-zed_wrapper_generate_messages_nodejs/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_nodejs.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_nodejs.dir/build
-.PHONY : zed_wrapper_generate_messages_nodejs/fast
-
-# Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/tf2_msgs_generate_messages_eus.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/tf2_msgs_generate_messages_eus.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/tf2_msgs_generate_messages_eus.dir/rule
-
-# Convenience name for target.
-tf2_msgs_generate_messages_eus: zed-ros-wrapper/zed_wrapper/CMakeFiles/tf2_msgs_generate_messages_eus.dir/rule
-
-.PHONY : tf2_msgs_generate_messages_eus
-
-# fast build rule for target.
-tf2_msgs_generate_messages_eus/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/tf2_msgs_generate_messages_eus.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/tf2_msgs_generate_messages_eus.dir/build
-.PHONY : tf2_msgs_generate_messages_eus/fast
-
-# Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/nodelet_generate_messages_cpp.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/nodelet_generate_messages_cpp.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/nodelet_generate_messages_cpp.dir/rule
-
-# Convenience name for target.
-nodelet_generate_messages_cpp: zed-ros-wrapper/zed_wrapper/CMakeFiles/nodelet_generate_messages_cpp.dir/rule
-
-.PHONY : nodelet_generate_messages_cpp
-
-# fast build rule for target.
-nodelet_generate_messages_cpp/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/nodelet_generate_messages_cpp.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/nodelet_generate_messages_cpp.dir/build
-.PHONY : nodelet_generate_messages_cpp/fast
-
-# Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_toggle_led.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_toggle_led.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_toggle_led.dir/rule
-
-# Convenience name for target.
-_zed_wrapper_generate_messages_check_deps_toggle_led: zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_toggle_led.dir/rule
-
-.PHONY : _zed_wrapper_generate_messages_check_deps_toggle_led
-
-# fast build rule for target.
-_zed_wrapper_generate_messages_check_deps_toggle_led/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_toggle_led.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_toggle_led.dir/build
-.PHONY : _zed_wrapper_generate_messages_check_deps_toggle_led/fast
-
-# Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_nodejs.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_nodejs.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_nodejs.dir/rule
-
-# Convenience name for target.
-stereo_msgs_generate_messages_nodejs: zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_nodejs.dir/rule
-
-.PHONY : stereo_msgs_generate_messages_nodejs
-
-# fast build rule for target.
-stereo_msgs_generate_messages_nodejs/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_nodejs.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_nodejs.dir/build
-.PHONY : stereo_msgs_generate_messages_nodejs/fast
-
-# Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_cpp.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_cpp.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_cpp.dir/rule
-
-# Convenience name for target.
-stereo_msgs_generate_messages_cpp: zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_cpp.dir/rule
-
-.PHONY : stereo_msgs_generate_messages_cpp
-
-# fast build rule for target.
-stereo_msgs_generate_messages_cpp/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_cpp.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_cpp.dir/build
-.PHONY : stereo_msgs_generate_messages_cpp/fast
-
-# Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/actionlib_generate_messages_cpp.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/actionlib_generate_messages_cpp.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/actionlib_generate_messages_cpp.dir/rule
-
-# Convenience name for target.
-actionlib_generate_messages_cpp: zed-ros-wrapper/zed_wrapper/CMakeFiles/actionlib_generate_messages_cpp.dir/rule
-
-.PHONY : actionlib_generate_messages_cpp
-
-# fast build rule for target.
-actionlib_generate_messages_cpp/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/actionlib_generate_messages_cpp.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/actionlib_generate_messages_cpp.dir/build
-.PHONY : actionlib_generate_messages_cpp/fast
-
-# Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_py.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_py.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_py.dir/rule
-
-# Convenience name for target.
-stereo_msgs_generate_messages_py: zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_py.dir/rule
-
-.PHONY : stereo_msgs_generate_messages_py
-
-# fast build rule for target.
-stereo_msgs_generate_messages_py/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_py.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_py.dir/build
-.PHONY : stereo_msgs_generate_messages_py/fast
-
-# Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/roslint_zed_wrapper.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/roslint_zed_wrapper.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/roslint_zed_wrapper.dir/rule
-
-# Convenience name for target.
-roslint_zed_wrapper: zed-ros-wrapper/zed_wrapper/CMakeFiles/roslint_zed_wrapper.dir/rule
-
-.PHONY : roslint_zed_wrapper
-
-# fast build rule for target.
-roslint_zed_wrapper/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/roslint_zed_wrapper.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/roslint_zed_wrapper.dir/build
-.PHONY : roslint_zed_wrapper/fast
-
-# Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/tf2_msgs_generate_messages_cpp.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/tf2_msgs_generate_messages_cpp.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/tf2_msgs_generate_messages_cpp.dir/rule
-
-# Convenience name for target.
-tf2_msgs_generate_messages_cpp: zed-ros-wrapper/zed_wrapper/CMakeFiles/tf2_msgs_generate_messages_cpp.dir/rule
-
-.PHONY : tf2_msgs_generate_messages_cpp
-
-# fast build rule for target.
-tf2_msgs_generate_messages_cpp/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/tf2_msgs_generate_messages_cpp.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/tf2_msgs_generate_messages_cpp.dir/build
-.PHONY : tf2_msgs_generate_messages_cpp/fast
-
-# Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_lisp.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_lisp.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_lisp.dir/rule
-
-# Convenience name for target.
-stereo_msgs_generate_messages_lisp: zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_lisp.dir/rule
-
-.PHONY : stereo_msgs_generate_messages_lisp
-
-# fast build rule for target.
-stereo_msgs_generate_messages_lisp/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_lisp.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_lisp.dir/build
-.PHONY : stereo_msgs_generate_messages_lisp/fast
-
-# Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/bond_generate_messages_py.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/bond_generate_messages_py.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/bond_generate_messages_py.dir/rule
-
-# Convenience name for target.
-bond_generate_messages_py: zed-ros-wrapper/zed_wrapper/CMakeFiles/bond_generate_messages_py.dir/rule
-
-.PHONY : bond_generate_messages_py
-
-# fast build rule for target.
-bond_generate_messages_py/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/bond_generate_messages_py.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/bond_generate_messages_py.dir/build
-.PHONY : bond_generate_messages_py/fast
-
-# Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_eus.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_eus.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_eus.dir/rule
-
-# Convenience name for target.
-stereo_msgs_generate_messages_eus: zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_eus.dir/rule
-
-.PHONY : stereo_msgs_generate_messages_eus
-
-# fast build rule for target.
-stereo_msgs_generate_messages_eus/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_eus.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_eus.dir/build
-.PHONY : stereo_msgs_generate_messages_eus/fast
-
-# Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/actionlib_generate_messages_eus.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/actionlib_generate_messages_eus.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/actionlib_generate_messages_eus.dir/rule
-
-# Convenience name for target.
-actionlib_generate_messages_eus: zed-ros-wrapper/zed_wrapper/CMakeFiles/actionlib_generate_messages_eus.dir/rule
-
-.PHONY : actionlib_generate_messages_eus
-
-# fast build rule for target.
-actionlib_generate_messages_eus/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/actionlib_generate_messages_eus.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/actionlib_generate_messages_eus.dir/build
-.PHONY : actionlib_generate_messages_eus/fast
-
-# Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/actionlib_generate_messages_lisp.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/actionlib_generate_messages_lisp.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/actionlib_generate_messages_lisp.dir/rule
-
-# Convenience name for target.
-actionlib_generate_messages_lisp: zed-ros-wrapper/zed_wrapper/CMakeFiles/actionlib_generate_messages_lisp.dir/rule
-
-.PHONY : actionlib_generate_messages_lisp
-
-# fast build rule for target.
-actionlib_generate_messages_lisp/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/actionlib_generate_messages_lisp.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/actionlib_generate_messages_lisp.dir/build
-.PHONY : actionlib_generate_messages_lisp/fast
-
-# Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/actionlib_generate_messages_nodejs.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/actionlib_generate_messages_nodejs.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/actionlib_generate_messages_nodejs.dir/rule
-
-# Convenience name for target.
-actionlib_generate_messages_nodejs: zed-ros-wrapper/zed_wrapper/CMakeFiles/actionlib_generate_messages_nodejs.dir/rule
-
-.PHONY : actionlib_generate_messages_nodejs
-
-# fast build rule for target.
-actionlib_generate_messages_nodejs/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/actionlib_generate_messages_nodejs.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/actionlib_generate_messages_nodejs.dir/build
-.PHONY : actionlib_generate_messages_nodejs/fast
-
-# Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/actionlib_generate_messages_py.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/actionlib_generate_messages_py.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/actionlib_generate_messages_py.dir/rule
-
-# Convenience name for target.
-actionlib_generate_messages_py: zed-ros-wrapper/zed_wrapper/CMakeFiles/actionlib_generate_messages_py.dir/rule
-
-.PHONY : actionlib_generate_messages_py
-
-# fast build rule for target.
-actionlib_generate_messages_py/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/actionlib_generate_messages_py.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/actionlib_generate_messages_py.dir/build
-.PHONY : actionlib_generate_messages_py/fast
-
-# Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/tf2_msgs_generate_messages_nodejs.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/tf2_msgs_generate_messages_nodejs.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/tf2_msgs_generate_messages_nodejs.dir/rule
-
-# Convenience name for target.
-tf2_msgs_generate_messages_nodejs: zed-ros-wrapper/zed_wrapper/CMakeFiles/tf2_msgs_generate_messages_nodejs.dir/rule
-
-.PHONY : tf2_msgs_generate_messages_nodejs
-
-# fast build rule for target.
-tf2_msgs_generate_messages_nodejs/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/tf2_msgs_generate_messages_nodejs.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/tf2_msgs_generate_messages_nodejs.dir/build
-.PHONY : tf2_msgs_generate_messages_nodejs/fast
-
-# Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/nodelet_generate_messages_eus.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/nodelet_generate_messages_eus.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/nodelet_generate_messages_eus.dir/rule
-
-# Convenience name for target.
-nodelet_generate_messages_eus: zed-ros-wrapper/zed_wrapper/CMakeFiles/nodelet_generate_messages_eus.dir/rule
-
-.PHONY : nodelet_generate_messages_eus
-
-# fast build rule for target.
-nodelet_generate_messages_eus/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/nodelet_generate_messages_eus.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/nodelet_generate_messages_eus.dir/build
-.PHONY : nodelet_generate_messages_eus/fast
-
-# Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/bond_generate_messages_nodejs.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/bond_generate_messages_nodejs.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/bond_generate_messages_nodejs.dir/rule
-
-# Convenience name for target.
-bond_generate_messages_nodejs: zed-ros-wrapper/zed_wrapper/CMakeFiles/bond_generate_messages_nodejs.dir/rule
-
-.PHONY : bond_generate_messages_nodejs
-
-# fast build rule for target.
-bond_generate_messages_nodejs/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/bond_generate_messages_nodejs.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/bond_generate_messages_nodejs.dir/build
-.PHONY : bond_generate_messages_nodejs/fast
-
-# Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_gencpp.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_gencpp.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_gencpp.dir/rule
-
-# Convenience name for target.
-zed_wrapper_gencpp: zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_gencpp.dir/rule
-
-.PHONY : zed_wrapper_gencpp
-
-# fast build rule for target.
-zed_wrapper_gencpp/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_gencpp.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_gencpp.dir/build
-.PHONY : zed_wrapper_gencpp/fast
-
-# Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/tf2_msgs_generate_messages_lisp.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/tf2_msgs_generate_messages_lisp.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/tf2_msgs_generate_messages_lisp.dir/rule
-
-# Convenience name for target.
-tf2_msgs_generate_messages_lisp: zed-ros-wrapper/zed_wrapper/CMakeFiles/tf2_msgs_generate_messages_lisp.dir/rule
-
-.PHONY : tf2_msgs_generate_messages_lisp
-
-# fast build rule for target.
-tf2_msgs_generate_messages_lisp/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/tf2_msgs_generate_messages_lisp.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/tf2_msgs_generate_messages_lisp.dir/build
-.PHONY : tf2_msgs_generate_messages_lisp/fast
-
-# Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_eus.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_eus.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_eus.dir/rule
-
-# Convenience name for target.
-zed_wrapper_generate_messages_eus: zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_eus.dir/rule
-
-.PHONY : zed_wrapper_generate_messages_eus
-
-# fast build rule for target.
-zed_wrapper_generate_messages_eus/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_eus.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_eus.dir/build
-.PHONY : zed_wrapper_generate_messages_eus/fast
-
-# Convenience name for target.
 zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_genpy.dir/rule:
 	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_genpy.dir/rule
 .PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_genpy.dir/rule
@@ -719,156 +209,6 @@ zed_wrapper_genpy: zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_genpy.dir/
 zed_wrapper_genpy/fast:
 	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_genpy.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_genpy.dir/build
 .PHONY : zed_wrapper_genpy/fast
-
-# Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_cpp.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_cpp.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_cpp.dir/rule
-
-# Convenience name for target.
-diagnostic_msgs_generate_messages_cpp: zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_cpp.dir/rule
-
-.PHONY : diagnostic_msgs_generate_messages_cpp
-
-# fast build rule for target.
-diagnostic_msgs_generate_messages_cpp/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_cpp.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_cpp.dir/build
-.PHONY : diagnostic_msgs_generate_messages_cpp/fast
-
-# Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/bond_generate_messages_eus.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/bond_generate_messages_eus.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/bond_generate_messages_eus.dir/rule
-
-# Convenience name for target.
-bond_generate_messages_eus: zed-ros-wrapper/zed_wrapper/CMakeFiles/bond_generate_messages_eus.dir/rule
-
-.PHONY : bond_generate_messages_eus
-
-# fast build rule for target.
-bond_generate_messages_eus/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/bond_generate_messages_eus.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/bond_generate_messages_eus.dir/build
-.PHONY : bond_generate_messages_eus/fast
-
-# Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_lisp.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_lisp.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_lisp.dir/rule
-
-# Convenience name for target.
-diagnostic_msgs_generate_messages_lisp: zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_lisp.dir/rule
-
-.PHONY : diagnostic_msgs_generate_messages_lisp
-
-# fast build rule for target.
-diagnostic_msgs_generate_messages_lisp/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_lisp.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_lisp.dir/build
-.PHONY : diagnostic_msgs_generate_messages_lisp/fast
-
-# Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_nodejs.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_nodejs.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_nodejs.dir/rule
-
-# Convenience name for target.
-diagnostic_msgs_generate_messages_nodejs: zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_nodejs.dir/rule
-
-.PHONY : diagnostic_msgs_generate_messages_nodejs
-
-# fast build rule for target.
-diagnostic_msgs_generate_messages_nodejs/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_nodejs.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_nodejs.dir/build
-.PHONY : diagnostic_msgs_generate_messages_nodejs/fast
-
-# Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/nodelet_generate_messages_py.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/nodelet_generate_messages_py.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/nodelet_generate_messages_py.dir/rule
-
-# Convenience name for target.
-nodelet_generate_messages_py: zed-ros-wrapper/zed_wrapper/CMakeFiles/nodelet_generate_messages_py.dir/rule
-
-.PHONY : nodelet_generate_messages_py
-
-# fast build rule for target.
-nodelet_generate_messages_py/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/nodelet_generate_messages_py.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/nodelet_generate_messages_py.dir/build
-.PHONY : nodelet_generate_messages_py/fast
-
-# Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages.dir/rule
-
-# Convenience name for target.
-zed_wrapper_generate_messages: zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages.dir/rule
-
-.PHONY : zed_wrapper_generate_messages
-
-# fast build rule for target.
-zed_wrapper_generate_messages/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages.dir/build
-.PHONY : zed_wrapper_generate_messages/fast
-
-# Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_start_remote_stream.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_start_remote_stream.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_start_remote_stream.dir/rule
-
-# Convenience name for target.
-_zed_wrapper_generate_messages_check_deps_start_remote_stream: zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_start_remote_stream.dir/rule
-
-.PHONY : _zed_wrapper_generate_messages_check_deps_start_remote_stream
-
-# fast build rule for target.
-_zed_wrapper_generate_messages_check_deps_start_remote_stream/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_start_remote_stream.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_start_remote_stream.dir/build
-.PHONY : _zed_wrapper_generate_messages_check_deps_start_remote_stream/fast
-
-# Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_py.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_py.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_py.dir/rule
-
-# Convenience name for target.
-diagnostic_msgs_generate_messages_py: zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_py.dir/rule
-
-.PHONY : diagnostic_msgs_generate_messages_py
-
-# fast build rule for target.
-diagnostic_msgs_generate_messages_py/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_py.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_py.dir/build
-.PHONY : diagnostic_msgs_generate_messages_py/fast
-
-# Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_reset_odometry.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_reset_odometry.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_reset_odometry.dir/rule
-
-# Convenience name for target.
-_zed_wrapper_generate_messages_check_deps_reset_odometry: zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_reset_odometry.dir/rule
-
-.PHONY : _zed_wrapper_generate_messages_check_deps_reset_odometry
-
-# fast build rule for target.
-_zed_wrapper_generate_messages_check_deps_reset_odometry/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_reset_odometry.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_reset_odometry.dir/build
-.PHONY : _zed_wrapper_generate_messages_check_deps_reset_odometry/fast
-
-# Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_start_svo_recording.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_start_svo_recording.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_start_svo_recording.dir/rule
-
-# Convenience name for target.
-_zed_wrapper_generate_messages_check_deps_start_svo_recording: zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_start_svo_recording.dir/rule
-
-.PHONY : _zed_wrapper_generate_messages_check_deps_start_svo_recording
-
-# fast build rule for target.
-_zed_wrapper_generate_messages_check_deps_start_svo_recording/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_start_svo_recording.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_start_svo_recording.dir/build
-.PHONY : _zed_wrapper_generate_messages_check_deps_start_svo_recording/fast
 
 # Convenience name for target.
 zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_py.dir/rule:
@@ -886,49 +226,184 @@ zed_wrapper_generate_messages_py/fast:
 .PHONY : zed_wrapper_generate_messages_py/fast
 
 # Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_stop_svo_recording.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_stop_svo_recording.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_stop_svo_recording.dir/rule
+zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_gennodejs.dir/rule:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_gennodejs.dir/rule
+.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_gennodejs.dir/rule
 
 # Convenience name for target.
-_zed_wrapper_generate_messages_check_deps_stop_svo_recording: zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_stop_svo_recording.dir/rule
+zed_wrapper_gennodejs: zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_gennodejs.dir/rule
 
-.PHONY : _zed_wrapper_generate_messages_check_deps_stop_svo_recording
+.PHONY : zed_wrapper_gennodejs
 
 # fast build rule for target.
-_zed_wrapper_generate_messages_check_deps_stop_svo_recording/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_stop_svo_recording.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_stop_svo_recording.dir/build
-.PHONY : _zed_wrapper_generate_messages_check_deps_stop_svo_recording/fast
+zed_wrapper_gennodejs/fast:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_gennodejs.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_gennodejs.dir/build
+.PHONY : zed_wrapper_gennodejs/fast
 
 # Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_set_pose.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_set_pose.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_set_pose.dir/rule
+zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_nodejs.dir/rule:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_nodejs.dir/rule
+.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_nodejs.dir/rule
 
 # Convenience name for target.
-_zed_wrapper_generate_messages_check_deps_set_pose: zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_set_pose.dir/rule
+zed_wrapper_generate_messages_nodejs: zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_nodejs.dir/rule
 
-.PHONY : _zed_wrapper_generate_messages_check_deps_set_pose
+.PHONY : zed_wrapper_generate_messages_nodejs
 
 # fast build rule for target.
-_zed_wrapper_generate_messages_check_deps_set_pose/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_set_pose.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_set_pose.dir/build
-.PHONY : _zed_wrapper_generate_messages_check_deps_set_pose/fast
+zed_wrapper_generate_messages_nodejs/fast:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_nodejs.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_nodejs.dir/build
+.PHONY : zed_wrapper_generate_messages_nodejs/fast
 
 # Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_geneus.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_geneus.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_geneus.dir/rule
+zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_eus.dir/rule:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_eus.dir/rule
+.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_eus.dir/rule
 
 # Convenience name for target.
-zed_wrapper_geneus: zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_geneus.dir/rule
+zed_wrapper_generate_messages_eus: zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_eus.dir/rule
 
-.PHONY : zed_wrapper_geneus
+.PHONY : zed_wrapper_generate_messages_eus
 
 # fast build rule for target.
-zed_wrapper_geneus/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_geneus.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_geneus.dir/build
-.PHONY : zed_wrapper_geneus/fast
+zed_wrapper_generate_messages_eus/fast:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_eus.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_eus.dir/build
+.PHONY : zed_wrapper_generate_messages_eus/fast
+
+# Convenience name for target.
+zed-ros-wrapper/zed_wrapper/CMakeFiles/ZEDWrapper.dir/rule:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/ZEDWrapper.dir/rule
+.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/ZEDWrapper.dir/rule
+
+# Convenience name for target.
+ZEDWrapper: zed-ros-wrapper/zed_wrapper/CMakeFiles/ZEDWrapper.dir/rule
+
+.PHONY : ZEDWrapper
+
+# fast build rule for target.
+ZEDWrapper/fast:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/ZEDWrapper.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/ZEDWrapper.dir/build
+.PHONY : ZEDWrapper/fast
+
+# Convenience name for target.
+zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_py.dir/rule:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_py.dir/rule
+.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_py.dir/rule
+
+# Convenience name for target.
+diagnostic_msgs_generate_messages_py: zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_py.dir/rule
+
+.PHONY : diagnostic_msgs_generate_messages_py
+
+# fast build rule for target.
+diagnostic_msgs_generate_messages_py/fast:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_py.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_py.dir/build
+.PHONY : diagnostic_msgs_generate_messages_py/fast
+
+# Convenience name for target.
+zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_gencfg.dir/rule:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_gencfg.dir/rule
+.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_gencfg.dir/rule
+
+# Convenience name for target.
+zed_wrapper_gencfg: zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_gencfg.dir/rule
+
+.PHONY : zed_wrapper_gencfg
+
+# fast build rule for target.
+zed_wrapper_gencfg/fast:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_gencfg.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_gencfg.dir/build
+.PHONY : zed_wrapper_gencfg/fast
+
+# Convenience name for target.
+zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_lisp.dir/rule:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_lisp.dir/rule
+.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_lisp.dir/rule
+
+# Convenience name for target.
+diagnostic_msgs_generate_messages_lisp: zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_lisp.dir/rule
+
+.PHONY : diagnostic_msgs_generate_messages_lisp
+
+# fast build rule for target.
+diagnostic_msgs_generate_messages_lisp/fast:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_lisp.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_lisp.dir/build
+.PHONY : diagnostic_msgs_generate_messages_lisp/fast
+
+# Convenience name for target.
+zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_node.dir/rule:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_node.dir/rule
+.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_node.dir/rule
+
+# Convenience name for target.
+zed_wrapper_node: zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_node.dir/rule
+
+.PHONY : zed_wrapper_node
+
+# fast build rule for target.
+zed_wrapper_node/fast:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_node.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_node.dir/build
+.PHONY : zed_wrapper_node/fast
+
+# Convenience name for target.
+zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_eus.dir/rule:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_eus.dir/rule
+.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_eus.dir/rule
+
+# Convenience name for target.
+stereo_msgs_generate_messages_eus: zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_eus.dir/rule
+
+.PHONY : stereo_msgs_generate_messages_eus
+
+# fast build rule for target.
+stereo_msgs_generate_messages_eus/fast:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_eus.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_eus.dir/build
+.PHONY : stereo_msgs_generate_messages_eus/fast
+
+# Convenience name for target.
+zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_nodejs.dir/rule:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_nodejs.dir/rule
+.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_nodejs.dir/rule
+
+# Convenience name for target.
+stereo_msgs_generate_messages_nodejs: zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_nodejs.dir/rule
+
+.PHONY : stereo_msgs_generate_messages_nodejs
+
+# fast build rule for target.
+stereo_msgs_generate_messages_nodejs/fast:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_nodejs.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_nodejs.dir/build
+.PHONY : stereo_msgs_generate_messages_nodejs/fast
+
+# Convenience name for target.
+zed-ros-wrapper/zed_wrapper/CMakeFiles/roslint_zed_wrapper.dir/rule:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/roslint_zed_wrapper.dir/rule
+.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/roslint_zed_wrapper.dir/rule
+
+# Convenience name for target.
+roslint_zed_wrapper: zed-ros-wrapper/zed_wrapper/CMakeFiles/roslint_zed_wrapper.dir/rule
+
+.PHONY : roslint_zed_wrapper
+
+# fast build rule for target.
+roslint_zed_wrapper/fast:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/roslint_zed_wrapper.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/roslint_zed_wrapper.dir/build
+.PHONY : roslint_zed_wrapper/fast
+
+# Convenience name for target.
+zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_cpp.dir/rule:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_cpp.dir/rule
+.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_cpp.dir/rule
+
+# Convenience name for target.
+diagnostic_msgs_generate_messages_cpp: zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_cpp.dir/rule
+
+.PHONY : diagnostic_msgs_generate_messages_cpp
+
+# fast build rule for target.
+diagnostic_msgs_generate_messages_cpp/fast:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_cpp.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_cpp.dir/build
+.PHONY : diagnostic_msgs_generate_messages_cpp/fast
 
 # Convenience name for target.
 zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_reset_tracking.dir/rule:
@@ -944,6 +419,66 @@ _zed_wrapper_generate_messages_check_deps_reset_tracking: zed-ros-wrapper/zed_wr
 _zed_wrapper_generate_messages_check_deps_reset_tracking/fast:
 	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_reset_tracking.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_reset_tracking.dir/build
 .PHONY : _zed_wrapper_generate_messages_check_deps_reset_tracking/fast
+
+# Convenience name for target.
+zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_lisp.dir/rule:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_lisp.dir/rule
+.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_lisp.dir/rule
+
+# Convenience name for target.
+zed_wrapper_generate_messages_lisp: zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_lisp.dir/rule
+
+.PHONY : zed_wrapper_generate_messages_lisp
+
+# fast build rule for target.
+zed_wrapper_generate_messages_lisp/fast:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_lisp.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_lisp.dir/build
+.PHONY : zed_wrapper_generate_messages_lisp/fast
+
+# Convenience name for target.
+zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_cpp.dir/rule:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_cpp.dir/rule
+.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_cpp.dir/rule
+
+# Convenience name for target.
+zed_wrapper_generate_messages_cpp: zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_cpp.dir/rule
+
+.PHONY : zed_wrapper_generate_messages_cpp
+
+# fast build rule for target.
+zed_wrapper_generate_messages_cpp/fast:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_cpp.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_cpp.dir/build
+.PHONY : zed_wrapper_generate_messages_cpp/fast
+
+# Convenience name for target.
+zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_cpp.dir/rule:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_cpp.dir/rule
+.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_cpp.dir/rule
+
+# Convenience name for target.
+stereo_msgs_generate_messages_cpp: zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_cpp.dir/rule
+
+.PHONY : stereo_msgs_generate_messages_cpp
+
+# fast build rule for target.
+stereo_msgs_generate_messages_cpp/fast:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_cpp.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_cpp.dir/build
+.PHONY : stereo_msgs_generate_messages_cpp/fast
+
+# Convenience name for target.
+zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_lisp.dir/rule:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_lisp.dir/rule
+.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_lisp.dir/rule
+
+# Convenience name for target.
+stereo_msgs_generate_messages_lisp: zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_lisp.dir/rule
+
+.PHONY : stereo_msgs_generate_messages_lisp
+
+# fast build rule for target.
+stereo_msgs_generate_messages_lisp/fast:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_lisp.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_lisp.dir/build
+.PHONY : stereo_msgs_generate_messages_lisp/fast
 
 # Convenience name for target.
 zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_set_led_status.dir/rule:
@@ -976,34 +511,199 @@ diagnostic_msgs_generate_messages_eus/fast:
 .PHONY : diagnostic_msgs_generate_messages_eus/fast
 
 # Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_cpp.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_cpp.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_cpp.dir/rule
+zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_py.dir/rule:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_py.dir/rule
+.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_py.dir/rule
 
 # Convenience name for target.
-zed_wrapper_generate_messages_cpp: zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_cpp.dir/rule
+stereo_msgs_generate_messages_py: zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_py.dir/rule
 
-.PHONY : zed_wrapper_generate_messages_cpp
+.PHONY : stereo_msgs_generate_messages_py
 
 # fast build rule for target.
-zed_wrapper_generate_messages_cpp/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_cpp.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_cpp.dir/build
-.PHONY : zed_wrapper_generate_messages_cpp/fast
+stereo_msgs_generate_messages_py/fast:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_py.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/stereo_msgs_generate_messages_py.dir/build
+.PHONY : stereo_msgs_generate_messages_py/fast
 
 # Convenience name for target.
-zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_lisp.dir/rule:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_lisp.dir/rule
-.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_lisp.dir/rule
+zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_reset_odometry.dir/rule:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_reset_odometry.dir/rule
+.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_reset_odometry.dir/rule
 
 # Convenience name for target.
-zed_wrapper_generate_messages_lisp: zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_lisp.dir/rule
+_zed_wrapper_generate_messages_check_deps_reset_odometry: zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_reset_odometry.dir/rule
 
-.PHONY : zed_wrapper_generate_messages_lisp
+.PHONY : _zed_wrapper_generate_messages_check_deps_reset_odometry
 
 # fast build rule for target.
-zed_wrapper_generate_messages_lisp/fast:
-	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_lisp.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages_lisp.dir/build
-.PHONY : zed_wrapper_generate_messages_lisp/fast
+_zed_wrapper_generate_messages_check_deps_reset_odometry/fast:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_reset_odometry.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_reset_odometry.dir/build
+.PHONY : _zed_wrapper_generate_messages_check_deps_reset_odometry/fast
+
+# Convenience name for target.
+zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_genlisp.dir/rule:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_genlisp.dir/rule
+.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_genlisp.dir/rule
+
+# Convenience name for target.
+zed_wrapper_genlisp: zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_genlisp.dir/rule
+
+.PHONY : zed_wrapper_genlisp
+
+# fast build rule for target.
+zed_wrapper_genlisp/fast:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_genlisp.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_genlisp.dir/build
+.PHONY : zed_wrapper_genlisp/fast
+
+# Convenience name for target.
+zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_stop_remote_stream.dir/rule:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_stop_remote_stream.dir/rule
+.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_stop_remote_stream.dir/rule
+
+# Convenience name for target.
+_zed_wrapper_generate_messages_check_deps_stop_remote_stream: zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_stop_remote_stream.dir/rule
+
+.PHONY : _zed_wrapper_generate_messages_check_deps_stop_remote_stream
+
+# fast build rule for target.
+_zed_wrapper_generate_messages_check_deps_stop_remote_stream/fast:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_stop_remote_stream.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_stop_remote_stream.dir/build
+.PHONY : _zed_wrapper_generate_messages_check_deps_stop_remote_stream/fast
+
+# Convenience name for target.
+zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_start_svo_recording.dir/rule:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_start_svo_recording.dir/rule
+.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_start_svo_recording.dir/rule
+
+# Convenience name for target.
+_zed_wrapper_generate_messages_check_deps_start_svo_recording: zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_start_svo_recording.dir/rule
+
+.PHONY : _zed_wrapper_generate_messages_check_deps_start_svo_recording
+
+# fast build rule for target.
+_zed_wrapper_generate_messages_check_deps_start_svo_recording/fast:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_start_svo_recording.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_start_svo_recording.dir/build
+.PHONY : _zed_wrapper_generate_messages_check_deps_start_svo_recording/fast
+
+# Convenience name for target.
+zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_set_pose.dir/rule:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_set_pose.dir/rule
+.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_set_pose.dir/rule
+
+# Convenience name for target.
+_zed_wrapper_generate_messages_check_deps_set_pose: zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_set_pose.dir/rule
+
+.PHONY : _zed_wrapper_generate_messages_check_deps_set_pose
+
+# fast build rule for target.
+_zed_wrapper_generate_messages_check_deps_set_pose/fast:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_set_pose.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_set_pose.dir/build
+.PHONY : _zed_wrapper_generate_messages_check_deps_set_pose/fast
+
+# Convenience name for target.
+zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_geneus.dir/rule:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_geneus.dir/rule
+.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_geneus.dir/rule
+
+# Convenience name for target.
+zed_wrapper_geneus: zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_geneus.dir/rule
+
+.PHONY : zed_wrapper_geneus
+
+# fast build rule for target.
+zed_wrapper_geneus/fast:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_geneus.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_geneus.dir/build
+.PHONY : zed_wrapper_geneus/fast
+
+# Convenience name for target.
+zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_stop_svo_recording.dir/rule:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_stop_svo_recording.dir/rule
+.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_stop_svo_recording.dir/rule
+
+# Convenience name for target.
+_zed_wrapper_generate_messages_check_deps_stop_svo_recording: zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_stop_svo_recording.dir/rule
+
+.PHONY : _zed_wrapper_generate_messages_check_deps_stop_svo_recording
+
+# fast build rule for target.
+_zed_wrapper_generate_messages_check_deps_stop_svo_recording/fast:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_stop_svo_recording.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_stop_svo_recording.dir/build
+.PHONY : _zed_wrapper_generate_messages_check_deps_stop_svo_recording/fast
+
+# Convenience name for target.
+zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_nodejs.dir/rule:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_nodejs.dir/rule
+.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_nodejs.dir/rule
+
+# Convenience name for target.
+diagnostic_msgs_generate_messages_nodejs: zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_nodejs.dir/rule
+
+.PHONY : diagnostic_msgs_generate_messages_nodejs
+
+# fast build rule for target.
+diagnostic_msgs_generate_messages_nodejs/fast:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_nodejs.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/diagnostic_msgs_generate_messages_nodejs.dir/build
+.PHONY : diagnostic_msgs_generate_messages_nodejs/fast
+
+# Convenience name for target.
+zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages.dir/rule:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages.dir/rule
+.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages.dir/rule
+
+# Convenience name for target.
+zed_wrapper_generate_messages: zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages.dir/rule
+
+.PHONY : zed_wrapper_generate_messages
+
+# fast build rule for target.
+zed_wrapper_generate_messages/fast:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_generate_messages.dir/build
+.PHONY : zed_wrapper_generate_messages/fast
+
+# Convenience name for target.
+zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_start_remote_stream.dir/rule:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_start_remote_stream.dir/rule
+.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_start_remote_stream.dir/rule
+
+# Convenience name for target.
+_zed_wrapper_generate_messages_check_deps_start_remote_stream: zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_start_remote_stream.dir/rule
+
+.PHONY : _zed_wrapper_generate_messages_check_deps_start_remote_stream
+
+# fast build rule for target.
+_zed_wrapper_generate_messages_check_deps_start_remote_stream/fast:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_start_remote_stream.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_start_remote_stream.dir/build
+.PHONY : _zed_wrapper_generate_messages_check_deps_start_remote_stream/fast
+
+# Convenience name for target.
+zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_toggle_led.dir/rule:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_toggle_led.dir/rule
+.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_toggle_led.dir/rule
+
+# Convenience name for target.
+_zed_wrapper_generate_messages_check_deps_toggle_led: zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_toggle_led.dir/rule
+
+.PHONY : _zed_wrapper_generate_messages_check_deps_toggle_led
+
+# fast build rule for target.
+_zed_wrapper_generate_messages_check_deps_toggle_led/fast:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_toggle_led.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/_zed_wrapper_generate_messages_check_deps_toggle_led.dir/build
+.PHONY : _zed_wrapper_generate_messages_check_deps_toggle_led/fast
+
+# Convenience name for target.
+zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_gencpp.dir/rule:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f CMakeFiles/Makefile2 zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_gencpp.dir/rule
+.PHONY : zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_gencpp.dir/rule
+
+# Convenience name for target.
+zed_wrapper_gencpp: zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_gencpp.dir/rule
+
+.PHONY : zed_wrapper_gencpp
+
+# fast build rule for target.
+zed_wrapper_gencpp/fast:
+	cd /home/felipe/roboserv_ws/build && $(MAKE) -f zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_gencpp.dir/build.make zed-ros-wrapper/zed_wrapper/CMakeFiles/zed_wrapper_gencpp.dir/build
+.PHONY : zed_wrapper_gencpp/fast
 
 src/nodelet/src/zed_wrapper_nodelet.o: src/nodelet/src/zed_wrapper_nodelet.cpp.o
 
@@ -1094,67 +794,47 @@ help:
 	@echo "... depend"
 	@echo "... install"
 	@echo "... rebuild_cache"
-	@echo "... test"
-	@echo "... install/local"
-	@echo "... install/strip"
 	@echo "... roslint"
 	@echo "... all_files_zed_wrapper"
-	@echo "... zed_wrapper_node"
-	@echo "... ZEDWrapper"
-	@echo "... zed_wrapper_gencfg"
-	@echo "... zed_wrapper_gennodejs"
-	@echo "... bond_generate_messages_lisp"
-	@echo "... bond_generate_messages_cpp"
-	@echo "... _zed_wrapper_generate_messages_check_deps_stop_remote_stream"
-	@echo "... zed_wrapper_genlisp"
-	@echo "... nodelet_generate_messages_nodejs"
-	@echo "... tf2_msgs_generate_messages_py"
-	@echo "... nodelet_generate_messages_lisp"
-	@echo "... zed_wrapper_generate_messages_nodejs"
-	@echo "... tf2_msgs_generate_messages_eus"
-	@echo "... nodelet_generate_messages_cpp"
-	@echo "... _zed_wrapper_generate_messages_check_deps_toggle_led"
-	@echo "... stereo_msgs_generate_messages_nodejs"
-	@echo "... stereo_msgs_generate_messages_cpp"
-	@echo "... actionlib_generate_messages_cpp"
-	@echo "... stereo_msgs_generate_messages_py"
-	@echo "... roslint_zed_wrapper"
-	@echo "... tf2_msgs_generate_messages_cpp"
-	@echo "... stereo_msgs_generate_messages_lisp"
-	@echo "... bond_generate_messages_py"
-	@echo "... stereo_msgs_generate_messages_eus"
-	@echo "... actionlib_generate_messages_eus"
-	@echo "... actionlib_generate_messages_lisp"
-	@echo "... actionlib_generate_messages_nodejs"
-	@echo "... actionlib_generate_messages_py"
-	@echo "... tf2_msgs_generate_messages_nodejs"
-	@echo "... nodelet_generate_messages_eus"
-	@echo "... bond_generate_messages_nodejs"
-	@echo "... zed_wrapper_gencpp"
-	@echo "... tf2_msgs_generate_messages_lisp"
-	@echo "... zed_wrapper_generate_messages_eus"
 	@echo "... zed_wrapper_genpy"
-	@echo "... diagnostic_msgs_generate_messages_cpp"
-	@echo "... list_install_components"
-	@echo "... bond_generate_messages_eus"
-	@echo "... diagnostic_msgs_generate_messages_lisp"
-	@echo "... diagnostic_msgs_generate_messages_nodejs"
-	@echo "... nodelet_generate_messages_py"
-	@echo "... zed_wrapper_generate_messages"
-	@echo "... _zed_wrapper_generate_messages_check_deps_start_remote_stream"
-	@echo "... diagnostic_msgs_generate_messages_py"
-	@echo "... _zed_wrapper_generate_messages_check_deps_reset_odometry"
-	@echo "... _zed_wrapper_generate_messages_check_deps_start_svo_recording"
 	@echo "... zed_wrapper_generate_messages_py"
-	@echo "... _zed_wrapper_generate_messages_check_deps_stop_svo_recording"
-	@echo "... _zed_wrapper_generate_messages_check_deps_set_pose"
-	@echo "... zed_wrapper_geneus"
+	@echo "... zed_wrapper_gennodejs"
+	@echo "... install/strip"
+	@echo "... zed_wrapper_generate_messages_nodejs"
+	@echo "... zed_wrapper_generate_messages_eus"
+	@echo "... test"
+	@echo "... ZEDWrapper"
+	@echo "... diagnostic_msgs_generate_messages_py"
+	@echo "... list_install_components"
+	@echo "... zed_wrapper_gencfg"
+	@echo "... diagnostic_msgs_generate_messages_lisp"
+	@echo "... zed_wrapper_node"
+	@echo "... stereo_msgs_generate_messages_eus"
+	@echo "... stereo_msgs_generate_messages_nodejs"
+	@echo "... roslint_zed_wrapper"
+	@echo "... diagnostic_msgs_generate_messages_cpp"
 	@echo "... _zed_wrapper_generate_messages_check_deps_reset_tracking"
-	@echo "... edit_cache"
+	@echo "... zed_wrapper_generate_messages_lisp"
+	@echo "... zed_wrapper_generate_messages_cpp"
+	@echo "... stereo_msgs_generate_messages_cpp"
+	@echo "... stereo_msgs_generate_messages_lisp"
 	@echo "... _zed_wrapper_generate_messages_check_deps_set_led_status"
 	@echo "... diagnostic_msgs_generate_messages_eus"
-	@echo "... zed_wrapper_generate_messages_cpp"
-	@echo "... zed_wrapper_generate_messages_lisp"
+	@echo "... stereo_msgs_generate_messages_py"
+	@echo "... install/local"
+	@echo "... _zed_wrapper_generate_messages_check_deps_reset_odometry"
+	@echo "... zed_wrapper_genlisp"
+	@echo "... _zed_wrapper_generate_messages_check_deps_stop_remote_stream"
+	@echo "... _zed_wrapper_generate_messages_check_deps_start_svo_recording"
+	@echo "... _zed_wrapper_generate_messages_check_deps_set_pose"
+	@echo "... zed_wrapper_geneus"
+	@echo "... _zed_wrapper_generate_messages_check_deps_stop_svo_recording"
+	@echo "... diagnostic_msgs_generate_messages_nodejs"
+	@echo "... zed_wrapper_generate_messages"
+	@echo "... _zed_wrapper_generate_messages_check_deps_start_remote_stream"
+	@echo "... _zed_wrapper_generate_messages_check_deps_toggle_led"
+	@echo "... edit_cache"
+	@echo "... zed_wrapper_gencpp"
 	@echo "... src/nodelet/src/zed_wrapper_nodelet.o"
 	@echo "... src/nodelet/src/zed_wrapper_nodelet.i"
 	@echo "... src/nodelet/src/zed_wrapper_nodelet.s"
