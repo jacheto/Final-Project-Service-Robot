@@ -161,4 +161,7 @@
 		<param name="min_frontier_size" value="2"/>
 	</node>
   
+	<node name="costmap_node" pkg="costmap_2d" type="costmap_2d_node" >
+	</node>
+
 </launch>
