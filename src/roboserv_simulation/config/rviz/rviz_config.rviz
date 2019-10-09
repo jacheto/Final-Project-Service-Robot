@@ -5,6 +5,9 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /TF1/TF1/Tree1
+        - /Robot1
+        - /Robot1/Polygon1
+        - /Distance Sensors1
       Splitter Ratio: 0.636828661
     Tree Height: 386
   - Class: rviz/Selection
@@ -25,7 +28,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: Camera
+    SyncSource: ""
 Visualization Manager:
   Class: ""
   Displays:
@@ -96,6 +99,8 @@ Visualization Manager:
               Value: true
             distSensor_R:
               Value: true
+            distSensor_T:
+              Value: true
             local_map:
               Value: true
             map:
@@ -125,6 +130,8 @@ Visualization Manager:
                 {}
               distSensor_R:
                 {}
+              distSensor_T:
+                {}
               zed_camera_center:
                 zed_left_camera_frame:
                   zed_left_camera_optical_frame:
@@ -132,11 +139,6 @@ Visualization Manager:
                 zed_right_camera_frame:
                   zed_right_camera_optical_frame:
                     {}
-            local_map:
-              odom:
-                {}
-            map:
-              {}
           Update Interval: 0
           Value: true
       Enabled: true
@@ -173,6 +175,11 @@ Visualization Manager:
               Show Axes: false
               Show Trail: false
               Value: true
+            distSensor_T:
+              Alpha: 1
+              Show Axes: false
+              Show Trail: false
+              Value: true
             zed_camera_center:
               Alpha: 1
               Show Axes: false
@@ -200,6 +207,14 @@ Visualization Manager:
           Update Interval: 0
           Value: true
           Visual Enabled: true
+        - Alpha: 1
+          Class: rviz/Polygon
+          Color: 255; 0; 0
+          Enabled: true
+          Name: Polygon
+          Topic: /move_base/local_costmap/footprint
+          Unreliable: false
+          Value: true
       Enabled: true
       Name: Robot
     - Class: rviz/Group
@@ -314,6 +329,16 @@ Visualization Manager:
           Topic: /distSensor_R
           Unreliable: false
           Value: true
+        - Alpha: 0.5
+          Buffer Length: 1
+          Class: rviz/Range
+          Color: 255; 255; 255
+          Enabled: true
+          Name: DistSensorBack
+          Queue Size: 100
+          Topic: /distSensor_T
+          Unreliable: false
+          Value: true
       Enabled: true
       Name: Distance Sensors
     - Class: rviz/Group
@@ -337,6 +362,7 @@ Visualization Manager:
               LaserScan: true
               Value: true
             Distance Sensors:
+              DistSensorBack: true
               DistSensorFront: true
               DistSensorLeft: true
               DistSensorRight: true
@@ -353,6 +379,7 @@ Visualization Manager:
               PointCloud2: true
               Value: true
             Robot:
+              Polygon: true
               RobotModel: true
               Value: true
             TF:
@@ -489,25 +516,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 7.43155766
+      Distance: 7.87222672
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.129670113
-        Y: -0.242001534
-        Z: 1.41242826
+        X: 0.617895603
+        Y: -0.289890409
+        Z: 1.29959536
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.429797977
+      Pitch: 0.839798033
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 3.09040833
+      Yaw: 3.215415
     Saved: ~
 Window Geometry:
   Camera:

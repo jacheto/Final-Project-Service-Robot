@@ -21,6 +21,8 @@ import shlex
 import sys
 import signal
 import psutil
+import cv2
+import base64
 from time import sleep
 from six.moves import urllib
 from geometry_msgs.msg import Twist
@@ -136,8 +138,6 @@ def loop():
         mapping = "true"
         navigation_mode = 2
     
-    print("BOOM")
-
     if not os.path.isdir(map_directory):
             os.mkdir(map_directory)
     
@@ -145,15 +145,33 @@ def loop():
 
     roscore = Roscore()
     
-    command_list = ['roslaunch', 'roboserv_simulation', 'roboserv_real.launch', 'map_name="' + map_name + '"', 'mapping="' + mapping + '"']
-    #roscore.run(command_list)
-    #time.sleep(20)
+    command_list = ['roslaunch', 'roboserv_simulation', 'roboserv_real.launch', 'map_name:="' + map_name + '"', 'mapping:="' + mapping + '"']
+    roscore.run(command_list)
+    time.sleep(5)
+
+    post('navigation_mode',navigation_mode)
+
+    if navigation_mode == 1:
+        post('localization_status', 0)
+
+
+
+    # envio do mapa
+
+    filename_pgm = ""
+    filename_jpg = ""
+    image_pgm = cv2.imread(filename_pgm)
+    cv2.imwrite(filename_jpg, image_pgm)
+    image_jpg = open(filename_jpg, 'rb')
+    image_b64 = base64.encodestring(image_jpg.read())
+    post("map_64", image_b64)
+
+
+
     #roscore.terminate()
 
     # verificar se o ROS já está aberto e rodando
 
-
-    post('navigation_mode',navigation_mode)
 
 
 def begin():

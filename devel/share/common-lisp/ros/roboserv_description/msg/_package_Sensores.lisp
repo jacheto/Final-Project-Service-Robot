@@ -1,8 +1,10 @@
 (cl:in-package roboserv_description-msg)
-(cl:export '(SENSORL-VAL
-          SENSORL
-          SENSORF-VAL
+(cl:export '(SENSORF-VAL
           SENSORF
+          SENSORL-VAL
+          SENSORL
           SENSORR-VAL
           SENSORR
+          SENSORT-VAL
+          SENSORT
 ))

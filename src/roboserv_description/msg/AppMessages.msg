@@ -8,5 +8,3 @@ boolean button_up_right
 boolean button_down_left
 boolean button_down_right
 boolean button_stop
-
-AppPoint 

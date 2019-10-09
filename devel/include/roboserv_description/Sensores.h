@@ -24,27 +24,32 @@ struct Sensores_
   typedef Sensores_<ContainerAllocator> Type;
 
   Sensores_()
-    : SensorL(0.0)
-    , SensorF(0.0)
-    , SensorR(0.0)  {
+    : SensorF(0.0)
+    , SensorL(0.0)
+    , SensorR(0.0)
+    , SensorT(0.0)  {
     }
   Sensores_(const ContainerAllocator& _alloc)
-    : SensorL(0.0)
-    , SensorF(0.0)
-    , SensorR(0.0)  {
+    : SensorF(0.0)
+    , SensorL(0.0)
+    , SensorR(0.0)
+    , SensorT(0.0)  {
   (void)_alloc;
     }
 
 
 
-   typedef float _SensorL_type;
-  _SensorL_type SensorL;
-
    typedef float _SensorF_type;
   _SensorF_type SensorF;
 
+   typedef float _SensorL_type;
+  _SensorL_type SensorL;
+
    typedef float _SensorR_type;
   _SensorR_type SensorR;
+
+   typedef float _SensorT_type;
+  _SensorT_type SensorT;
 
 
 
@@ -124,12 +129,12 @@ struct MD5Sum< ::roboserv_description::Sensores_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "4ab95327ee166468a1f69926574cd811";
+    return "1098e5ac0a1250d94a2ff805714a24fa";
   }
 
   static const char* value(const ::roboserv_description::Sensores_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x4ab95327ee166468ULL;
-  static const uint64_t static_value2 = 0xa1f69926574cd811ULL;
+  static const uint64_t static_value1 = 0x1098e5ac0a1250d9ULL;
+  static const uint64_t static_value2 = 0x4a2ff805714a24faULL;
 };
 
 template<class ContainerAllocator>
@@ -148,9 +153,10 @@ struct Definition< ::roboserv_description::Sensores_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "float32 SensorL	\n\
-float32 SensorF\n\
+    return "float32 SensorF\n\
+float32 SensorL\n\
 float32 SensorR\n\
+float32 SensorT\n\
 ";
   }
 
@@ -169,9 +175,10 @@ namespace serialization
   {
     template<typename Stream, typename T> inline static void allInOne(Stream& stream, T m)
     {
-      stream.next(m.SensorL);
       stream.next(m.SensorF);
+      stream.next(m.SensorL);
       stream.next(m.SensorR);
+      stream.next(m.SensorT);
     }
 
     ROS_DECLARE_ALLINONE_SERIALIZER
@@ -190,12 +197,14 @@ struct Printer< ::roboserv_description::Sensores_<ContainerAllocator> >
 {
   template<typename Stream> static void stream(Stream& s, const std::string& indent, const ::roboserv_description::Sensores_<ContainerAllocator>& v)
   {
-    s << indent << "SensorL: ";
-    Printer<float>::stream(s, indent + "  ", v.SensorL);
     s << indent << "SensorF: ";
     Printer<float>::stream(s, indent + "  ", v.SensorF);
+    s << indent << "SensorL: ";
+    Printer<float>::stream(s, indent + "  ", v.SensorL);
     s << indent << "SensorR: ";
     Printer<float>::stream(s, indent + "  ", v.SensorR);
+    s << indent << "SensorT: ";
+    Printer<float>::stream(s, indent + "  ", v.SensorT);
   }
 };
 

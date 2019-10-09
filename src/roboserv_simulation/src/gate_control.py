@@ -48,8 +48,8 @@ def gate_control():
 	output_vel = Twist()
 
 	# Para o robo caso o sensor seja ativado
-	if range_L < 0.3 or range_F < 0.3 or range_R < 0.3:
-		last_input_vel.linear.x = 0
+	#if range_L < 0.3 or range_F < 0.3 or range_R < 0.3:
+		#last_input_vel.linear.x = 0
 	
 	# Aplica a rampa e realimenta os estados
 	# Tempo de subida: 	2 s
@@ -59,11 +59,43 @@ def gate_control():
 	#output_vel.linear.x = b * last_output_vel.linear.x + a * last_input_vel.linear.x
 	#output_vel.angular.z = b * last_output_vel.angular.z + a * last_input_vel.angular.z
 	
-	Ta = 0.2 # Tempo de assentamento (s)
-	Hz = 20.0 # Frequencia de atualizacao
-	e = exp(- 4/Ta * 1/Hz)
-	output_vel.linear.x = last_output_vel.linear.x * e + last_input_vel.linear.x * (1 - e)
-	output_vel.angular.z = last_output_vel.angular.z * e + last_input_vel.angular.z * (1 - e)
+	#Ta = 0.2 # Tempo de assentamento (s)
+	#Hz = 20.0 # Frequencia de atualizacao
+	#e = exp(- 4/Ta * 1/Hz)
+	#output_vel.linear.x = last_output_vel.linear.x * e + last_input_vel.linear.x * (1 - e)
+	#output_vel.angular.z = last_output_vel.angular.z * e + last_input_vel.angular.z * (1 - e)
+
+	max_acel_linear = 0.5
+	max_acel_angular = 0.9
+
+
+	max_acel_linear_fp = max_acel_linear / 20
+	diff_linear = input_vel.linear.x - last_output_vel.linear.x
+
+	if diff_linear != 0:
+		signal_linear = diff_linear / abs(diff_linear)
+	else:
+		signal_linear = 1
+
+	if abs(input_vel.linear.x - last_output_vel.linear.x) > max_acel_linear_fp:
+		output_vel.linear.x = last_output_vel.linear.x + signal_linear * max_acel_linear_fp
+	else:
+		output_vel.linear.x = input_vel.linear.x
+
+
+	max_acel_angular_fp = max_acel_angular / 20
+	diff_angular =  input_vel.angular.z - last_output_vel.angular.z
+
+	if diff_angular != 0:
+		signal_angular = diff_angular / abs(diff_angular)
+	else:
+		signal_angular = 1
+	
+	if abs(input_vel.angular.z - last_output_vel.angular.z) > max_acel_angular_fp:
+		output_vel.angular.z = last_output_vel.angular.z + signal_angular * max_acel_angular_fp
+	else:
+		output_vel.angular.z = input_vel.angular.z
+	
 
 	last_output_vel = output_vel
 	last_input_vel = input_vel

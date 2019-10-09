@@ -235,9 +235,10 @@
 		
 	<!--Sensor Infravermelho-->
 
-	<xacro:create_ir name="distSensor_R"  body_name="${robot_name}" lenght="${body_radius}" height="${body_length/2}" ang_degree="-45"/>
 	<xacro:create_ir name="distSensor_F"  body_name="${robot_name}" lenght="${body_radius}" height="${body_length/2}" ang_degree="0"/>
 	<xacro:create_ir name="distSensor_L"  body_name="${robot_name}" lenght="${body_radius}" height="${body_length/2}" ang_degree="45"/>
+	<xacro:create_ir name="distSensor_R"  body_name="${robot_name}" lenght="${body_radius}" height="${body_length/2}" ang_degree="-45"/>
+	<xacro:create_ir name="distSensor_T"  body_name="${robot_name}" lenght="${body_radius}" height="${body_length/2}" ang_degree="180"/>
 
 	
 </robot>
