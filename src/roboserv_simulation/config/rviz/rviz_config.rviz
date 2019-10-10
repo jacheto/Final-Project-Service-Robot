@@ -8,6 +8,7 @@ Panels:
         - /Robot1
         - /Robot1/Polygon1
         - /Distance Sensors1
+        - /Distance Sensors1/DistSensorBack1
       Splitter Ratio: 0.636828661
     Tree Height: 386
   - Class: rviz/Selection
@@ -28,7 +29,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: ""
+    SyncSource: Camera
 Visualization Manager:
   Class: ""
   Displays:
@@ -139,6 +140,11 @@ Visualization Manager:
                 zed_right_camera_frame:
                   zed_right_camera_optical_frame:
                     {}
+            local_map:
+              odom:
+                {}
+            map:
+              {}
           Update Interval: 0
           Value: true
       Enabled: true
@@ -332,7 +338,7 @@ Visualization Manager:
         - Alpha: 0.5
           Buffer Length: 1
           Class: rviz/Range
-          Color: 255; 255; 255
+          Color: 255; 255; 0
           Enabled: true
           Name: DistSensorBack
           Queue Size: 100
