@@ -13,6 +13,11 @@
 	<param name="robot_description" command="$(find xacro)/xacro.py '$(find roboserv_description)/urdf/roboserv.xacro' using_simulation:=0"/>
 	<param name="use_sim_time" value="false"/>
 
+	<!-- Transforma o mapa em uma imagem para enviar para o app 
+	<node name="transform_map" pkg="roboserv_simulation" type="transform_map.py">
+		<param name="directory" value="$(arg maps_dir)/$(arg map_name)"/>
+	</node>-->
+
 	<!-- Prepara o ambiente -->
 	<node name="prepare_env" pkg="roboserv_simulation" type="prepare_env.py">
 		<param name="directory" value="$(arg maps_dir)/$(arg map_name)"/>
@@ -75,10 +80,6 @@
 	<!-- Carrega o mapa do arquivo gerado no topico map -->
 	<group unless="$(arg mapping)">
 		<node name="planner_map_server" pkg="map_server" type="map_server" args="$(arg maps_dir)/$(arg map_name)/map_img.yaml"/>
-
-		<!--node name="costmap_node" pkg="costmap_2d" type="costmap_2d_node" >
-			<rosparam file="$(find roboserv_simulation)/config/move_base/costmap_common.yaml" command="load" ns="costmap" />
-		</node-->
 	</group>
 
 	<group if="$(arg mapping)">
@@ -98,7 +99,9 @@
 		</node>
 		
 		<!-- Salva o mapa em um arquivo continuamente -->
-		<node name="map_saver" pkg="map_server" type="map_saver" args="-f $(arg maps_dir)/$(arg map_name)/map_img"/>
+		<node name="save_map" pkg="roboserv_simulation" type="save_map.py">
+			<param name="directory" value="$(arg maps_dir)/$(arg map_name)"/>
+		</node>
 	</group>
 
 	<!-- rtabmap: Realiza o mapeamento e relocaliza o robo ao resetar -->

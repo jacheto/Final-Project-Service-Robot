@@ -39,27 +39,18 @@ def ProcessarScan(scan):
 	global sensor_R
 	global sensor_T
 	r = list(scan.ranges)
-	n_hp = 200#rospy.get_param('~hidden_points') # numero de pontos ignorados de ambos os lados
+	n_hp = rospy.get_param('~hidden_points') # numero de pontos ignorados de ambos os lados
 	n_s = 200 # numero de pontos que representarao os sensores ultrassonicos
 	nan = float('nan')
 	
 	
-	min_dist = 0.5
+	min_dist = 0.4
 
-	if all(i < min_dist for i in sensor_L):
-		r_L = [min_dist]*n_s
-	else:
-		r_L = r[:n_s]
+	#r_L = [min_dist]*n_s if all(i < min_dist for i in sensor_L) else r[:n_s]
 	
-	if all(i < min_dist for i in sensor_F):
-		r_F = [min_dist]*n_s
-	else:
-		r_F = r[(len(r)-n_s)/2:(len(r)+n_s)/2]
+	#r_F = [min_dist]*n_s if all(i < min_dist for i in sensor_F) else r[(len(r)-n_s)/2:(len(r)+n_s)/2]
 
-	if all(i < min_dist for i in sensor_R):
-		r_R = [min_dist]*n_s
-	else:
-		r_R = r[len(r)-n_s:]
+	#r_R = [min_dist]*n_s if all(i < min_dist for i in sensor_R) else r[len(r)-n_s:]
 	
 	
 

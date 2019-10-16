@@ -96,11 +96,6 @@ def get(chave, obter_tempo=False):
         return valor
 
 
-def rotateImage(image, angle):
-    center=tuple(np.array(image.shape[0:2])/4)
-    rot_mat = cv2.getRotationMatrix2D(center,angle,1.0)
-    return cv2.warpAffine(image, rot_mat, image.shape[0:2],flags=cv2.INTER_LINEAR)
-
 
 def loop2():
     
