@@ -53,28 +53,36 @@ CMAKE_BINARY_DIR = /home/felipe/roboserv_ws/build
 # Include the progress variables for this target.
 include roboserv_description/CMakeFiles/roboserv_description_generate_messages_py.dir/progress.make
 
+roboserv_description/CMakeFiles/roboserv_description_generate_messages_py: /home/felipe/roboserv_ws/devel/lib/python2.7/dist-packages/roboserv_description/msg/_AppMsg.py
 roboserv_description/CMakeFiles/roboserv_description_generate_messages_py: /home/felipe/roboserv_ws/devel/lib/python2.7/dist-packages/roboserv_description/msg/_Sensores.py
 roboserv_description/CMakeFiles/roboserv_description_generate_messages_py: /home/felipe/roboserv_ws/devel/lib/python2.7/dist-packages/roboserv_description/msg/_Motores.py
 roboserv_description/CMakeFiles/roboserv_description_generate_messages_py: /home/felipe/roboserv_ws/devel/lib/python2.7/dist-packages/roboserv_description/msg/__init__.py
 
 
+/home/felipe/roboserv_ws/devel/lib/python2.7/dist-packages/roboserv_description/msg/_AppMsg.py: /opt/ros/kinetic/lib/genpy/genmsg_py.py
+/home/felipe/roboserv_ws/devel/lib/python2.7/dist-packages/roboserv_description/msg/_AppMsg.py: /home/felipe/roboserv_ws/src/roboserv_description/msg/AppMsg.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/felipe/roboserv_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Python from MSG roboserv_description/AppMsg"
+	cd /home/felipe/roboserv_ws/build/roboserv_description && ../catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /home/felipe/roboserv_ws/src/roboserv_description/msg/AppMsg.msg -Iroboserv_description:/home/felipe/roboserv_ws/src/roboserv_description/msg -Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg -p roboserv_description -o /home/felipe/roboserv_ws/devel/lib/python2.7/dist-packages/roboserv_description/msg
+
 /home/felipe/roboserv_ws/devel/lib/python2.7/dist-packages/roboserv_description/msg/_Sensores.py: /opt/ros/kinetic/lib/genpy/genmsg_py.py
 /home/felipe/roboserv_ws/devel/lib/python2.7/dist-packages/roboserv_description/msg/_Sensores.py: /home/felipe/roboserv_ws/src/roboserv_description/msg/Sensores.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/felipe/roboserv_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Python from MSG roboserv_description/Sensores"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/felipe/roboserv_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Python from MSG roboserv_description/Sensores"
 	cd /home/felipe/roboserv_ws/build/roboserv_description && ../catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /home/felipe/roboserv_ws/src/roboserv_description/msg/Sensores.msg -Iroboserv_description:/home/felipe/roboserv_ws/src/roboserv_description/msg -Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg -p roboserv_description -o /home/felipe/roboserv_ws/devel/lib/python2.7/dist-packages/roboserv_description/msg
 
 /home/felipe/roboserv_ws/devel/lib/python2.7/dist-packages/roboserv_description/msg/_Motores.py: /opt/ros/kinetic/lib/genpy/genmsg_py.py
 /home/felipe/roboserv_ws/devel/lib/python2.7/dist-packages/roboserv_description/msg/_Motores.py: /home/felipe/roboserv_ws/src/roboserv_description/msg/Motores.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/felipe/roboserv_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Python from MSG roboserv_description/Motores"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/felipe/roboserv_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating Python from MSG roboserv_description/Motores"
 	cd /home/felipe/roboserv_ws/build/roboserv_description && ../catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /home/felipe/roboserv_ws/src/roboserv_description/msg/Motores.msg -Iroboserv_description:/home/felipe/roboserv_ws/src/roboserv_description/msg -Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg -p roboserv_description -o /home/felipe/roboserv_ws/devel/lib/python2.7/dist-packages/roboserv_description/msg
 
 /home/felipe/roboserv_ws/devel/lib/python2.7/dist-packages/roboserv_description/msg/__init__.py: /opt/ros/kinetic/lib/genpy/genmsg_py.py
+/home/felipe/roboserv_ws/devel/lib/python2.7/dist-packages/roboserv_description/msg/__init__.py: /home/felipe/roboserv_ws/devel/lib/python2.7/dist-packages/roboserv_description/msg/_AppMsg.py
 /home/felipe/roboserv_ws/devel/lib/python2.7/dist-packages/roboserv_description/msg/__init__.py: /home/felipe/roboserv_ws/devel/lib/python2.7/dist-packages/roboserv_description/msg/_Sensores.py
 /home/felipe/roboserv_ws/devel/lib/python2.7/dist-packages/roboserv_description/msg/__init__.py: /home/felipe/roboserv_ws/devel/lib/python2.7/dist-packages/roboserv_description/msg/_Motores.py
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/felipe/roboserv_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating Python msg __init__.py for roboserv_description"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/felipe/roboserv_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating Python msg __init__.py for roboserv_description"
 	cd /home/felipe/roboserv_ws/build/roboserv_description && ../catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py -o /home/felipe/roboserv_ws/devel/lib/python2.7/dist-packages/roboserv_description/msg --initpy
 
 roboserv_description_generate_messages_py: roboserv_description/CMakeFiles/roboserv_description_generate_messages_py
+roboserv_description_generate_messages_py: /home/felipe/roboserv_ws/devel/lib/python2.7/dist-packages/roboserv_description/msg/_AppMsg.py
 roboserv_description_generate_messages_py: /home/felipe/roboserv_ws/devel/lib/python2.7/dist-packages/roboserv_description/msg/_Sensores.py
 roboserv_description_generate_messages_py: /home/felipe/roboserv_ws/devel/lib/python2.7/dist-packages/roboserv_description/msg/_Motores.py
 roboserv_description_generate_messages_py: /home/felipe/roboserv_ws/devel/lib/python2.7/dist-packages/roboserv_description/msg/__init__.py

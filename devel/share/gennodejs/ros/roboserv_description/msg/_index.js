@@ -2,13 +2,11 @@
 "use strict";
 
 let Motores = require('./Motores.js');
-let AppMessages = require('./AppMessages.js');
+let AppMsg = require('./AppMsg.js');
 let Sensores = require('./Sensores.js');
-let AppPoint = require('./AppPoint.js');
 
 module.exports = {
   Motores: Motores,
-  AppMessages: AppMessages,
+  AppMsg: AppMsg,
   Sensores: Sensores,
-  AppPoint: AppPoint,
 };

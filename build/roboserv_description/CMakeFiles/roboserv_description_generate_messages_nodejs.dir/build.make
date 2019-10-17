@@ -53,21 +53,28 @@ CMAKE_BINARY_DIR = /home/felipe/roboserv_ws/build
 # Include the progress variables for this target.
 include roboserv_description/CMakeFiles/roboserv_description_generate_messages_nodejs.dir/progress.make
 
+roboserv_description/CMakeFiles/roboserv_description_generate_messages_nodejs: /home/felipe/roboserv_ws/devel/share/gennodejs/ros/roboserv_description/msg/AppMsg.js
 roboserv_description/CMakeFiles/roboserv_description_generate_messages_nodejs: /home/felipe/roboserv_ws/devel/share/gennodejs/ros/roboserv_description/msg/Sensores.js
 roboserv_description/CMakeFiles/roboserv_description_generate_messages_nodejs: /home/felipe/roboserv_ws/devel/share/gennodejs/ros/roboserv_description/msg/Motores.js
 
 
+/home/felipe/roboserv_ws/devel/share/gennodejs/ros/roboserv_description/msg/AppMsg.js: /opt/ros/kinetic/lib/gennodejs/gen_nodejs.py
+/home/felipe/roboserv_ws/devel/share/gennodejs/ros/roboserv_description/msg/AppMsg.js: /home/felipe/roboserv_ws/src/roboserv_description/msg/AppMsg.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/felipe/roboserv_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Javascript code from roboserv_description/AppMsg.msg"
+	cd /home/felipe/roboserv_ws/build/roboserv_description && ../catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /home/felipe/roboserv_ws/src/roboserv_description/msg/AppMsg.msg -Iroboserv_description:/home/felipe/roboserv_ws/src/roboserv_description/msg -Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg -p roboserv_description -o /home/felipe/roboserv_ws/devel/share/gennodejs/ros/roboserv_description/msg
+
 /home/felipe/roboserv_ws/devel/share/gennodejs/ros/roboserv_description/msg/Sensores.js: /opt/ros/kinetic/lib/gennodejs/gen_nodejs.py
 /home/felipe/roboserv_ws/devel/share/gennodejs/ros/roboserv_description/msg/Sensores.js: /home/felipe/roboserv_ws/src/roboserv_description/msg/Sensores.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/felipe/roboserv_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Javascript code from roboserv_description/Sensores.msg"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/felipe/roboserv_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Javascript code from roboserv_description/Sensores.msg"
 	cd /home/felipe/roboserv_ws/build/roboserv_description && ../catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /home/felipe/roboserv_ws/src/roboserv_description/msg/Sensores.msg -Iroboserv_description:/home/felipe/roboserv_ws/src/roboserv_description/msg -Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg -p roboserv_description -o /home/felipe/roboserv_ws/devel/share/gennodejs/ros/roboserv_description/msg
 
 /home/felipe/roboserv_ws/devel/share/gennodejs/ros/roboserv_description/msg/Motores.js: /opt/ros/kinetic/lib/gennodejs/gen_nodejs.py
 /home/felipe/roboserv_ws/devel/share/gennodejs/ros/roboserv_description/msg/Motores.js: /home/felipe/roboserv_ws/src/roboserv_description/msg/Motores.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/felipe/roboserv_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Javascript code from roboserv_description/Motores.msg"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/felipe/roboserv_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating Javascript code from roboserv_description/Motores.msg"
 	cd /home/felipe/roboserv_ws/build/roboserv_description && ../catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /home/felipe/roboserv_ws/src/roboserv_description/msg/Motores.msg -Iroboserv_description:/home/felipe/roboserv_ws/src/roboserv_description/msg -Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg -p roboserv_description -o /home/felipe/roboserv_ws/devel/share/gennodejs/ros/roboserv_description/msg
 
 roboserv_description_generate_messages_nodejs: roboserv_description/CMakeFiles/roboserv_description_generate_messages_nodejs
+roboserv_description_generate_messages_nodejs: /home/felipe/roboserv_ws/devel/share/gennodejs/ros/roboserv_description/msg/AppMsg.js
 roboserv_description_generate_messages_nodejs: /home/felipe/roboserv_ws/devel/share/gennodejs/ros/roboserv_description/msg/Sensores.js
 roboserv_description_generate_messages_nodejs: /home/felipe/roboserv_ws/devel/share/gennodejs/ros/roboserv_description/msg/Motores.js
 roboserv_description_generate_messages_nodejs: roboserv_description/CMakeFiles/roboserv_description_generate_messages_nodejs.dir/build.make

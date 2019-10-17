@@ -1,6 +1,6 @@
 # generated from genmsg/cmake/pkg-genmsg.context.in
 
-messages_str = "/home/felipe/roboserv_ws/src/roboserv_description/msg/Sensores.msg;/home/felipe/roboserv_ws/src/roboserv_description/msg/Motores.msg"
+messages_str = "/home/felipe/roboserv_ws/src/roboserv_description/msg/Sensores.msg;/home/felipe/roboserv_ws/src/roboserv_description/msg/Motores.msg;/home/felipe/roboserv_ws/src/roboserv_description/msg/AppMsg.msg"
 services_str = ""
 pkg_name = "roboserv_description"
 dependencies_str = "std_msgs"

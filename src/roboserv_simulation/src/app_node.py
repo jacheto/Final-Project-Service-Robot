@@ -25,7 +25,7 @@ import cv2
 import base64
 from time import sleep
 from six.moves import urllib
-from geometry_msgs.msg import Twist
+from roboserv_description.msg import AppMsg
 
 class Roscore(object):
     """
@@ -49,47 +49,52 @@ class Roscore(object):
             raise e
 
     def terminate(self):
-        print("try to kill child pids of roscore pid: " + str(self.roscore_pid))
+        logmsg("try to kill child pids of roscore pid: " + str(self.roscore_pid))
         kill_child_processes(self.roscore_pid)
         self.roscore_process.terminate()
         self.roscore_process.wait()  # important to prevent from zombie process
         Roscore.__initialized = False
         self.rodando = False
 
+def logmsg(msg):
+    rospy.loginfo(msg)
+
 def kill_child_processes(parent_pid, sig=signal.SIGTERM):
     try:
         parent = psutil.Process(parent_pid)
-        print(parent)
+        logmsg(parent)
     except psutil.NoSuchProcess:
-        print("parent process not existing")
+        logmsg("parent process not existing")
         return
     children = parent.children(recursive=True)
-    print(children)
+    logmsg(children)
     for process in children:
-        print("try to kill child: " + str(process))
+        logmsg("try to kill child: " + str(process))
         process.send_signal(sig)
 
 def post(chave, valor):
-    print("post " + chave)
-    address = "http://192.168.1.2:5010"
+    logmsg("post called at '" + chave + "'")
+    address = rospy.get_param('~server_address')
     valor_json = json.dumps(valor)
     try:
         requests.post(url = address + "/post_data?chave=" + chave, data=valor_json)
     except:
-        print("Aguardando Server")
+        logmsg("Aguardando Server")
 
 def get(chave, obter_tempo=False):
-    print("get " + chave)
-    address = "http://192.168.1.2:5010"
+    logmsg("get called at '" + chave + "'")
+    address = rospy.get_param('~server_address')
     valor_json = ""
     try:
         valor_json = urllib.request.urlopen(address + '/get_data?chave=' + chave).read()
     except:
-        print("Aguardando Server")
+        logmsg("Aguardando Server")
     if valor_json == "":
         return "" if not obter_tempo else {'valor':"", 'tempo':0}
+    
     valor_dict = json.loads(valor_json)
-    valor = json.loads(valor_dict['valor'])
+    logmsg(valor_dict)
+    valor = valor_dict['valor']
     if obter_tempo:
         return {'valor': valor, 'tempo': valor_dict['timestamp_get'] - valor_dict['timestamp_post']}
     else:
@@ -97,109 +102,15 @@ def get(chave, obter_tempo=False):
 
 
 
-def loop2():
-    
-    # Avisa que o PC ligou
-    post("pc_on", True)
-
-    # Verifica se o app foi aberto
-    app_on = False
-    while not app_on:
-        app_on = get('app_on')
-        print("aguardando app")
-        sleep(0.1)
-
-    # Inicia modo escolha de mapa
-    navigation_mode = 0
-    post('navigation_mode', navigation_mode)
-
-    # Escolha dos mapas
-    valid_map = False
-    while not valid_map:
-
-        directory = '/media/felipe/DATA/ROS_maps/roboserv' #rospy.get_param('~directory')
-        if not os.path.isdir(directory):
-            os.mkdir(directory)
-        
-        maps_list = []
-        for subdir, dirs, files in os.walk(directory):
-            maps_list.append(dirs[0])
-        
-        post('maps_list', maps_list)
-
-        map_name = ""
-        while map_name == "":
-            map_name = get('map_name')
-            print("aguardando mapa")
-            sleep(0.1)
-
-        if map_name.endswith('_del'):
-            shutil.rmtree(directory + '/' + map_name.replace('_del', ''))
-            apagou_mapa = True
-            post('apagou_mapa', True)
-        else:
-            valid_map = True
-    
-
-    map_directory = directory + '/' + map_name
-
-    if map_name == "default":
-        if os.path.isdir(map_directory):
-            shutil.rmtree(map_directory)
-
-    if maps_list.__contains__(map_name) and map_name != "default":
-        mapping = "false"
-        navigation_mode = 1
-    else:
-        mapping = "true"
-        navigation_mode = 2
-    
-    if not os.path.isdir(map_directory):
-            os.mkdir(map_directory)
-    
-    # inicia ROS com os parâmetros map_name e mapping
-
-    roscore = Roscore()
-    
-    command_list = ['roslaunch', 'roboserv_simulation', 'roboserv_real.launch', 'map_name:="' + map_name + '"', 'mapping:="' + mapping + '"']
-    roscore.run(command_list)
-    time.sleep(5)
-
-    post('navigation_mode',navigation_mode)
-
-    if navigation_mode == 1:
-        post('localization_status', 0)
-
-
-
-    # envio do mapa
-
-    filename_pgm = ""
-    filename_jpg = ""
-    image_pgm = cv2.imread(filename_pgm)
-    cv2.imwrite(filename_jpg, image_pgm)
-    image_jpg = open(filename_jpg, 'rb')
-    image_b64 = base64.encodestring(image_jpg.read())
-    post("map_64", image_b64)
-
-
-
-    #roscore.terminate()
-
-    # verificar se o ROS já está aberto e rodando
-
-
 def loop():
 
-    global vel_pub
-    global vel
     rospy.init_node('app_node')
-    vel_pub = rospy.Publisher('cmd_vel_mux/input/teleop', Twist, queue_size=1)
-
-    vel = Twist()
+    appMsg_pub = rospy.Publisher('appMsgs', AppMsg, queue_size=1)
+    
     rate = rospy.Rate(1)
     
-    directory = '/media/felipe/DATA/ROS_maps/roboserv/' #rospy.get_param('~directory')
+    directory = rospy.get_param('~directory')
+    ard_port = rospy.get_param('~ard_port')
     map_dir = ""
     roscore = Roscore()
     app_ligado = False
@@ -214,23 +125,23 @@ def loop():
         # Avisa o App que o PC está ligado
         post("pc_on", True)
         post('navigation_mode', navigation_mode)
+        # navigation_mode = 0 -> Não escolheu modo ainda
+        # navigation_mode = 1 -> Modo localizacao
+        # navigation_mode = 2 -> Modo mapeamento
+        
 
         # Verifica se o App está ligado
         app_dict = get('app_on', True)
-        app_ligado = app_dict['valor']
+        if type(app_dict) is dict:
+            app_ligado = app_dict['valor']
+        else:
+            app_ligado = False
         
         if not app_ligado:
             resetar_robo = True
-            print("aguardando app")
+            logmsg("aguardando app")
         
         else:
-
-            # Verifica se o último sinal de 'app ligado' foi enviado a mais de 5 segundos
-            t_now = time.time()
-            if app_dict['tempo'] > 5:
-                # [TODO] Envia sinal para o robô parar o movimento
-                #print("para o movimento do robo")
-                pass
                 
             if not escolheu_mapa:
 
@@ -242,13 +153,15 @@ def loop():
                 post('maps_list', maps_list)
 
                 map_name = get('map_name')
-                if map_name == "":
-                    print("aguardando mapa")
+                if map_name == "" or map_name == 'Key not available!':
+                    logmsg("aguardando mapa")
                 
                 else:
                     if map_name.endswith('_del'):
-                        shutil.rmtree(directory + '/' + map_name.replace('_del', ''))
-                        post('apagou_mapa', True)
+                        dir_del = directory + '/' + map_name.replace('_del', '')
+                        if os.path.isdir(dir_del):
+                            shutil.rmtree(dir_del)
+                            post('apagou_mapa', True)
                     else:
                         escolheu_mapa = True
             
@@ -257,6 +170,7 @@ def loop():
                 if not robo_funcionando:
 
                     map_dir = directory + '/' + map_name
+                    map_app_dir = map_dir + "/map_img.jpg"
 
                     if map_name == "default":
                         if os.path.isdir(map_dir):
@@ -274,22 +188,60 @@ def loop():
                     if not os.path.isdir(map_dir):
                             os.mkdir(map_dir)
                     
-                    command_list = ['roslaunch', 'roboserv_simulation', 'roboserv_real.launch', 'map_name:=' + map_name, 'mapping:=' + mapping]
+                    logmsg("Iniciando robo")
+                    command_list = ['roslaunch', 'roboserv_simulation', 'roboserv_real.launch', 'map_name:=' + map_name, 'mapping:=' + mapping, 'maps_dir:=' + directory, 'ard_port:=' + ard_port]
                     roscore.run(command_list)
                     time.sleep(5)
 
                     robo_funcionando = True
-                
+                    
                 else:
-                    print("robo funcionando!")
-                    map_app_dir = map_dir + "/map_app.jpg"
+                    
+                    # Envia o mapa atual
                     if os.path.exists(map_app_dir):
-                        image_jpg = open(map_app_dir, 'rb')
-                        image_b64 = base64.encodestring(image_jpg.read())
-                        post("map_64", image_b64)
+                        with open(map_app_dir,'rb') as image_jpg:
+                            image_b64 = base64.encodestring(image_jpg.read())
+                        post("map_64", 'data:image/jpg;base64,' + image_b64)
+                    
+                    # Obtem os comandos do app
+                    operation_mode = get("operation_mode")
+                    # operation_mode = 1 -> Seguir ponto no mapa definido pelo app
+                    # operation_mode = 2 -> Navegacao manual
+                    # operation_mode = 3 -> Navegacao autonoma
+                    # operation_mode = 4 -> Parar movimentação
+                    
+                    # obtem o local onde o robo deve ir
+                    robot_pos = get("robot_goal")
+                    
+                    # obtem os comandos dependendo de onde o usuario clicar no app
+                    robot_commands = get("robot_commands")
+
+                    # obtem o status do botao de desligar robo (a logica esta assim para impedir que 
+                    # qualquer valor além de True seja considerado verdadeiro no 'if resetar_robo')
+                    resetar_robo = True if get("turn_robot_off") == True else False
+
+                    appMsg = AppMsg()
+                    appMsg.operation_mode = operation_mode
+                    appMsg.navigation_mode = navigation_mode
+                    appMsg.button_up = robot_commands['up']
+                    appMsg.button_down = robot_commands['down']
+                    appMsg.button_left = robot_commands['left']
+                    appMsg.button_right = robot_commands['right']
+                    appMsg.button_up_left = robot_commands['up_left']
+                    appMsg.button_up_right = robot_commands['up_right']
+                    appMsg.button_down_left = robot_commands['down_left']
+                    appMsg.button_down_right = robot_commands['down_right']
+                    appMsg.robot_pos_x = robot_pos['x']
+                    appMsg.robot_pos_y = robot_pos['y']
+
+                    appMsg_pub.publish(appMsg)
 
 
-                
+            
+            # Verifica se o último sinal de 'app ligado' foi enviado a mais de 5 segundos
+            if app_dict['tempo'] > 5:
+                operation_mode = 4
+            
         if resetar_robo:
             if roscore.rodando:
                 roscore.terminate()

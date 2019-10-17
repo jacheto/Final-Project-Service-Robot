@@ -36,6 +36,7 @@ if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspeci
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/roboserv_description/msg" TYPE FILE FILES
     "/home/felipe/roboserv_ws/src/roboserv_description/msg/Sensores.msg"
     "/home/felipe/roboserv_ws/src/roboserv_description/msg/Motores.msg"
+    "/home/felipe/roboserv_ws/src/roboserv_description/msg/AppMsg.msg"
     )
 endif()
 

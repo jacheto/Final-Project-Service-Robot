@@ -1,0 +1,12 @@
+uint8 operation_mode
+uint8 navigation_mode
+bool button_up
+bool button_down
+bool button_left
+bool button_right
+bool button_up_left
+bool button_up_right
+bool button_down_left
+bool button_down_right
+float32 robot_pos_x
+float32 robot_pos_y

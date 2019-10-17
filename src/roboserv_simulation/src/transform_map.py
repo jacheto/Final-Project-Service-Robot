@@ -18,7 +18,7 @@ from math import pi
 def rotateImage(image, x_center, y_center, angle):
     center = (x_center, y_center)
     rot_mat = cv2.getRotationMatrix2D(center,angle,1.0)
-    return cv2.warpAffine(image, rot_mat, image.shape[0:2],flags=cv2.INTER_LINEAR)
+    return cv2.warpAffine(image, rot_mat, image.shape[0:2], flags=cv2.INTER_LINEAR, borderValue=(205, 205, 205))
 
 
 def get_pos(trans, map_path_yaml, img_shape):
@@ -49,7 +49,7 @@ def get_pos(trans, map_path_yaml, img_shape):
 def loop():
     
 	rospy.init_node('transform_map')
-	rate = rospy.Rate(1)
+	rate = rospy.Rate(2)
 
 	# definicao de parametros
 	tfBuffer = tf2_ros.Buffer()
@@ -80,6 +80,7 @@ def loop():
 			if not img is None:
 				# atualiza a posicao do robo em relacao ao mapa
 				(x_origin_px, y_origin_px, x_robot_px, y_robot_px, ang) = get_pos(trans, map_path_yaml, np.shape(img))
+				
 				img_rot = rotateImage(img, y_origin_px, x_origin_px, 90)
 				# rotaciona a imagem com o centro na posicao onde o robo esta
 				x = x_origin_px - x_robot_px
@@ -95,6 +96,7 @@ def loop():
 				
 				
 				img_rot = img_rot[int(x-img_size_y*(1-prop)):int(x+img_size_y*prop), y-int(img_size_x/2):int(y+img_size_x/2)]
+
 				# salva a imgagem como jpg
 				cv2.imwrite(map_path_jpg, img_rot)
 

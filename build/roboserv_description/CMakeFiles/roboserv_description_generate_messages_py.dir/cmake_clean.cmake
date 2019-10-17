@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/roboserv_description_generate_messages_py"
+  "/home/felipe/roboserv_ws/devel/lib/python2.7/dist-packages/roboserv_description/msg/_AppMsg.py"
   "/home/felipe/roboserv_ws/devel/lib/python2.7/dist-packages/roboserv_description/msg/_Sensores.py"
   "/home/felipe/roboserv_ws/devel/lib/python2.7/dist-packages/roboserv_description/msg/_Motores.py"
   "/home/felipe/roboserv_ws/devel/lib/python2.7/dist-packages/roboserv_description/msg/__init__.py"

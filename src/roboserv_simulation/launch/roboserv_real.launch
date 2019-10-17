@@ -3,9 +3,9 @@
 	
 	<!-- Porta do Arduino -->
 	<arg name="ard_port" default="0" />
+	<arg name="maps_dir" default="/mnt/HD/ROS_maps/roboserv" />
 	<arg name="mapping" default="true" />
-	<arg name="maps_dir" default="/media/felipe/DATA/ROS_maps/roboserv" />
-	<arg name="map_name" default="testes_dev" />
+	<arg name="map_name" default="default" />
 	
 	<!-- Definicao do robo -->
 	<param name="robot/name" value="roboserv_real"/>
@@ -13,10 +13,10 @@
 	<param name="robot_description" command="$(find xacro)/xacro.py '$(find roboserv_description)/urdf/roboserv.xacro' using_simulation:=0"/>
 	<param name="use_sim_time" value="false"/>
 
-	<!-- Transforma o mapa em uma imagem para enviar para o app 
+	<!-- Transforma o mapa em uma imagem para enviar para o app -->
 	<node name="transform_map" pkg="roboserv_simulation" type="transform_map.py">
 		<param name="directory" value="$(arg maps_dir)/$(arg map_name)"/>
-	</node>-->
+	</node>
 
 	<!-- Prepara o ambiente -->
 	<node name="prepare_env" pkg="roboserv_simulation" type="prepare_env.py">

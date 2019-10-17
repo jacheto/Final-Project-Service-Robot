@@ -54,11 +54,11 @@ def gate_control():
 	# Para o robo caso o sensor seja ativado
 	if range_L < 0.3 or range_F < 0.3 or range_R < 0.3:
 		if last_input_vel.linear.x > 0:
-			last_input_vel.linear.x = 0
+			pass#last_input_vel.linear.x = 0
 
 	if range_T < 0.3:
 		if last_input_vel.linear.x < 0:
-			last_input_vel.linear.x = 0
+			pass#last_input_vel.linear.x = 0
 	
 	# Aplica a rampa de velocidade
 	max_acel_linear = 0.5

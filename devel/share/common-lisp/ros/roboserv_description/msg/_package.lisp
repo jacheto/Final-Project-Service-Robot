@@ -1,10 +1,8 @@
 (cl:defpackage roboserv_description-msg
   (:use )
   (:export
-   "<APPMESSAGES>"
-   "APPMESSAGES"
-   "<APPPOINT>"
-   "APPPOINT"
+   "<APPMSG>"
+   "APPMSG"
    "<MOTORES>"
    "MOTORES"
    "<SENSORES>"
