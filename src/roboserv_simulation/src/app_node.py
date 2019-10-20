@@ -115,7 +115,7 @@ def loop():
     app_ligado = False
     escolheu_mapa = False
     maps_list = []
-    navigation_mode = 0
+    navigation_mode = -1
     robo_funcionando = False
     resetar_robo = False
     
@@ -124,7 +124,8 @@ def loop():
         # Avisa o App que o PC está ligado
         post("pc_on", True)
         post('navigation_mode', navigation_mode)
-        # navigation_mode = 0 -> Não escolheu modo ainda
+        # navigation_mode = -1 -> Está escolhendo um mapa
+        # navigation_mode = 0 -> Está escolhendo um mapa (faz o app voltar para o mapa e só dura um ciclo)
         # navigation_mode = 1 -> Modo localizacao
         # navigation_mode = 2 -> Modo mapeamento
         
@@ -143,6 +144,9 @@ def loop():
         else:
                 
             if not escolheu_mapa:
+                
+                if app_dict['tempo'] > 5:
+                    resetar_robo = True
 
                 if not os.path.isdir(directory):
                     os.mkdir(directory)
@@ -150,6 +154,7 @@ def loop():
                 maps_list = os.listdir(directory)
 
                 post('maps_list', maps_list)
+                navigation_mode = -1
 
                 map_name = get('map_name')
                 print(map_name)
@@ -250,8 +255,8 @@ def loop():
 
             
             # Verifica se o último sinal de 'app ligado' foi enviado a mais de 5 segundos
-            if app_dict['tempo'] > 5:
-                operation_mode = 4
+            if app_dict['tempo'] > 1:
+                post('operation_mode', 4)
             
         if resetar_robo:
             if roscore.rodando:

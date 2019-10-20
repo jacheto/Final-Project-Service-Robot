@@ -55,7 +55,7 @@ def vel_mux():
 	input_vel = Twist()
 	
 	if AppMsg.operation_mode == 1:
-		input_vel = navi_vel
+    		input_vel = navi_vel
 
 	elif AppMsg.operation_mode == 2:
     
@@ -75,8 +75,6 @@ def vel_mux():
 
 		#if min(range_F, range_L, range_R) < 0.3 and input_vel.linear.x > 0:
 		#	input_vel.linear.x = 0
-		
-		print(input_vel)
 
 	elif AppMsg.operation_mode == 3:
 		pass
@@ -102,6 +100,9 @@ def gate_control(input_vel):
 	max_acel_linear = 0.8
 	max_acel_angular = 1
 
+	if min(range_F, range_L, range_R) < 0.3  and input_vel.linear.x > 0:
+		input_vel.linear.x = 0
+	
 	# Rampa linear
 	max_acel_linear_fp = max_acel_linear / 20.0
 	diff_linear = input_vel.linear.x - last_output_vel.linear.x
