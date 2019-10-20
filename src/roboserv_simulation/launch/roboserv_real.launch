@@ -128,6 +128,8 @@
 		<arg name="visual_odometry"		value="false"/>
 	</include>
 
+	<arg name="no_static_map" value="true"/>
+
 	<!-- Path planning -->
 	<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
 		<param name="base_global_planner" value="navfn/NavfnROS"/>
@@ -137,13 +139,13 @@
 		<rosparam file="$(find roboserv_simulation)/config/move_base/costmap_common.yaml" command="load" ns="global_costmap" />
 		<rosparam file="$(find roboserv_simulation)/config/move_base/costmap_common.yaml" command="load" ns="local_costmap" />
 		<rosparam file="$(find roboserv_simulation)/config/move_base/costmap_local.yaml" command="load" ns="local_costmap" />
-		<rosparam file="$(find roboserv_simulation)/config/move_base/costmap_global.yaml" command="load" ns="global_costmap"/>
-		<rosparam file="$(find roboserv_simulation)/config/move_base/move_base_params.yaml" command="load"/>
+		<rosparam file="$(find roboserv_simulation)/config/move_base/costmap_global_static.yaml" command="load" ns="global_costmap" unless="$(arg no_static_map)"/>
+		<rosparam file="$(find roboserv_simulation)/config/move_base/costmap_global_laser.yaml" command="load" ns="global_costmap" if="$(arg no_static_map)"/>
 
 		<param name="local_costmap/width" value="10.0"/>
 		<param name="local_costmap/height" value="10.0"/>
-		<param name="global_costmap/width" value="100.0"/>
-		<param name="global_costmap/height" value="100.0"/>
+		<param name="global_costmap/width" value="100.0" if="$(arg no_static_map)"/>
+		<param name="global_costmap/height" value="100.0" if="$(arg no_static_map)"/>
 		
 		<remap from="cmd_vel" to="cmd_vel_navi"/>
 	</node>
