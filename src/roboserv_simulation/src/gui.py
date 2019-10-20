@@ -188,7 +188,7 @@ class Example(wx.Frame):
             json.dump([point.__dict__ for point in self.points_list], f)
 
     def get_point_list(self):
-        self.points_file = "/media/felipe/DATA/ROS_maps/roboserv/saved_points.txt"
+        self.points_file = "/mnt/HD/ROS_maps/roboserv/saved_points.txt"
         self.points_list = []
         if os.stat(self.points_file).st_size != 0:
             with open(self.points_file, 'r') as f:

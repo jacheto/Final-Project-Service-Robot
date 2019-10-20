@@ -31,8 +31,8 @@ def rotateImage(image, angle):
     return cv2.warpAffine(image, rot_mat, image.shape[0:2],flags=cv2.INTER_LINEAR)
 
 
-filename_pgm = "/media/felipe/DATA/ROS_maps/roboserv/teste3/map_img.pgm"
-filename_jpg = "/media/felipe/DATA/ROS_maps/roboserv/teste3/map_rot.jpg"
+filename_pgm = "/mnt/HD/ROS_maps/roboserv/teste3/map_img.pgm"
+filename_jpg = "/mnt/HD/ROS_maps/roboserv/teste3/map_rot.jpg"
 
 image_pgm = cv2.imread(filename_pgm)
 

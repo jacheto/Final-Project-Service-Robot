@@ -7,11 +7,12 @@
 # Redistribution and use in source and binary forms, with or without
 
 import rospy
+import shutil
 import os
 
 def inicializar():
     rospy.init_node('prepare_env')
-    directory = rospy.get_param('~directory')
+    directory = rospy.get_param('~directory')                                                                                                                                                                                                                                       
     if not os.path.isdir(directory):
         os.mkdir(directory)
 if __name__ == '__main__':

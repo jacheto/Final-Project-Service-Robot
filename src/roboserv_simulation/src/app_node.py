@@ -73,7 +73,7 @@ def kill_child_processes(parent_pid, sig=signal.SIGTERM):
         process.send_signal(sig)
 
 def post(chave, valor):
-    logmsg("post called at '" + chave + "'")
+    #logmsg("post called at '" + chave + "'")
     address = rospy.get_param('~server_address')
     valor_json = json.dumps(valor)
     try:
@@ -82,18 +82,18 @@ def post(chave, valor):
         logmsg("Aguardando Server")
 
 def get(chave, obter_tempo=False):
-    logmsg("get called at '" + chave + "'")
+    #logmsg("get called at '" + chave + "'")
     address = rospy.get_param('~server_address')
     valor_json = ""
-    try:
-        valor_json = urllib.request.urlopen(address + '/get_data?chave=' + chave).read()
-    except:
-        logmsg("Aguardando Server")
+    #try:
+    valor_json = urllib.request.urlopen(address + '/get_data?chave=' + chave).read()
+    #except:
+        #logmsg("Aguardando Server")
     if valor_json == "":
         return "" if not obter_tempo else {'valor':"", 'tempo':0}
     
     valor_dict = json.loads(valor_json)
-    logmsg(valor_dict)
+    #logmsg(valor_dict)
     valor = valor_dict['valor']
     if obter_tempo:
         return {'valor': valor, 'tempo': valor_dict['timestamp_get'] - valor_dict['timestamp_post']}
@@ -107,10 +107,9 @@ def loop():
     rospy.init_node('app_node')
     appMsg_pub = rospy.Publisher('appMsgs', AppMsg, queue_size=1)
     
-    rate = rospy.Rate(1)
+    rate = rospy.Rate(5)
     
     directory = rospy.get_param('~directory')
-    ard_port = rospy.get_param('~ard_port')
     map_dir = ""
     roscore = Roscore()
     app_ligado = False
@@ -133,7 +132,7 @@ def loop():
         # Verifica se o App está ligado
         app_dict = get('app_on', True)
         if type(app_dict) is dict:
-            app_ligado = app_dict['valor']
+            app_ligado = True if app_dict['valor'] == True else False
         else:
             app_ligado = False
         
@@ -153,7 +152,8 @@ def loop():
                 post('maps_list', maps_list)
 
                 map_name = get('map_name')
-                if map_name == "" or map_name == 'Key not available!':
+                print(map_name)
+                if map_name == "":
                     logmsg("aguardando mapa")
                 
                 else:
@@ -162,6 +162,7 @@ def loop():
                         if os.path.isdir(dir_del):
                             shutil.rmtree(dir_del)
                             post('apagou_mapa', True)
+                            print("apagou mapa: " +  map_name.replace('_del', ''))
                     else:
                         escolheu_mapa = True
             
@@ -189,53 +190,63 @@ def loop():
                             os.mkdir(map_dir)
                     
                     logmsg("Iniciando robo")
-                    command_list = ['roslaunch', 'roboserv_simulation', 'roboserv_real.launch', 'map_name:=' + map_name, 'mapping:=' + mapping, 'maps_dir:=' + directory, 'ard_port:=' + ard_port]
+                    command_list = ['roslaunch', 'roboserv_simulation', 'roboserv_real.launch', 'map_name:=' + map_name, 'mapping:=' + mapping, 'maps_dir:=' + directory]
                     roscore.run(command_list)
+                    post('navigation_mode', navigation_mode)
                     time.sleep(5)
 
                     robo_funcionando = True
                     
                 else:
                     
-                    # Envia o mapa atual
-                    if os.path.exists(map_app_dir):
-                        with open(map_app_dir,'rb') as image_jpg:
-                            image_b64 = base64.encodestring(image_jpg.read())
-                        post("map_64", 'data:image/jpg;base64,' + image_b64)
-                    
-                    # Obtem os comandos do app
-                    operation_mode = get("operation_mode")
-                    # operation_mode = 1 -> Seguir ponto no mapa definido pelo app
-                    # operation_mode = 2 -> Navegacao manual
-                    # operation_mode = 3 -> Navegacao autonoma
-                    # operation_mode = 4 -> Parar movimentação
-                    
-                    # obtem o local onde o robo deve ir
-                    robot_pos = get("robot_goal")
-                    
-                    # obtem os comandos dependendo de onde o usuario clicar no app
-                    robot_commands = get("robot_commands")
+                    try:
+                        # Envia o mapa atual
+                        if os.path.exists(map_app_dir):
+                            with open(map_app_dir,'rb') as image_jpg:
+                                image_b64 = base64.encodestring(image_jpg.read())
+                            post("map_64", 'data:image/jpg;base64,' + image_b64)
+                        
+                        # Obtem os comandos do app
+                        operation_mode = get("operation_mode")
+                        
+                        if not isinstance(operation_mode, int):
+                            operation_mode = 0
+                        # operation_mode = 1 -> Seguir ponto no mapa definido pelo app
+                        # operation_mode = 2 -> Navegacao manual
+                        # operation_mode = 3 -> Navegacao autonoma
+                        # operation_mode = 4 -> Parar movimentação
+                        
+                        # obtem o local onde o robo deve ir
+                        robot_pos = get("robot_pos")
+                        
+                        # obtem os comandos dependendo de onde o usuario clicar no app
+                        robot_direction = get("direction")
 
-                    # obtem o status do botao de desligar robo (a logica esta assim para impedir que 
-                    # qualquer valor além de True seja considerado verdadeiro no 'if resetar_robo')
-                    resetar_robo = True if get("turn_robot_off") == True else False
+                        # obtem o status do botao de desligar robo (a logica esta assim para impedir que 
+                        # qualquer valor além de True seja considerado verdadeiro no 'if resetar_robo')
+                        resetar_robo = True if get("turn_robot_off") == True else False
 
-                    appMsg = AppMsg()
-                    appMsg.operation_mode = operation_mode
-                    appMsg.navigation_mode = navigation_mode
-                    appMsg.button_up = robot_commands['up']
-                    appMsg.button_down = robot_commands['down']
-                    appMsg.button_left = robot_commands['left']
-                    appMsg.button_right = robot_commands['right']
-                    appMsg.button_up_left = robot_commands['up_left']
-                    appMsg.button_up_right = robot_commands['up_right']
-                    appMsg.button_down_left = robot_commands['down_left']
-                    appMsg.button_down_right = robot_commands['down_right']
-                    appMsg.robot_pos_x = robot_pos['x']
-                    appMsg.robot_pos_y = robot_pos['y']
+                        appMsg = AppMsg()
+                        appMsg.operation_mode = operation_mode
+                        appMsg.navigation_mode = navigation_mode
+                        if isinstance(robot_direction, dict):
+                            appMsg.button_up = True if robot_direction['up'] == True else False
+                            appMsg.button_down = True if robot_direction['down'] == True else False
+                            appMsg.button_left = True if robot_direction['left'] == True else False
+                            appMsg.button_right = True if robot_direction['right'] == True else False
+                            appMsg.button_up_left = True if robot_direction['no'] == True else False
+                            appMsg.button_up_right = True if robot_direction['ne'] == True else False
+                            appMsg.button_down_left = True if robot_direction['so'] == True else False
+                            appMsg.button_down_right = True if robot_direction['se'] == True else False
+                        if robot_pos != "" and robot_pos != 'Key not available!':
+                            appMsg.robot_pos_x = robot_pos['x']
+                            appMsg.robot_pos_y = robot_pos['y']
 
-                    appMsg_pub.publish(appMsg)
+                        appMsg_pub.publish(appMsg)
 
+                    except Exception as e:
+                        print("Erro no robo: " + str(e))
+                        resetar_robo = True
 
             
             # Verifica se o último sinal de 'app ligado' foi enviado a mais de 5 segundos
@@ -245,7 +256,7 @@ def loop():
         if resetar_robo:
             if roscore.rodando:
                 roscore.terminate()
-            
+            navigation_mode = 0
             escolheu_mapa = False
             robo_funcionando = False
             post('map_name', '')

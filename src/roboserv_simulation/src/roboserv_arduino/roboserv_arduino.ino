@@ -95,7 +95,7 @@ void loop() {
   dist.SensorF = get_dist(pinTrig_F, pinEcho_F);
   dist.SensorL = get_dist(pinTrig_L, pinEcho_L);
   dist.SensorR = get_dist(pinTrig_R, pinEcho_R);
-  dist.SensorT = get_dist(pinTrig_T, pinEcho_T);
+  //dist.SensorT = get_dist(pinTrig_T, pinEcho_T);
   
   sensorPub.publish(&dist);
   

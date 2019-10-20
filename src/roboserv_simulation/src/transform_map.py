@@ -13,7 +13,22 @@ import subprocess
 import tf2_ros
 import tf
 import yaml
+import tf
+from roboserv_description.msg import AppMsg
+from geometry_msgs.msg import PoseStamped
 from math import pi
+
+
+def pintar(img, x, y, color):
+	print(np.shape(img))
+	print('pontos:')
+	print((x, y))
+	for xp in range(int(x-2), int(x+2)):
+		for yp in range(int(y-2), int(y+2)):
+			img[xp, yp, 0] = color[2]
+			img[xp, yp, 1] = color[1]
+			img[xp, yp, 2] = color[0]
+	return img
 
 def rotateImage(image, x_center, y_center, angle):
     center = (x_center, y_center)
@@ -22,7 +37,8 @@ def rotateImage(image, x_center, y_center, angle):
 
 
 def get_pos(trans, map_path_yaml, img_shape):
-    
+	global yaml_resolution
+
 	yaml_info = None
 	with open(map_path_yaml, 'r') as stream:
 		try:
@@ -46,24 +62,39 @@ def get_pos(trans, map_path_yaml, img_shape):
 	
 	return (x_origin_px, y_origin_px, x_robot_px, y_robot_px, ang)
 
+
+def update_AppMsg(appmsg):
+	global AppMsg
+	AppMsg = appmsg
+
 def loop():
     
+	global AppMsg
+	global goal_pub
+	global yaml_resolution
+
 	rospy.init_node('transform_map')
+	rospy.Subscriber('appMsgs', AppMsg, update_AppMsg)
+	goal_pub = rospy.Publisher('/move_base_simple/goal', PoseStamped, queue_size=1)
 	rate = rospy.Rate(2)
 
 	# definicao de parametros
 	tfBuffer = tf2_ros.Buffer()
 	listener = tf2_ros.TransformListener(tfBuffer)
-	map_path = '/media/felipe/DATA/ROS_maps/roboserv/andar3'#rospy.get_param('~directory')
+	map_path = "/mnt/HD/ROS_maps/roboserv/andar2"#rospy.get_param('~directory')
 	map_path_pgm = map_path + '/map_img.pgm'
 	map_path_jpg = map_path + '/map_img.jpg'
 	map_path_yaml = map_path + '/map_img.yaml'
 	trans = None
-	
+	x_abs_px_anterior = 0
+	y_abs_px_anterior = 0
+	x_px = 0
+	y_px = 0
 	# tamanho da imagem no celular
-	img_size_x = 200
-	img_size_y = 200
+	img_size_x = 185
+	img_size_y = 140
 	prop = 0.25 # 0 -> robo sera mostrado em baixo, 1 -> robo sera mostrado em cima
+	count = 0
 	while not rospy.is_shutdown():
     		
 		# obtem a transformacao entre a origem do mapa e a posicao atual do robo
@@ -86,19 +117,50 @@ def loop():
 				x = x_origin_px - x_robot_px
 				y = y_origin_px - y_robot_px
 				img_rot = rotateImage(img_rot, y, x, ang)
-				print((x_origin_px, y_origin_px, x_robot_px, y_robot_px, ang))
-				img_rot[x, y, 0] = 0
-				img_rot[x, y, 1] = 0
-				img_rot[x, y, 2] = 255
-				#img_rot = rotateImage(img, x, y, ang)
-				#print(np.shape(img))
-				# corta a imagem para manter o robo no centro e se adequar a tela do app
-				
+
+				img_rot = pintar(img_rot, x, y, (255, 0, 0))
 				
 				img_rot = img_rot[int(x-img_size_y*(1-prop)):int(x+img_size_y*prop), y-int(img_size_x/2):int(y+img_size_x/2)]
 
+				img_rot = pintar(img_rot, x_px, y_px, (0, 0, 255))
+				
 				# salva a imgagem como jpg
 				cv2.imwrite(map_path_jpg, img_rot)
+		
+
+		x_abs_px = AppMsg.robot_pos_x
+		y_abs_px = AppMsg.robot_pos_y
+		print("oi"+str(count))
+		count = count + 1
+		if isinstance(x_abs_px, float) and isinstance(x_abs_px, float):
+			if x_abs_px != x_abs_px_anterior or y_abs_px != y_abs_px_anterior:
+				screen_w = 368
+				screen_h = 276 
+				x_px = y_abs_px / 2.0
+				y_px = x_abs_px / 2.0
+				
+				x_robot_px = img_size_y * (1 - prop) - y_abs_px
+				y_robot_px = x_abs_px - img_size_x / 2
+
+				x_robot_m = x_robot_px * yaml_resolution
+				y_robot_m = y_robot_px * yaml_resolution
+				print("FOI O PONTO AQUI")
+				ps = PoseStamped()
+				goal_ang = 0
+				(rx, ry, rz, rw) = tf.transformations.quaternion_from_euler(0, 0, goal_ang)
+
+				ps.pose.position.x = x_robot_m
+				ps.pose.position.y = y_robot_m
+				ps.pose.orientation.x = rx
+				ps.pose.orientation.y = ry
+				ps.pose.orientation.z = rz
+				ps.pose.orientation.w = rw
+
+				#goal_pub.publish(ps)
+
+				x_abs_px_anterior = x_abs_px
+				y_abs_px_anterior = y_abs_px
+			
 
 		rate.sleep()
 

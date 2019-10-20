@@ -4,7 +4,7 @@
 	<!-- Porta do Arduino -->
 	<arg name="ard_port" default="0" />
 	<arg name="mapping" default="true" />
-	<arg name="maps_dir" default="/media/felipe/DATA/ROS_maps/roboserv_simulation" />
+	<arg name="maps_dir" default="/mnt/HD/ROS_maps/roboserv_simulation" />
 	<arg name="map_name" default="testes_dev" />
 	<arg name="world_file"  default="$(find roboserv_simulation)/worlds/cafezin"/>
 	
@@ -58,6 +58,19 @@
         <rosparam file="$(find roboserv_simulation)/config/zed/common.yaml" command="load" />
         <rosparam file="$(find roboserv_simulation)/config/zed/zed.yaml" command="load" />
     </node>-->
+	<!-- Navegacao Autonoma -->
+	<node pkg="explore_lite" type="explore" respawn="false" name="explore" output="screen">
+		<param name="robot_base_frame" value="base_link"/>
+		<param name="costmap_topic" value="map"/>
+		<param name="costmap_updates_topic" value="map_updates"/>
+		<param name="visualize" value="true"/>
+		<param name="planner_frequency" value="0.5"/>
+		<param name="progress_timeout" value="20.0"/>
+		<param name="potential_scale" value="3.0"/>
+		<param name="gain_scale" value="1.0"/>
+		<param name="transform_tolerance" value="0.4"/>
+		<param name="min_frontier_size" value="2"/>
+	</node>
 
 	<!-- Abrir Rviz -->
 	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find roboserv_simulation)/config/rviz/rviz_config.rviz"/>
@@ -140,9 +153,6 @@
 		<rosparam file="$(find roboserv_simulation)/config/move_base/costmap_common.yaml" command="load" ns="global_costmap" />
 		<rosparam file="$(find roboserv_simulation)/config/move_base/costmap_common.yaml" command="load" ns="local_costmap" />
 		<rosparam file="$(find roboserv_simulation)/config/move_base/costmap_local.yaml" command="load" ns="local_costmap" />
-		<rosparam file="$(find roboserv_simulation)/config/move_base/costmap_global_static.yaml" command="load" ns="global_costmap" unless="$(arg no_static_map)"/>
-		<rosparam file="$(find roboserv_simulation)/config/move_base/costmap_global_laser.yaml" command="load" ns="global_costmap" if="$(arg no_static_map)"/>
-
 		<param name="local_costmap/width" value="10.0"/>
 		<param name="local_costmap/height" value="10.0"/>
 		<param name="global_costmap/width" value="100.0" if="$(arg no_static_map)"/>

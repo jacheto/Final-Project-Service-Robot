@@ -4,6 +4,7 @@ import rospy
 import pygame
 from geometry_msgs.msg import Twist
 from math import exp
+from roboserv_description.msg import AppMsg
 
 def control():
     global last_input_vel
@@ -11,7 +12,9 @@ def control():
 
     last_input_vel = Twist()
     last_output_vel = Twist()
-
+    appm = AppMsg()
+    appm.operation_mode = 2
+    appm.navigation_mode = 1
     last_lin_vel = 0
     last_ang_vel = 0
 
@@ -87,6 +90,11 @@ def control():
         
         trans_pos = (-round(float(mouse_pos[0] - screen_w/2)/(screen_w/2),3), -round(float(mouse_pos[1] - screen_h/2)/(screen_h/2),3))
         
+        appm.button_up = trans_pos[1] > 0.33
+        appm.button_down = trans_pos[1] < -0.33
+        appm.button_right = trans_pos[0] > 0.33
+        appm.button_left = trans_pos[0] < -0.33
+        appm.operation_mode = 2
         input_vel = Twist()
         output_vel = Twist()
 
@@ -99,23 +107,26 @@ def control():
         output_vel.angular.z = last_output_vel.angular.z * e + last_input_vel.angular.z * (1 - e)
         last_output_vel = output_vel
         last_input_vel = input_vel
-        print(stop)
-
+        
         if abs(output_vel.linear.x) > 1e-3 or abs(output_vel.angular.z) > 1e-3:
-            if stop:
+            if stop:   
                 output_vel.linear.x = 0
                 output_vel.angular.z = 0
-            
-            vel_pub.publish(output_vel)
+        appMsg_pub.publish(appm)
+        print('oi')
+            #vel_pub.publish(output_vel)
         rate.sleep()
 
 def start():
-	global vel_pub
-    
-	rospy.init_node('control_robot')
-	vel_pub = rospy.Publisher('cmd_vel_mux/input/teleop', Twist, queue_size=1)
-	
-	control()
+    global vel_pub
+    global appMsg_pub
+
+    appMsg_pub = rospy.Publisher('appMsgs', AppMsg, queue_size=1)
+
+    rospy.init_node('control_robot')
+    vel_pub = rospy.Publisher('cmd_vel_mux/input/teleop', Twist, queue_size=1)
+
+    control()
 
 if __name__ == '__main__':
     try:

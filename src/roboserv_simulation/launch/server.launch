@@ -4,7 +4,7 @@
 	<!-- Porta do Arduino -->
 	<arg name="ard_port" default="0" />
 	<arg name="maps_dir" default="/mnt/HD/ROS_maps/roboserv" />
-	<arg name="server_address" default="http://192.168.1.2:5010"
+	<arg name="server_address" default="http://192.168.1.2:5010"/>
 	
 	<!-- Inicia a comunicacao com o servidor -->
 	<node name="app_node" pkg="roboserv_simulation" type="app_node.py" output="screen">
