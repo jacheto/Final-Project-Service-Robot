@@ -18,6 +18,8 @@ import tf
 from roboserv_description.msg import AppMsg
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 from actionlib_msgs.msg import GoalStatus
+from geometry_msgs.msg import PoseStamped
+from nav_msgs.msg import Path
 import actionlib
 from geometry_msgs.msg import Pose, Point, Quaternion
 import math
@@ -171,27 +173,49 @@ def update_AppMsg(appmsg):
 	global AppMsg
 	AppMsg = appmsg
 
+def update_path(path):
+	global pathPoints
+	pathPoints = []
+	for p in path.poses:
+		pathPoints.append(Point(-p.pose.position.y/res, p.pose.position.x/res, 0))
+
+def update_goal(goal):
+	global goal_pos
+	
+	goal_pos = Point(-goal.pose.position.y/res, goal.pose.position.x/res, tf.transformations.euler_from_quaternion([
+		goal.pose.orientation.x,
+		goal.pose.orientation.y,	
+		goal.pose.orientation.z,	
+		goal.pose.orientation.w])[2])
+	
 
 def loop2():
+	global pathPoints
 	global AppMsg
+	global goal_pos
 	global res
 	rospy.init_node('tratamento_mapa')
 	rospy.Subscriber('appMsgs', AppMsg, update_AppMsg)
 	goal_client = actionlib.SimpleActionClient('move_base', MoveBaseAction)
-	rate = rospy.Rate(2)
+	rate = rospy.Rate(1)
 
 	tfBuffer = tf2_ros.Buffer()
 	listener = tf2_ros.TransformListener(tfBuffer)
-	map_path = "/mnt/HD/ROS_maps/roboserv/andar3dnv2"#rospy.get_param('~directory')
+	map_path = rospy.get_param('~directory')#"/mnt/HD/ROS_maps/roboserv/andar3dnv2"
 	map_path_pgm = map_path + '/map_img.pgm'
+	costmap_path_pgm = map_path + '/costmap_img.pgm'
 	map_path_jpg = map_path + '/map_img.jpg'
 	map_path_yaml = map_path + '/map_img.yaml'
 	res = get_res(map_path_yaml)
+	rospy.Subscriber('/move_base/DWAPlannerROS/global_plan', Path, update_path)
+	rospy.Subscriber('/move_base/current_goal', PoseStamped, update_goal)
 
 	pos_odom_px_current_goal = Point(50, 80, 0)
 
 	trans_map_odom = trans_odom_robot = None
 	last_pos_goal_px = pos_robot_px_goal = Point()
+	pathPoints = []
+	goal_pos = Point(0, 0, 0)
 
 	app_screen_w = 368
 	app_screen_h = 276
@@ -217,18 +241,16 @@ def loop2():
 			pos_odom_px = transform_point(pos_map_px, trans_map_odom)
 			(odom_img, pos_odom_px) = relativize_image(map_img, pos_odom_px)
 
-
-			# Pinta o current goal no mapa odom
-			# pos_map_px_current_goal = sumPoints(pos_odom_px, pos_odom_px_current_goal)
-			# odom_img = PaintPoint(odom_img, pos_map_px_current_goal, (0, 0, 255))
-
-			teste = Point(2/res, -2/res, 0)
-			pos_odom_px_goal = back_transform_point(pos_odom_px, trans_odom_robot, teste)
-			
 			
 			# Pinta o caminho no mapa odom
-			#
-			#
+			for p in pathPoints:
+				odom_img = PaintPoint(odom_img, sumPoints(pos_odom_px, p), (0, 255, 0))
+			
+
+			# Pinta o current goal no mapa odom
+			pos_map_px_current_goal = sumPoints(pos_odom_px, goal_pos)
+			odom_img = PaintPoint(odom_img, pos_map_px_current_goal, (0, 0, 255))
+			
 
 			# Obtem a imagem odom -> robot e a posicao do robot neste mapa
 			pos_robot_px = transform_point(pos_odom_px, trans_odom_robot)
@@ -277,7 +299,7 @@ def loop2():
 					print("Escolha um ponto de até 10 m de distância!")
 				else:
     				
-					pos_odom_px_goal.p()
+					#pos_odom_px_goal.p()
 
 					(rx, ry, rz, rw) = tf.transformations.quaternion_from_euler(0, 0, ang_app_px)
 

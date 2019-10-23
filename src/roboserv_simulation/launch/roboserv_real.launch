@@ -14,10 +14,10 @@
 	<param name="robot_description" command="$(find xacro)/xacro.py '$(find roboserv_description)/urdf/roboserv.xacro' using_simulation:=0"/>
 	<param name="use_sim_time" value="false"/>
 
-	<!-- Transforma o mapa em uma imagem para enviar para o app 
-	<node name="transform_map" pkg="roboserv_simulation" type="transform_map.py" output="screen">
+	<!-- Transforma o mapa em uma imagem para enviar para o app -->
+	<node name="tratamento_mapa" pkg="roboserv_simulation" type="tratamento_mapa.py" output="screen">
 		<param name="directory" value="$(arg maps_dir)/$(arg map_name)"/>
-	</node>-->
+	</node>
 
 	<!-- Prepara o ambiente -->
 	<node name="prepare_env" pkg="roboserv_simulation" type="prepare_env.py">

@@ -12,12 +12,16 @@ import subprocess
 def loop():
     
 	rospy.init_node('save_map')
-	rate = rospy.Rate(0.2)
+	rate = rospy.Rate(1)
 	
 	map_path = rospy.get_param('~directory')
-	
+	count = 0
 	while not rospy.is_shutdown():
-		subprocess.Popen(['rosrun', 'map_server', 'map_saver', '-f', map_path + '/map_img'])
+		subprocess.Popen(['rosrun', 'map_server', 'map_saver', '-f', map_path + '/map_img'])#, "map:=/move_base/global_costmap/costmap"])
+		count += 1
+		if count == 5:
+			subprocess.Popen(['rosrun', 'map_server', 'map_saver', '-f', map_path + '/map_img', "map:=/map"])
+			count = 0
 		rate.sleep()
 
 

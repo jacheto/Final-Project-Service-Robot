@@ -55,23 +55,40 @@ def vel_mux():
 	input_vel = Twist()
 	
 	if AppMsg.operation_mode == 1:
-    		input_vel = navi_vel
+		input_vel = navi_vel
 
 	elif AppMsg.operation_mode == 2:
     
 		lin_vel = 0.2
 		ang_vel = 0.8
+		lin_vel_girando = 0.2
+		ang_vel_girando = 0.2
 
 		if AppMsg.button_up:
-			input_vel.linear.x += 1
-		if AppMsg.button_down:
-			input_vel.linear.x += -1
-		if AppMsg.button_right:
-			input_vel.angular.z += 1
-		if AppMsg.button_left:
-			input_vel.angular.z += -1
-		input_vel.linear.x *= lin_vel
-		input_vel.angular.z *= ang_vel
+			input_vel.linear.x = lin_vel
+			input_vel.angular.z = 0
+		elif AppMsg.button_down:
+			input_vel.linear.x = -lin_vel
+			input_vel.angular.z = 0
+		elif AppMsg.button_right:
+			input_vel.linear.x = 0
+			input_vel.angular.z = -ang_vel
+		elif AppMsg.button_left:
+			input_vel.linear.x = 0
+			input_vel.angular.z = ang_vel
+		elif AppMsg.button_up_right:
+			input_vel.linear.x = lin_vel_girando
+			input_vel.angular.z = -ang_vel_girando
+		elif AppMsg.button_up_left:
+			input_vel.linear.x = lin_vel_girando
+			input_vel.angular.z = ang_vel_girando
+		elif AppMsg.button_down_right:
+			input_vel.linear.x = -lin_vel_girando
+			input_vel.angular.z = -ang_vel_girando
+		elif AppMsg.button_down_left:
+			input_vel.linear.x = -lin_vel_girando
+			input_vel.angular.z = ang_vel_girando
+		
 
 		#if min(range_F, range_L, range_R) < 0.3 and input_vel.linear.x > 0:
 		#	input_vel.linear.x = 0
@@ -100,7 +117,7 @@ def gate_control(input_vel):
 	max_acel_linear = 0.8
 	max_acel_angular = 1
 
-	if min(range_F, range_L, range_R) < 0.3  and input_vel.linear.x > 0:
+	if min(range_F, range_L, range_R) < 0.2 and input_vel.linear.x > 0:
 		input_vel.linear.x = 0
 	
 	# Rampa linear

@@ -115,17 +115,18 @@ def loop():
     app_ligado = False
     escolheu_mapa = False
     maps_list = []
-    navigation_mode = -1
+    navigation_mode = 0
+    operation_mode = 0
     robo_funcionando = False
     resetar_robo = False
     
     while not rospy.is_shutdown():
-
+        appMsg = AppMsg()
         # Avisa o App que o PC está ligado
         post("pc_on", True)
         post('navigation_mode', navigation_mode)
-        # navigation_mode = -1 -> Está escolhendo um mapa
-        # navigation_mode = 0 -> Está escolhendo um mapa (faz o app voltar para o mapa e só dura um ciclo)
+        # navigation_mode = -1-> Está escolhendo um mapa (faz o app voltar para o mapa e só dura um ciclo)
+        # navigation_mode = 0 -> Está escolhendo um mapa
         # navigation_mode = 1 -> Modo localizacao
         # navigation_mode = 2 -> Modo mapeamento
         
@@ -144,9 +145,6 @@ def loop():
         else:
                 
             if not escolheu_mapa:
-                
-                if app_dict['tempo'] > 5:
-                    resetar_robo = True
 
                 if not os.path.isdir(directory):
                     os.mkdir(directory)
@@ -154,13 +152,12 @@ def loop():
                 maps_list = os.listdir(directory)
 
                 post('maps_list', maps_list)
-                navigation_mode = -1
+                navigation_mode = 0
 
                 map_name = get('map_name')
                 print(map_name)
                 if map_name == "":
                     logmsg("aguardando mapa")
-                
                 else:
                     if map_name.endswith('_del'):
                         dir_del = directory + '/' + map_name.replace('_del', '')
@@ -170,11 +167,9 @@ def loop():
                             print("apagou mapa: " +  map_name.replace('_del', ''))
                     else:
                         escolheu_mapa = True
-            
             else:
-
                 if not robo_funcionando:
-
+                    print("iniciando robo")
                     map_dir = directory + '/' + map_name
                     map_app_dir = map_dir + "/map_img.jpg"
 
@@ -203,7 +198,6 @@ def loop():
                     robo_funcionando = True
                     
                 else:
-                    
                     try:
                         # Envia o mapa atual
                         if os.path.exists(map_app_dir):
@@ -229,11 +223,10 @@ def loop():
 
                         # obtem o status do botao de desligar robo (a logica esta assim para impedir que 
                         # qualquer valor além de True seja considerado verdadeiro no 'if resetar_robo')
-                        resetar_robo = True if get("turn_robot_off") == True else False
-
-                        appMsg = AppMsg()
+                        resetar_robo = True if get("map_name") == "" else False
                         appMsg.operation_mode = operation_mode
                         appMsg.navigation_mode = navigation_mode
+        
                         if isinstance(robot_direction, dict):
                             appMsg.button_up = True if robot_direction['up'] == True else False
                             appMsg.button_down = True if robot_direction['down'] == True else False
@@ -246,26 +239,27 @@ def loop():
                         if robot_pos != "" and robot_pos != 'Key not available!':
                             appMsg.robot_pos_x = robot_pos['x']
                             appMsg.robot_pos_y = robot_pos['y']
-
-                        appMsg_pub.publish(appMsg)
-
+                            
                     except Exception as e:
                         print("Erro no robo: " + str(e))
                         resetar_robo = True
 
             
-            # Verifica se o último sinal de 'app ligado' foi enviado a mais de 5 segundos
-            if app_dict['tempo'] > 1:
+            # Verifica se o último sinal de 'app ligado' foi enviado a mais de 2 segundos
+            if app_dict['tempo'] > 2:
                 post('operation_mode', 4)
-            
+        
         if resetar_robo:
             if roscore.rodando:
                 roscore.terminate()
-            navigation_mode = 0
+            navigation_mode = -1
             escolheu_mapa = False
             robo_funcionando = False
+            print("resetar robo")
             post('map_name', '')
             resetar_robo = False
+        
+        appMsg_pub.publish(appMsg)
 
         rate.sleep()
 
