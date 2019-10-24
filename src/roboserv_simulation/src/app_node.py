@@ -247,7 +247,7 @@ def loop():
             
             # Verifica se o último sinal de 'app ligado' foi enviado a mais de 2 segundos
             if app_dict['tempo'] > 2:
-                post('operation_mode', 4)
+                pass#post('operation_mode', 4)
         
         if resetar_robo:
             if roscore.rodando:

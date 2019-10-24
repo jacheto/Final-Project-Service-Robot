@@ -44,13 +44,13 @@ def ProcessarScan(scan):
 	nan = float('nan')
 	
 	
-	min_dist = 0.4
+	min_dist = 0.2
 
-	#r_L = [min_dist]*n_s if all(i < min_dist for i in sensor_L) else r[:n_s]
+	r_L = [min_dist]*n_s if all(i < min_dist for i in sensor_L) else r[:n_s]
 	
-	#r_F = [min_dist]*n_s if all(i < min_dist for i in sensor_F) else r[(len(r)-n_s)/2:(len(r)+n_s)/2]
+	r_F = [min_dist]*n_s if all(i < min_dist for i in sensor_F) else r[(len(r)-n_s)/2:(len(r)+n_s)/2]
 
-	#r_R = [min_dist]*n_s if all(i < min_dist for i in sensor_R) else r[len(r)-n_s:]
+	r_R = [min_dist]*n_s if all(i < min_dist for i in sensor_R) else r[len(r)-n_s:]
 	
 	
 

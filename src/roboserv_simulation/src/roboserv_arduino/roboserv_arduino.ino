@@ -48,7 +48,7 @@ float wheel_dist = 0.38;
 
 void setarMotores(const geometry_msgs::Twist& vel){
   
-  int vel_L = (int) (90 - 90 * (vel.linear.x - vel.angular.z * wheel_dist/2) );
+  int vel_L = (int) (90 - 90 * (vel.linear.x - vel.angular.z * wheel_dist/2) * 1.2 );
   int vel_R = (int) (90 - 90 * (vel.linear.x + vel.angular.z * wheel_dist/2) );
   if (vel_L < 0)    vel_L = 0;
   if (vel_L > 180)  vel_L = 180;

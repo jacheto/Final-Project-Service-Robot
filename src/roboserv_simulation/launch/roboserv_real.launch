@@ -63,7 +63,7 @@
 	 <node pkg="depthimage_to_laserscan" type="depthimage_to_laserscan" name="depthimage_to_laserscan" >
         <remap from="image" to="/zed_node/depth/depth_registered" />
 		<remap from="camera_info" to="/zed_node/depth/camera_info" />
-        <param name="scan_height" value="150"/>
+        <param name="scan_height" value="300"/>
         <param name="range_min" value="0.3"/>
         <param name="range_max" value="20"/>
         <param name="output_frame_id" value="base_link"/>
@@ -154,7 +154,7 @@
 	<node pkg="roboserv_simulation" type="finish_goal_aux.py" name="finish_goal_aux" output="screen">
 		<param name="tolerance_dist" value="0.4"/>
 		<param name="tolerance_ang" value="0.3"/>
-		<param name="ang_vel" value="0.5"/>
+		<param name="ang_vel" value="0.8"/>
 	</node>
 
 	<!-- Navegacao Autonoma 

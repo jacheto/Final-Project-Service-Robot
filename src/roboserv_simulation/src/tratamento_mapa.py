@@ -23,6 +23,7 @@ from nav_msgs.msg import Path
 import actionlib
 from geometry_msgs.msg import Pose, Point, Quaternion
 import math
+import os
 
 class Point():
 	def __init__(self, x = None, y = None, ang = None):
@@ -234,89 +235,90 @@ def loop2():
 		if trans_map_odom is not None and trans_odom_robot is not None:
 
 			# Obtem a imagem do mapa e sua posicao inicial
-			map_img = cv2.imread(map_path_pgm)
-			pos_map_px = get_origin(map_img, map_path_yaml)
+			if os.path.isfile(map_path_pgm):
+				map_img = cv2.imread(map_path_pgm)
+				pos_map_px = get_origin(map_img, map_path_yaml)
 
-			# Obtem a imagem map -> odom e a posicao do odom neste mapa
-			pos_odom_px = transform_point(pos_map_px, trans_map_odom)
-			(odom_img, pos_odom_px) = relativize_image(map_img, pos_odom_px)
+				# Obtem a imagem map -> odom e a posicao do odom neste mapa
+				pos_odom_px = transform_point(pos_map_px, trans_map_odom)
+				(odom_img, pos_odom_px) = relativize_image(map_img, pos_odom_px)
 
-			
-			# Pinta o caminho no mapa odom
-			for p in pathPoints:
-				odom_img = PaintPoint(odom_img, sumPoints(pos_odom_px, p), (0, 255, 0))
-			
-
-			# Pinta o current goal no mapa odom
-			pos_map_px_current_goal = sumPoints(pos_odom_px, goal_pos)
-			odom_img = PaintPoint(odom_img, pos_map_px_current_goal, (0, 0, 255))
-			
-
-			# Obtem a imagem odom -> robot e a posicao do robot neste mapa
-			pos_robot_px = transform_point(pos_odom_px, trans_odom_robot)
-			odom_img = PaintPoint(odom_img, pos_robot_px, (0, 0, 255))
-			(robot_img, pos_robot_px) = relativize_image(odom_img, pos_robot_px)
-			
-			# Pinta o robo no mapa robot
-			robot_img = PaintPoint(robot_img, pos_robot_px, (255, 0, 0))
-			
-			# Corta o mapa robot nas proporcoes que sera enviado para o app
-			robot_img_w = np.shape(robot_img)[0]
-			robot_img_h = np.shape(robot_img)[1]
-			backgroung_img = np.zeros([robot_img_w * 2, robot_img_h * 2, 3], dtype=np.uint8)
-			backgroung_img.fill(205)
-			backgroung_img[robot_img_w * 1/2: robot_img_w * 3/2, robot_img_h * 1/2: robot_img_h * 3/2] = robot_img
-			
-			backgroung_img = backgroung_img[
-				int(robot_img_w * 1/2 + pos_robot_px.x - img_screen_w):
-				int(robot_img_w * 1/2 + pos_robot_px.x + img_screen_w),
-				int(robot_img_h * 1/2 + pos_robot_px.y - img_screen_w):
-				int(robot_img_h * 1/2 + pos_robot_px.y + img_screen_w)]
-
-			final_img = rotateImage(backgroung_img, img_screen_w, img_screen_w, 90)
-			
-			final_img = final_img[int(img_screen_w - img_screen_h * (1-prop)):int(img_screen_w + img_screen_h*prop), img_screen_w/2:img_screen_w*3/2]
-			
-			# Salva o mapa em um arquivo
-			cv2.imwrite(map_path_jpg, final_img)
-
-			
-			pos_goal_px = Point(AppMsg.robot_pos_x, AppMsg.robot_pos_y, 0)
-
-			if isinstance(pos_goal_px.x, float) and isinstance(pos_goal_px.y, float) and not pos_goal_px.equals(last_pos_goal_px):
 				
-				x_app_px = app_screen_w * 0.5 - pos_goal_px.x
-				y_app_px = app_screen_h * (1 - prop) - pos_goal_px.y
-				ang_app_px = np.arctan2(x_app_px, y_app_px)
-
-				pos_robot_px_goal = Point(x_app_px, y_app_px, ang_app_px)
-				pos_robot_m_goal = Point(x_app_px * res, y_app_px * res, ang_app_px)
+				# Pinta o caminho no mapa odom
+				for p in pathPoints:
+					odom_img = PaintPoint(odom_img, sumPoints(pos_odom_px, p), (0, 255, 0))
 				
-				pos_odom_px_goal = back_transform_point(pos_odom_px, trans_odom_robot, pos_robot_px_goal)
-				pos_odom_m_goal = Point(pos_odom_px_goal.x*res, pos_odom_px_goal.y*res, pos_odom_px_goal.ang)
-				
-				if np.sqrt((x_app_px*res) ** 2 + (y_app_px*res) ** 2) > 10:
-					print("Escolha um ponto de até 10 m de distância!")
-				else:
-    				
-					#pos_odom_px_goal.p()
 
-					(rx, ry, rz, rw) = tf.transformations.quaternion_from_euler(0, 0, ang_app_px)
-
-					goal = MoveBaseGoal()
-					goal.target_pose.header.frame_id = "base_link"
-					goal.target_pose.header.stamp = rospy.Time.now()
-					goal.target_pose.pose.position.x = pos_robot_m_goal.y
-					goal.target_pose.pose.position.y = pos_robot_m_goal.x
-					goal.target_pose.pose.orientation.x = rx
-					goal.target_pose.pose.orientation.y = ry
-					goal.target_pose.pose.orientation.z = rz
-					goal.target_pose.pose.orientation.w = rw
-					goal_client.send_goal(goal)
+				# Pinta o current goal no mapa odom
+				pos_map_px_current_goal = sumPoints(pos_odom_px, goal_pos)
+				odom_img = PaintPoint(odom_img, pos_map_px_current_goal, (0, 0, 255))
 				
-				last_pos_goal_px.x = pos_goal_px.x
-				last_pos_goal_px.y = pos_goal_px.y
-				last_pos_goal_px.ang = pos_goal_px.ang
+
+				# Obtem a imagem odom -> robot e a posicao do robot neste mapa
+				pos_robot_px = transform_point(pos_odom_px, trans_odom_robot)
+				odom_img = PaintPoint(odom_img, pos_robot_px, (0, 0, 255))
+				(robot_img, pos_robot_px) = relativize_image(odom_img, pos_robot_px)
+				
+				# Pinta o robo no mapa robot
+				robot_img = PaintPoint(robot_img, pos_robot_px, (255, 0, 0))
+				
+				# Corta o mapa robot nas proporcoes que sera enviado para o app
+				robot_img_w = np.shape(robot_img)[0]
+				robot_img_h = np.shape(robot_img)[1]
+				backgroung_img = np.zeros([robot_img_w * 2, robot_img_h * 2, 3], dtype=np.uint8)
+				backgroung_img.fill(205)
+				backgroung_img[robot_img_w * 1/2: robot_img_w * 3/2, robot_img_h * 1/2: robot_img_h * 3/2] = robot_img
+				
+				backgroung_img = backgroung_img[
+					int(robot_img_w * 1/2 + pos_robot_px.x - img_screen_w):
+					int(robot_img_w * 1/2 + pos_robot_px.x + img_screen_w),
+					int(robot_img_h * 1/2 + pos_robot_px.y - img_screen_w):
+					int(robot_img_h * 1/2 + pos_robot_px.y + img_screen_w)]
+
+				final_img = rotateImage(backgroung_img, img_screen_w, img_screen_w, 90)
+				
+				final_img = final_img[int(img_screen_w - img_screen_h * (1-prop)):int(img_screen_w + img_screen_h*prop), img_screen_w/2:img_screen_w*3/2]
+				
+				# Salva o mapa em um arquivo
+				cv2.imwrite(map_path_jpg, final_img)
+
+				
+				pos_goal_px = Point(AppMsg.robot_pos_x, AppMsg.robot_pos_y, 0)
+
+				if isinstance(pos_goal_px.x, float) and isinstance(pos_goal_px.y, float) and not pos_goal_px.equals(last_pos_goal_px):
+					
+					x_app_px = app_screen_w * 0.5 - pos_goal_px.x
+					y_app_px = app_screen_h * (1 - prop) - pos_goal_px.y
+					ang_app_px = np.arctan2(x_app_px, y_app_px)
+
+					pos_robot_px_goal = Point(x_app_px, y_app_px, ang_app_px)
+					pos_robot_m_goal = Point(x_app_px * res, y_app_px * res, ang_app_px)
+					
+					pos_odom_px_goal = back_transform_point(pos_odom_px, trans_odom_robot, pos_robot_px_goal)
+					pos_odom_m_goal = Point(pos_odom_px_goal.x*res, pos_odom_px_goal.y*res, pos_odom_px_goal.ang)
+					
+					if np.sqrt((x_app_px*res) ** 2 + (y_app_px*res) ** 2) > 10:
+						print("Escolha um ponto de até 10 m de distância!")
+					else:
+						
+						#pos_odom_px_goal.p()
+
+						(rx, ry, rz, rw) = tf.transformations.quaternion_from_euler(0, 0, ang_app_px)
+
+						goal = MoveBaseGoal()
+						goal.target_pose.header.frame_id = "base_link"
+						goal.target_pose.header.stamp = rospy.Time.now()
+						goal.target_pose.pose.position.x = pos_robot_m_goal.y
+						goal.target_pose.pose.position.y = pos_robot_m_goal.x
+						goal.target_pose.pose.orientation.x = rx
+						goal.target_pose.pose.orientation.y = ry
+						goal.target_pose.pose.orientation.z = rz
+						goal.target_pose.pose.orientation.w = rw
+						goal_client.send_goal(goal)
+					
+					last_pos_goal_px.x = pos_goal_px.x
+					last_pos_goal_px.y = pos_goal_px.y
+					last_pos_goal_px.ang = pos_goal_px.ang
 
 		rate.sleep()
 

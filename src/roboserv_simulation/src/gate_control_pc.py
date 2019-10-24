@@ -34,87 +34,26 @@ def update_R(rng):
 	range_R = rng.range
 
 def update_vel(vel):
-	global navi_vel
-	navi_vel = vel
+	global input_vel
+	input_vel = vel
 
 def update_AppMsg(appmsg):
 	global AppMsg
 	AppMsg = appmsg
 
-def vel_mux():
+def gate_control():
+	global range_R
 	global range_F
 	global range_L
-	global range_R
-	global range_T
 	global vel_pub
-	global navi_vel
+	global input_vel
 	global last_input_vel
 	global last_output_vel
-	global AppMsg
-
-	input_vel = Twist()
 	
-	if AppMsg.operation_mode == 1:
-		input_vel = navi_vel
-
-	elif AppMsg.operation_mode == 2:
-    
-		lin_vel = 0.2
-		ang_vel = 0.8
-		lin_vel_girando = 0.2
-		ang_vel_girando = 0.2
-
-		if AppMsg.button_up:
-			input_vel.linear.x = lin_vel
-			input_vel.angular.z = 0
-		elif AppMsg.button_down:
-			input_vel.linear.x = -lin_vel
-			input_vel.angular.z = 0
-		elif AppMsg.button_right:
-			input_vel.linear.x = 0
-			input_vel.angular.z = -ang_vel
-		elif AppMsg.button_left:
-			input_vel.linear.x = 0
-			input_vel.angular.z = ang_vel
-		elif AppMsg.button_up_right:
-			input_vel.linear.x = lin_vel_girando
-			input_vel.angular.z = -ang_vel_girando
-		elif AppMsg.button_up_left:
-			input_vel.linear.x = lin_vel_girando
-			input_vel.angular.z = ang_vel_girando
-		elif AppMsg.button_down_right:
-			input_vel.linear.x = -lin_vel_girando
-			input_vel.angular.z = -ang_vel_girando
-		elif AppMsg.button_down_left:
-			input_vel.linear.x = -lin_vel_girando
-			input_vel.angular.z = ang_vel_girando
-		
-
-		#if min(range_F, range_L, range_R) < 0.3 and input_vel.linear.x > 0:
-		#	input_vel.linear.x = 0
-
-	elif AppMsg.operation_mode == 3:
-		pass
-
-	elif AppMsg.operation_mode == 4:
-		input_vel = Twist()
-	
-	gate_control(input_vel)
-
-
-def gate_control(input_vel):
-	global range_F
-	global range_L
-	global range_R
-	global range_T
-	global vel_pub
-	global last_input_vel
-	global last_output_vel
-	global AppMsg
 	output_vel = Twist()
-	
+
 	# Aplica a rampa de velocidade
-	max_acel_linear = 0.4
+	max_acel_linear = 0.8
 	max_acel_angular = 1
 
 	if min(range_F, range_L, range_R) < 0.2 and input_vel.linear.x > 0:
@@ -165,8 +104,9 @@ def gate_control(input_vel):
 		gate_vel.angular.z = output_vel.angular.z
 	
 	# Publica a velocidade
-	vel_pub.publish(input_vel)
-    
+	vel_pub.publish(gate_vel)
+
+
 def start():
 	global vel_pub
 	global navi_vel
@@ -175,7 +115,7 @@ def start():
 	rospy.Subscriber('distSensor_F', Range, update_F)
 	rospy.Subscriber('distSensor_L', Range, update_L)
 	rospy.Subscriber('distSensor_R', Range, update_R)
-	rospy.Subscriber('cmd_vel_navi', Twist, update_vel)
+	rospy.Subscriber('cmd_vel_mux/output', Twist, update_vel)
 	rospy.Subscriber('appMsgs', AppMsg, update_AppMsg)
 	
 	vel_pub = rospy.Publisher('cmd_vel_gate', Twist, queue_size=1)
@@ -183,7 +123,7 @@ def start():
 	rate = rospy.Rate(20)
 	
 	while not rospy.is_shutdown():
-		vel_mux()
+		gate_control()
 		rate.sleep()
 
 if __name__ == '__main__':
