@@ -19,6 +19,11 @@
 		<param name="directory" value="$(arg maps_dir)/$(arg map_name)"/>
 	</node>
 
+	<!-- Salva a tela do RVIZ para enviar para o PC-->
+	<node name="salvar_rviz" pkg="roboserv_simulation" type="salvar_rviz.py">
+		<param name="directory" value="$(arg maps_dir)"/>
+	</node>
+
 	<!-- Prepara o ambiente -->
 	<node name="prepare_env" pkg="roboserv_simulation" type="prepare_env.py">
 		<param name="directory" value="$(arg maps_dir)/$(arg map_name)"/>

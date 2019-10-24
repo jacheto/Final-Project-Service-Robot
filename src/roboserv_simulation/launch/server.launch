@@ -7,9 +7,9 @@
 	<arg name="server_address" default="http://192.168.1.2:5010"/>
 	<arg name="open_rviz" default="true"/>
 	
-	<!-- Inicia a tela do robô -->
+	<!-- Inicia a tela do robô 
 	<node name="robot_screen" pkg="roboserv_simulation" type="robot_screen.py" output="screen"/>
-	
+	-->
 	<!-- Inicia a comunicacao com o servidor -->
 	<node name="app_node" pkg="roboserv_simulation" type="app_node.py" output="screen">
 		<param name="ard_port" value="$(arg ard_port)"/>

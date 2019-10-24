@@ -16,7 +16,11 @@
 
 	<!-- Transforma o mapa em uma imagem para enviar para o app -->
 	<node name="tratamento_mapa" pkg="roboserv_simulation" type="tratamento_mapa.py" output="screen">
-		<param name="directory" value="$(arg maps_dir)/$(arg map_name)"/>
+		<param name="directory" value="$(arg maps_dir)/$(arg map_name)"/> 
+	</node> 
+	<!-- Salva a tela do RVIZ para enviar para o PC--> 
+	<node name="salvar_rviz" pkg="roboserv_simulation" type="salvar_rviz.py" output="screen">
+		<param name="directory" value="$(arg maps_dir)"/>
 	</node>
 
 	<!-- Prepara o ambiente -->

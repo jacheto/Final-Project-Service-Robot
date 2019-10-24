@@ -110,11 +110,12 @@ def back_transform_point(p0, trans_p0_p1, p2_relativo_a_p1):
 def get_res(yaml_path):
     
 	yaml_info = None
-	with open(yaml_path, 'r') as f:
-		try:
-			yaml_info = yaml.safe_load(f)
-		except:
-			pass
+	if os.path.isfile(yaml_path):
+		with open(yaml_path, 'r') as f:
+			try:
+				yaml_info = yaml.safe_load(f)
+			except:
+				pass
 
 	if yaml_info is None:
 		return None
@@ -202,7 +203,7 @@ def loop2():
 
 	tfBuffer = tf2_ros.Buffer()
 	listener = tf2_ros.TransformListener(tfBuffer)
-	map_path = rospy.get_param('~directory')#"/mnt/HD/ROS_maps/roboserv/andar3dnv2"
+	map_path = rospy.get_param('~directory') #"/mnt/HD/ROS_maps/roboserv/andar3dnv2"
 	map_path_pgm = map_path + '/map_img.pgm'
 	costmap_path_pgm = map_path + '/costmap_img.pgm'
 	map_path_jpg = map_path + '/map_img.jpg'
@@ -368,7 +369,7 @@ def loop():
 		except:
 			pass
 		
-		if not trans is None:
+		if not trans is None and os.path.isfile(map_path_pgm):
     		
 			# abre o mapa em pgm
 			img = cv2.imread(map_path_pgm)

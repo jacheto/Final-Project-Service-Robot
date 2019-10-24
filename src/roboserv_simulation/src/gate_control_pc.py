@@ -53,7 +53,7 @@ def gate_control():
 	output_vel = Twist()
 
 	# Aplica a rampa de velocidade
-	max_acel_linear = 0.8
+	max_acel_linear = 0.4
 	max_acel_angular = 1
 
 	if min(range_F, range_L, range_R) < 0.2 and input_vel.linear.x > 0:
