@@ -13,6 +13,7 @@ import numpy as np
 import subprocess
 import tf2_ros
 import tf
+import time
 import yaml
 import tf
 from roboserv_description.msg import AppMsg
@@ -244,20 +245,17 @@ def loop2():
 				pos_odom_px = transform_point(pos_map_px, trans_map_odom)
 				(odom_img, pos_odom_px) = relativize_image(map_img, pos_odom_px)
 
-				
-				# Pinta o caminho no mapa odom
-				for p in pathPoints:
-					odom_img = PaintPoint(odom_img, sumPoints(pos_odom_px, p), (0, 255, 0))
-				
+				if AppMsg.operation_mode == 1:
+					# Pinta o caminho no mapa odom
+					for p in pathPoints:
+						odom_img = PaintPoint(odom_img, sumPoints(pos_odom_px, p), (0, 255, 0))
 
-				# Pinta o current goal no mapa odom
-				pos_map_px_current_goal = sumPoints(pos_odom_px, goal_pos)
-				odom_img = PaintPoint(odom_img, pos_map_px_current_goal, (0, 0, 255))
+					# Pinta o current goal no mapa odom
+					odom_img = PaintPoint(odom_img, sumPoints(pos_odom_px, goal_pos), (0, 0, 255))
 				
 
 				# Obtem a imagem odom -> robot e a posicao do robot neste mapa
 				pos_robot_px = transform_point(pos_odom_px, trans_odom_robot)
-				odom_img = PaintPoint(odom_img, pos_robot_px, (0, 0, 255))
 				(robot_img, pos_robot_px) = relativize_image(odom_img, pos_robot_px)
 				
 				# Pinta o robo no mapa robot

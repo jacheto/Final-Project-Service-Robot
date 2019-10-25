@@ -4,16 +4,18 @@
 	<!-- Porta do Arduino -->
 	<arg name="ard_port" default="0" />
 	<arg name="maps_dir" default="/mnt/HD/ROS_maps/roboserv" />
+	<arg name="maps_dir_bkp" default="/mnt/HD/ROS_maps/bkp"/>
 	<arg name="server_address" default="http://192.168.1.2:5010"/>
 	<arg name="open_rviz" default="true"/>
 	
-	<!-- Inicia a tela do robô 
+	<!-- Inicia a tela do robô -->
 	<node name="robot_screen" pkg="roboserv_simulation" type="robot_screen.py" output="screen"/>
-	-->
+	
 	<!-- Inicia a comunicacao com o servidor -->
 	<node name="app_node" pkg="roboserv_simulation" type="app_node.py" output="screen">
 		<param name="ard_port" value="$(arg ard_port)"/>
 		<param name="directory" value="$(arg maps_dir)"/>
+		<param name="bkp_directory" value="$(arg maps_dir_bkp)"/>
 		<param name="server_address" value="$(arg server_address)"/>
 		<param name="open_rviz" value="$(arg open_rviz)"/>
 	</node>

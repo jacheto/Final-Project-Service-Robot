@@ -15,8 +15,8 @@ footprint: [
 footprint_padding: 0.01
 
 robot_base_frame: base_link
-update_frequency: 4.0
-publish_frequency: 3.0
+update_frequency: 5
+publish_frequency: 5
 transform_tolerance: 0.5
 
 resolution: 0.05

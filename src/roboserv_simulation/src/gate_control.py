@@ -11,6 +11,7 @@ import rospy
 from sensor_msgs.msg import Range
 from geometry_msgs.msg import Twist
 from roboserv_description.msg import AppMsg
+from actionlib_msgs.msg import GoalID
 from math import exp
 
 range_F = 999
@@ -53,12 +54,15 @@ def vel_mux():
 	global AppMsg
 
 	input_vel = Twist()
+	cancel_msg = GoalID()
 	
 	if AppMsg.operation_mode == 1:
 		input_vel = navi_vel
 
 	elif AppMsg.operation_mode == 2:
-    
+		
+		cancel_pub.publish(cancel_msg)
+
 		lin_vel = 0.2
 		ang_vel = 0.8
 		lin_vel_girando = 0.2
@@ -100,6 +104,7 @@ def vel_mux():
 		input_vel = Twist()
 	
 	gate_control(input_vel)
+	
 
 
 def gate_control(input_vel):
@@ -110,14 +115,15 @@ def gate_control(input_vel):
 	global vel_pub
 	global last_input_vel
 	global last_output_vel
+	global cancel_pub
 	global AppMsg
 	output_vel = Twist()
 	
 	# Aplica a rampa de velocidade
 	max_acel_linear = 0.4
-	max_acel_angular = 1
+	max_acel_angular = 0.8
 
-	if min(range_F, range_L, range_R) < 0.2 and input_vel.linear.x > 0:
+	if min(range_F, range_L, range_R) < 0.25 and input_vel.linear.x > 0:
 		input_vel.linear.x = 0
 	
 	# Rampa linear
@@ -170,6 +176,8 @@ def gate_control(input_vel):
 def start():
 	global vel_pub
 	global navi_vel
+	global cancel_pub
+
 	navi_vel = Twist()
 	rospy.init_node('gate_control')
 	rospy.Subscriber('distSensor_F', Range, update_F)
@@ -177,6 +185,7 @@ def start():
 	rospy.Subscriber('distSensor_R', Range, update_R)
 	rospy.Subscriber('cmd_vel_navi', Twist, update_vel)
 	rospy.Subscriber('appMsgs', AppMsg, update_AppMsg)
+	cancel_pub = rospy.Publisher('move_base/cancel', GoalID, queue_size=1)
 	
 	vel_pub = rospy.Publisher('cmd_vel_gate', Twist, queue_size=1)
 	

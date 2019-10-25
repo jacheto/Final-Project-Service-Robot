@@ -2,119 +2,54 @@
 
 import rospy
 import pygame
-from geometry_msgs.msg import Twist
 from math import exp
 from roboserv_description.msg import AppMsg
+from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
+import numpy
 
-def control():
-    global last_input_vel
-    global last_output_vel
+class Point():
+	def __init__(self, x = None, y = None, ang = None):
+		self.x = x
+		self.y = y
+		self.ang = ang
+	def p(self):
+		print("x: " + str(self.x) + " y: " + str(self.y) + " ang: " + str(self.ang*180/np.pi))
+	def equals(self, p):
+		return self.x == p.x and self.y == p.y and self.ang == p.ang
 
-    last_input_vel = Twist()
-    last_output_vel = Twist()
-    appm = AppMsg()
-    appm.operation_mode = 2
-    appm.navigation_mode = 1
-    last_lin_vel = 0
-    last_ang_vel = 0
+def loop():
 
-    pygame.init()
-    screen_w, screen_h = 640, 480
-    screen = pygame.display.set_mode((screen_w, screen_h))
-    clock = pygame.time.Clock()
-
-    robot_lin_acel = 0.2
-    robot_ang_acel = 0.4
-
-    robot_lin_vel = 0.2
-    robot_ang_vel = 1
-
-    robot_lin_stop_time = 2
-    robot_ang_stop_time = 1.5
-
-    Hz = 20
-    x_vel = 0
-    ang_vel = 0
-
-    pygame.draw.line(screen, (255, 255, 255), (0, screen_h/3), (screen_w, screen_h/3), 1)
-    pygame.draw.line(screen, (255, 255, 255), (0, screen_h/3*2), (screen_w, screen_h/3*2), 1)
-    pygame.draw.line(screen, (255, 255, 255), (screen_w/3, 0), (screen_w/3, screen_h), 1)
-    pygame.draw.line(screen, (255, 255, 255), (screen_w/3*2, 0), (screen_w/3*2, screen_h), 1)
-    pygame.display.flip()
+    rate = rospy.Rate(20)
     
-    rate = rospy.Rate(Hz)
-    vel = Twist()
-    mouse_down = False
-    stop = False
+    PointsList = [
+        Point(-0.916830384892, -0.236819291785),    # perto do poster
+        Point(1.8523196839, 2.43201789971),         # perto da tv
+        Point(-0.0652114767318, 3.01871753926),     # longe do poster
+        Point(0.663393627245, -0.589388137909)      # longe da tv
+    ]
+    index = 0
+
     while not rospy.is_shutdown():
-        lin_acel = 0
-        ang_acel = 0
-        lin_stop_time = robot_lin_stop_time
-        ang_stop_time = robot_ang_stop_time
 
-        pressed = pygame.key.get_pressed()
-        mouse_pos = (screen_w/2, screen_h/2)
-        # alt_held = pressed[pygame.K_LALT] or pressed[pygame.K_RALT]
-        # ctrl_held = pressed[pygame.K_LCTRL] or pressed[pygame.K_RCTRL]
-        
-        for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:
 
-                if event.key == pygame.K_i:
-                    lin_acel += 1
-                elif event.key == pygame.K_COMMA:
-                    lin_acel += -1
 
-                elif event.key == pygame.K_l:
-                    ang_acel += 1
-                elif event.key == pygame.K_j:
-                    ang_acel += -1
-                
-                elif event.key == pygame.K_k:
-                    lin_acel = 0
-                    ang_acel = 0
-                    lin_stop_time = 1
-                    ang_stop_time = 1
-            
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button == 1: # left click grows radius
-                    mouse_down = True
-                if event.button == 3: # right click shrinks radius
-                    stop = True
-            if event.type == pygame.MOUSEBUTTONUP:
-                stop = False
-                mouse_down = False
-        
-        if mouse_down:
-            mouse_pos = event.pos
-        
-        trans_pos = (-round(float(mouse_pos[0] - screen_w/2)/(screen_w/2),3), -round(float(mouse_pos[1] - screen_h/2)/(screen_h/2),3))
-        
-        appm.button_up = trans_pos[1] > 0.33
-        appm.button_down = trans_pos[1] < -0.33
-        appm.button_right = trans_pos[0] > 0.33
-        appm.button_left = trans_pos[0] < -0.33
-        appm.operation_mode = 2
-        input_vel = Twist()
-        output_vel = Twist()
 
-        input_vel.linear.x = trans_pos[1] * 0.3
-        input_vel.angular.z = trans_pos[0] * 1.0
 
-        Ta = 2 # Tempo de assentamento (s)
-        e = exp(- 4/Ta * 1/Hz)
-        output_vel.linear.x = last_output_vel.linear.x * e + last_input_vel.linear.x * (1 - e)
-        output_vel.angular.z = last_output_vel.angular.z * e + last_input_vel.angular.z * (1 - e)
-        last_output_vel = output_vel
-        last_input_vel = input_vel
-        
-        if abs(output_vel.linear.x) > 1e-3 or abs(output_vel.angular.z) > 1e-3:
-            if stop:   
-                output_vel.linear.x = 0
-                output_vel.angular.z = 0
-        appMsg_pub.publish(appm)
-        print('oi')
-            #vel_pub.publish(output_vel)
+        prox_index = (index + 1) % len(PointsList)
+        x = PointsList[index].x
+        y = PointsList[index].y
+        ang = np.arctan2(PointsList[prox_index].x - PointsList[index].x, PointsList[prox_index].y - PointsList[index].y)
+        (rx, ry, rz, rw) = tf.transformations.quaternion_from_euler(0, 0, ang)
+        goal = MoveBaseGoal()
+        goal.target_pose.header.frame_id = "odom"
+        goal.target_pose.header.stamp = rospy.Time.now()
+        goal.target_pose.pose.position.x = y
+        goal.target_pose.pose.position.y = x
+        goal.target_pose.pose.orientation.x = rx
+        goal.target_pose.pose.orientation.y = ry
+        goal.target_pose.pose.orientation.z = rz
+        goal.target_pose.pose.orientation.w = rw
+        goal_client.send_goal(goal)
         rate.sleep()
 
 def start():
@@ -126,7 +61,7 @@ def start():
     rospy.init_node('nav_autonoma')
     vel_pub = rospy.Publisher('cmd_vel_auto', Twist, queue_size=1)
 
-    control()
+    loop()
 
 if __name__ == '__main__':
     try:

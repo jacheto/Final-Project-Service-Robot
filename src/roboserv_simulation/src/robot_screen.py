@@ -12,6 +12,7 @@ import pygame
 from pygame.locals import *
 import math
 import time
+import os
 import rospy
 from pygame import gfxdraw
 from roboserv_description.msg import AppMsg
@@ -50,7 +51,7 @@ if __name__ == '__main__':
     
     SW,SH = 640,480
     screen = pygame.display.set_mode((SW,SH))
-    pygame.display.set_caption('this is a test')
+    pygame.display.set_caption('robot screen interface')
     screen = pygame.display.get_surface()
     tmp = screen.convert()
     caption = pygame.display.get_caption()
@@ -84,6 +85,7 @@ if __name__ == '__main__':
     last_output = 1
     last_setpoint = 1
     last_t = t0
+    os.system('wmctrl -r "robot screen interface" -b add,above')
     while not _quit and not rospy.is_shutdown():
         t1 = time.time()
         t = t1 - t0

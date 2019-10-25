@@ -30,7 +30,7 @@ void setarMotores(const geometry_msgs::Twist&);
 Ultrasonic sensor_F (pinTrig_F, pinEcho_F);
 Ultrasonic sensor_L (pinTrig_L, pinEcho_L);
 Ultrasonic sensor_R (pinTrig_R, pinEcho_R);
-Ultrasonic sensor_T (pinTrig_T, pinEcho_T);
+//Ultrasonic sensor_T (pinTrig_T, pinEcho_T);
 
 Servo motor_L;
 Servo motor_R;
@@ -74,7 +74,7 @@ float get_dist(int pinTrig, int pinEcho) {
   delayMicroseconds(10);
   digitalWrite(pinTrig, LOW);
   long t0 = micros();
-  long max_time_us = 10000;
+  long max_time_us = 8000;
   float duration = pulseIn(pinEcho, HIGH, max_time_us);
   float distance = duration*0.034/200;
   

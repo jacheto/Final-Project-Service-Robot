@@ -101,7 +101,6 @@ def get(chave, obter_tempo=False):
         return valor
 
 
-
 def loop():
 
     rospy.init_node('app_node')
@@ -110,6 +109,7 @@ def loop():
     rate = rospy.Rate(5)
     
     directory = rospy.get_param('~directory')
+    bkp_directory = rospy.get_param('~bkp_directory')
     stream_dir = directory + "/rviz_img.png"
     map_dir = ""
     roscore = Roscore()
@@ -158,6 +158,7 @@ def loop():
             if not robo_funcionando:
                 print("iniciando robo")
                 map_dir = directory + '/' + map_name
+                map_bkp_dir = bkp_directory + '/' + map_name
                 map_app_dir = map_dir + "/map_img.jpg"
 
                 if map_name == "default":
@@ -174,13 +175,18 @@ def loop():
                     navigation_mode = 2
                 
                 if not os.path.isdir(map_dir):
-                        os.mkdir(map_dir)
+                    os.mkdir(map_dir)
                 
+                if os.path.isdir(map_bkp_dir):
+                    if os.path.isdir(map_dir):
+                        shutil.rmtree(map_dir)
+                    shutil.copytree(map_bkp_dir, map_dir)
+                sleep(5)
                 logmsg("Iniciando robo")
                 command_list = ['roslaunch', 'roboserv_simulation', 'roboserv_real.launch', 'map_name:=' + map_name, 'mapping:=' + mapping, 'maps_dir:=' + directory]
                 roscore.run(command_list)
                 post('navigation_mode', navigation_mode)
-                time.sleep(5)
+                time.sleep(3)
 
                 robo_funcionando = True
                 
