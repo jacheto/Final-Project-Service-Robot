@@ -1,4 +1,9 @@
-# Roboserv
+# Service Robot
+
+## About the project
+This is my final project at University. It is a 1.5 m (or 5 feet) service robot that can map the environment and walk in a room, avoiding walls, obstacules and humans. I did it with 3 other people, my part was basically doing all the software / coding / intelligence of the robot. We used ROS Kinetic running in Ubuntu for the robot brain.
+
+Here is a tutorial to remind myself if I ever need to run the software again (it is in portuguese):
 
 ### Como configurar o projeto
 
